@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Building List</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="bg-light fs-6">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success py-2">
+        <div class="container-fluid d-flex justify-content-between">
+            <a class="navbar-brand fs-4" href="#"><i class="fa fa-leaf me-2"></i> Trang quản trị</a>
+            <div class="text-white d-flex align-items-center" role="button">
+                <span class="bg-black bg-opacity-10 px-3 py-1 rounded">
+                    Xin chào, nguyen van a <i class="fa fa-caret-down ms-1"></i>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="d-flex">
+
+        <div class="bg-white border-end d-flex flex-column" style="width: 220px; min-height: 100vh;">
+
+            <div class="d-flex border-bottom">
+                <button class="btn btn-secondary rounded-0 flex-fill py-1"><i class="fa fa-signal"></i></button>
+                <button class="btn btn-info rounded-0 flex-fill py-1 text-white"><i
+                        class="fa fa-pencil-alt"></i></button>
+                <button class="btn btn-warning rounded-0 flex-fill py-1 text-white"><i class="fa fa-users"></i></button>
+                <button class="btn btn-danger rounded-0 flex-fill py-1"><i class="fa fa-cogs"></i></button>
+            </div>
+
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-primary fw-bold border-bottom border-start border-primary border-3 bg-light"
+                        href="#">
+                        <i class="fa fa-building me-2"></i> Quản Lý Tòa Nhà
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-secondary border-bottom" href="#">
+                        <i class="fa fa-users me-2"></i> Quản Lý Tài Khoản
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-secondary border-bottom" href="#">
+                        <i class="fa fa-user-tie me-2"></i> Quản Lý Khách Hàng
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="flex-grow-1 bg-white">
+
+            <div class="bg-light border-bottom px-4 py-2" style="font-size: 0.85rem;">
+                <i class="fa fa-home text-primary me-1"></i>
+                <a href="#" class="text-decoration-none" style="color: #2b7dbc;">Home</a>
+                <i class="fa fa-angle-right text-secondary mx-2" style="font-size: 0.75rem;"></i>
+                <span class="text-secondary">Dashboard</span>
+            </div>
+
+            <div class="p-4 pt-3">
+
+                <div class="pb-2 mb-4" style="border-bottom: 1px dotted #e2e2e2;">
+                    <h4 class="mb-0 fw-normal d-inline-block" style="color: #2679b5;">Danh sách tòa nhà</h4>
+                    <small class="text-secondary ms-2" style="letter-spacing: 1px;">» overview & stats</small>
+                </div>
+
+                <div class="card mb-4 rounded-0">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <span class="text-info">Tìm kiếm</span>
+
+                        <div class="border-start ps-3 d-flex align-items-center">
+                            <i class="fa fa-sync text-success me-2" role="button" style="opacity: 0.7;"
+                                id="btnResetForm"></i>
+                            <i class="fa fa-chevron-up text-secondary me-2" id="iconCollapse" role="button"
+                                style="opacity: 0.7;" data-bs-toggle="collapse" data-bs-target="#searchCollapse"></i>
+                            <i class="fa fa-times text-danger" role="button" style="opacity: 0.7;"></i>
+                        </div>
+                    </div>
+
+                    <div id="searchCollapse" class="collapse show">
+                        <div class="card-body">
+                            <form id="searchForm">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label mb-1">Tên tòa nhà</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label mb-1">Diện tích sàn</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-1">Quận</label>
+                                        <select class="form-select form-select-sm rounded-0">
+                                            <option>Quận 2</option>
+                                            <option>Quận 1</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label mb-1">Diện tích sàn</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="form-label mb-1">Diện tích sàn</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label mb-1">Số tầng hầm</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label mb-1">Hướng</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label mb-1">Hạng</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-1">Diện tích từ</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-1">Diện tích đến</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-1">Giá thuê từ</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label mb-1">Giá thuê đến</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label mb-1">Tên Quản lý</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label mb-1">SĐT Quản lý</label>
+                                        <input type="text" class="form-control form-control-sm rounded-0">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label mb-1">Chọn nhân viên</label>
+                                        <select class="form-select form-select-sm rounded-0">
+                                            <option>Trần Văn D</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 d-flex gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="noithat">
+                                        <label class="form-check-label" for="noithat">Nội thất</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="tangtret">
+                                        <label class="form-check-label" for="tangtret">Tầng trệt</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="nguyencan" checked>
+                                        <label class="form-check-label text-primary" for="nguyencan">Nguyên căn</label>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn btn-sm btn-primary rounded-0">
+                                    <i class="fa fa-search"></i> Tìm kiếm
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mb-2 gap-2">
+                    <button class="btn btn-sm btn-success px-4 py-2 rounded-3" title="Thêm tòa nhà"><i
+                            class="bi bi-building-add"></i></button>
+                    <button class="btn btn-sm btn-danger px-4 py-2 rounded-3" title="Xóa"><i
+                            class="bi bi-trash3-fill"></i></button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle fs-6">
+                        <thead class="table-light text-secondary">
+                            <tr>
+                                <th class="text-center" style="width: 40px;"><input type="checkbox"
+                                        class="form-check-input"></th>
+                                <th>Tên tòa nhà</th>
+                                <th>Địa chỉ</th>
+                                <th>Số tầng hầm</th>
+                                <th>Tên quản lý</th>
+                                <th>SĐT quản lý</th>
+                                <th>Diện tích sàn</th>
+                                <th>Diện tích thuê</th>
+                                <th>Diện tích trống</th>
+                                <th>Giá thuê</th>
+                                <th>Phí dịch vụ</th>
+                                <th>Phí môi giới</th>
+                                <th class="text-center">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>DEV Building 1</td>
+                                <td>12, Phan Xích Long, Quận 1</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center text-nowrap">
+                                    <button class="btn btn-sm btn-success py-0 px-1 rounded-0"
+                                        onclick="assignmentBuilding(1)"><i class="bi bi-check2-circle"
+                                            title="Giao tòa nhà"></i></button>
+                                    <button class="btn btn-sm btn-info text-white py-0 px-1 rounded-0"><i
+                                            class="bi bi-pen-fill" title="Sửa tòa nhà"></i></button>
+                                    <button class="btn btn-sm btn-danger py-0 px-1 rounded-0"><i
+                                            class="bi bi-trash3-fill" title="Xóa tòa nhà"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>DEV Building 2</td>
+                                <td>12, Phan Xích Long, Quận 1</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center text-nowrap">
+                                    <button class="btn btn-sm btn-success py-0 px-1 rounded-0"
+                                        onclick="assignmentBuilding(1)"><i class="bi bi-check2-circle"></i></button>
+                                    <button class="btn btn-sm btn-info text-white py-0 px-1 rounded-0"><i
+                                            class="bi bi-pen-fill"></i></button>
+                                    <button class="btn btn-sm btn-danger py-0 px-1 rounded-0"><i
+                                            class="bi bi-trash3-fill"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer mt-auto pt-3 pb-3 text-center bg-white" style="border-top: 3px double #e5e5e5;">
+        <div class="d-inline-flex align-items-center justify-content-center">
+
+            <span class="text-secondary me-3" style="font-size: 0.95rem;">
+                <span class="text-primary">IvanSum</span> Building Application &copy; 2026-2027
+            </span>
+
+            <div class="d-inline-flex align-items-center justify-content-center mx-1"
+                style="width: 20px; height: 20px; background-color: #ff00bf; border-radius: 3px; cursor: pointer;"
+                title="Twitter">
+                <i class="bi bi-instagram text-white" style="font-size: 0.9rem;"></i>
+            </div>
+
+            <div class="d-inline-flex align-items-center justify-content-center mx-1"
+                style="width: 20px; height: 20px; background-color: #4b8ccb; border-radius: 3px; cursor: pointer;"
+                title="Facebook">
+                <i class="bi bi-facebook text-white" style="font-size: 0.9rem;"></i>
+            </div>
+
+            <div class="d-inline-flex align-items-center justify-content-center mx-1"
+                style="width: 20px; height: 20px; background-color: #050505; border-radius: 3px; cursor: pointer;"
+                title="X">
+                <i class="bi bi-twitter-x text-white" style="font-size: 0.9rem;"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="assignmentBuildingModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Danh sách nhân viên</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped align-middle fs-6">
+                        <thead class="table-light text-secondary">
+                            <tr>
+                                <th class="text-center" style="width: 40px;"><input type="checkbox"
+                                        class="form-check-input"></th>
+                                <th>Họ tên nhân viên</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>Nguyen van A</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td>Nguyen van B</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Giao tòa nhà</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const searchCollapse = document.getElementById('searchCollapse');
+        const iconCollapse = document.getElementById('iconCollapse');
+
+        searchCollapse.addEventListener('hidden.bs.collapse', function () {
+            iconCollapse.classList.remove('fa-chevron-up');
+            iconCollapse.classList.add('fa-chevron-down');
+        });
+
+        searchCollapse.addEventListener('shown.bs.collapse', function () {
+            iconCollapse.classList.remove('fa-chevron-down');
+            iconCollapse.classList.add('fa-chevron-up');
+        });
+
+        // id ==> $('# ...')
+        // class ==> $('# ...') 
+        function assignmentBuilding(id) {
+            $('#assignmentBuildingModal').modal('show');
+        }
+
+        document.getElementById("btnResetForm").addEventListener('click', function () {
+            document.getElementById("searchForm").reset();
+        })
+    </script>
+</body>
+
+</html>
