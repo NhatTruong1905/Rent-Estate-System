@@ -193,12 +193,12 @@
                 <div class="d-flex justify-content-end mb-2 gap-2">
                     <button class="btn btn-sm btn-success px-4 py-2 rounded-3" title="Thêm tòa nhà"><i
                             class="bi bi-building-add"></i></button>
-                    <button class="btn btn-sm btn-danger px-4 py-2 rounded-3" title="Xóa"><i
+                    <button class="btn btn-sm btn-danger px-4 py-2 rounded-3" title="Xóa" id="btnDeleteBuilding"><i
                             class="bi bi-trash3-fill"></i></button>
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped align-middle fs-6">
+                    <table class="table table-bordered table-striped align-middle fs-6" id="buildingList">
                         <thead class="table-light text-secondary">
                             <tr>
                                 <th class="text-center" style="width: 40px;"><input type="checkbox"
@@ -219,7 +219,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" value="1"></td>
                                 <td>DEV Building 1</td>
                                 <td>12, Phan Xích Long, Quận 1</td>
                                 <td></td>
@@ -242,7 +242,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" value="3"></td>
                                 <td>DEV Building 2</td>
                                 <td>12, Phan Xích Long, Quận 1</td>
                                 <td></td>
@@ -367,6 +367,12 @@
 
         document.getElementById("btnResetForm").addEventListener('click', function () {
             document.getElementById("searchForm").reset();
+        })
+
+        $('#btnDeleteBuilding').click(function(e){
+            e.preventDefault();
+
+            
         })
     </script>
 </body>
