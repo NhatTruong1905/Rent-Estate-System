@@ -309,21 +309,21 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <table class="table table-bordered table-striped align-middle fs-6">
+                    <table class="table table-bordered table-striped align-middle fs-6" id="staffList">
                         <thead class="table-light text-secondary">
                             <tr>
                                 <th class="text-center" style="width: 40px;"><input type="checkbox"
-                                        class="form-check-input"></th>
+                                        class="form-check-input" value="30"></th>
                                 <th>Họ tên nhân viên</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" value="31"></td>
                                 <td>Nguyen van A</td>
                             </tr>
                             <tr>
-                                <td class="text-center"><input type="checkbox" class="form-check-input"></td>
+                                <td class="text-center"><input type="checkbox" class="form-check-input" value="32"></td>
                                 <td>Nguyen van B</td>
                             </tr>
                         </tbody>
@@ -332,12 +332,12 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Giao tòa nhà</button>
+                    <button type="button" class="btn btn-primary" id="btnAssignmentBuilding">Giao tòa nhà</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
                 </div>
-
             </div>
         </div>
+        <input type="hidden" id="buildingId" value="">
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -359,21 +359,76 @@
             iconCollapse.classList.add('fa-chevron-up');
         });
 
-        // id ==> $('# ...')
-        // class ==> $('# ...') 
-        function assignmentBuilding(id) {
-            $('#assignmentBuildingModal').modal('show');
-        }
-
         document.getElementById("btnResetForm").addEventListener('click', function () {
             document.getElementById("searchForm").reset();
         })
 
-        $('#btnDeleteBuilding').click(function(e){
+        // id ==> $('# ...')
+        // class ==> $('# ...') 
+        function assignmentBuilding(id) {
+            $('#buildingId').val(id);
+            $('#assignmentBuildingModal').modal('show');
+        }
+
+        $('#btnAssignmentBuilding').click(function (e) {
             e.preventDefault();
 
-            
+            var json = {}
+            json['buildingId'] = $('#buildingId').val();
+            var staffIds = $('#staffList').find('tbody input[type = checkbox]:checked').map(function () {
+                return $(this).val();
+            }).get();
+            json['staffIds'] = staffIds;
+
+            if (json['buildingId'] != '' && json['staffIds'].length != 0) {
+                updateAssignment(json);
+            } else {
+                alert('Id của tòa nhà và nhân viên không được rỗng!')
+            }
         })
+
+        $('#btnDeleteBuilding').click(function (e) {
+            e.preventDefault();
+
+            var data = {}
+            var ids = $('#buildingList').find('tbody input[type = checkbox]:checked').map(function () {
+                return $(this).val();
+            }).get();
+            data['ids'] = ids
+
+            deleteBuilding(data['ids'])
+        })
+
+
+        function updateAssignment(data) {
+            $.ajax({
+                url: "https://localhost:8080/api/assignments",
+                type: "DELETE",
+                dataType: "JSON",
+                success: function (response) {
+                    console.log("success")
+                },
+                error: function (response) {
+                    console.log("error")
+                }
+            });
+        }
+
+        function deleteBuilding(data) {
+            $.ajax({
+                url: "https://localhost:8080/api/buildings" + data,
+                type: "POST",
+                data: JSON.stringify,
+                dataType: "JSON",
+                contentType: "application/json",
+                success: function (response) {
+                    console.log("success")
+                },
+                error: function (response) {
+                    console.log("error")
+                }
+            });
+        }
     </script>
 </body>
 
