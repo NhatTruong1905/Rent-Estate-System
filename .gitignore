@@ -4,6 +4,7 @@
 .classpath
 target/
 .metadata/
+.idea/
 # Compiled class file
 *.class
 
