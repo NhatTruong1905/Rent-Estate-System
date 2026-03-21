@@ -98,7 +98,7 @@
                                         <div class="col-xs-12">
                                             <div class="col-sm-3">
                                                 <label>Diện tích từ</label>
-                                               <form:input path="areaFrom" class="form-control"/>
+                                                <form:input path="areaFrom" class="form-control"/>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label>Diện tích đến</label>
@@ -311,33 +311,28 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnAssignmentBuilding">Giao tòa nhà</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
     <input type="hidden" id="buildingId" value="">
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-
 <script>
-    const searchCollapse = document.getElementById('searchCollapse');
-    const iconCollapse = document.getElementById('iconCollapse');
-
-    if (searchCollapse) {
-        searchCollapse.addEventListener('hidden.bs.collapse', function () {
-            iconCollapse.classList.remove('fa-chevron-up');
-            iconCollapse.classList.add('fa-chevron-down');
-        });
-
-        searchCollapse.addEventListener('shown.bs.collapse', function () {
-            iconCollapse.classList.remove('fa-chevron-down');
-            iconCollapse.classList.add('fa-chevron-up');
-        });
-    }
+    // const searchCollapse = document.getElementById('searchCollapse');
+    // const iconCollapse = document.getElementById('iconCollapse');
+    //
+    // if (searchCollapse) {
+    //     searchCollapse.addEventListener('hidden.bs.collapse', function () {
+    //         iconCollapse.classList.remove('fa-chevron-up');
+    //         iconCollapse.classList.add('fa-chevron-down');
+    //     });
+    //
+    //     searchCollapse.addEventListener('shown.bs.collapse', function () {
+    //         iconCollapse.classList.remove('fa-chevron-down');
+    //         iconCollapse.classList.add('fa-chevron-up');
+    //     });
+    // }
 
     $('#btnSearch').click(function (e) {
         e.preventDefault()
