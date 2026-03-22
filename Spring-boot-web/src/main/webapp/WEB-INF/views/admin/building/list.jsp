@@ -57,12 +57,10 @@
                                         <div class="col-xs-12">
                                             <div class="col-sm-3">
                                                 <label>Quận</label>
-                                                <select class="form-control" name="district">
-                                                    <option value="">--Chọn quận--</option>
-                                                    <option value="QUAN_1">Quận 1</option>
-                                                    <option value="QUAN_2">Quận 2</option>
-                                                    <option value="QUAN_TD">Quận Thủ Đức</option>
-                                                </select>
+                                                <form:select path="district" class="form-control">
+                                                    <option value="">-- Chọn Quận --</option>
+                                                    <form:options items="${districts}"></form:options>
+                                                </form:select>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Phường</label>
@@ -128,11 +126,10 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Chọn nhân viên</label>
-                                                <select class="form-control" name="staffId">
+                                                <form:select path="staffId" class="form-control">
                                                     <option value="">-- Chọn Nhân Viên --</option>
-                                                    <option value="1">Trần Văn D</option>
-                                                    <option value="2">Trần Xuân V</option>
-                                                </select>
+                                                    <form:options items="${staffs}"></form:options>
+                                                </form:select>
                                             </div>
                                         </div>
                                     </div>
@@ -140,18 +137,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <label class="inline" style="margin-right: 15px;">
-                                                <input class="ace" type="checkbox" value="noi-that" name="typeCode">
-                                                <span class="lbl"> Nội thất</span>
-                                            </label>
-                                            <label class="inline" style="margin-right: 15px;">
-                                                <input class="ace" type="checkbox" value="tang-tret" name="typeCode">
-                                                <span class="lbl"> Tầng trệt</span>
-                                            </label>
-                                            <label class="inline">
-                                                <input class="ace" type="checkbox" value="nguyen-can" name="typeCode">
-                                                <span class="lbl"> Nguyên căn</span>
-                                            </label>
+                                            <form:checkboxes path="typeCode" items="${typeCodes}"/>
                                         </div>
                                     </div>
                                     <div class="space-8"></div>
@@ -205,60 +191,38 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="center">
-                                    <label class="pos-rel">
-                                        <input type="checkbox" class="ace" value="1"/>
-                                        <span class="lbl"></span>
-                                    </label>
-                                </td>
-                                <td>DEV Building 1</td>
-                                <td>12, Phan Xích Long, Quận 1</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="text-center text-nowrap">
-                                    <button class="btn btn-xs btn-success" onclick="assignmentBuilding(1)"
-                                            title="Giao tòa nhà"><i class="fa fa-check-square"></i></button>
-                                    <button class="btn btn-xs btn-info" title="Sửa tòa nhà"><i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"><i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="center">
-                                    <label class="pos-rel">
-                                        <input type="checkbox" class="ace" value="3"/>
-                                        <span class="lbl"></span>
-                                    </label>
-                                </td>
-                                <td>DEV Building 2</td>
-                                <td>12, Phan Xích Long, Quận 1</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="text-center text-nowrap">
-                                    <button class="btn btn-xs btn-success" onclick="assignmentBuilding(3)"
-                                            title="Giao tòa nhà"><i class="fa fa-check-square"></i></button>
-                                    <button class="btn btn-xs btn-info" title="Sửa tòa nhà"><i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"><i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
+                            <c:forEach var="item" items="${buildingList}">
+                                <tr>
+                                    <td class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" value="${item.id}"/>
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
+                                    <td>${item.name}</td>
+                                    <td>${item.address}</td>
+                                    <td>${item.numberOfBasement}</td>
+                                    <td>${item.managerName}</td>
+                                    <td>${item.managerPhoneNumber}</td>
+                                    <td>${item.floorArea}</td>
+                                    <td>${item.rentArea}</td>
+                                    <td>${item.emptyArea}</td>
+                                    <td>${item.rentPrice}</td>
+                                    <td>${item.serviceFee}</td>
+                                    <td>${item.brokerageFee}</td>
+                                    <td class="text-center text-nowrap">
+                                        <button class="btn btn-xs btn-success" onclick="assignmentBuilding(${item.id})"
+                                                title="Giao tòa nhà"><i class="fa fa-check-square"></i></button>
+                                        <a class="btn btn-xs btn-info" title="Sửa tòa nhà"
+                                           href="/admin/building-edit-${item.id}"><i
+                                                class="fa fa-pencil"></i>
+                                        </a>
+                                        <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"><i
+                                                class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+
                             </tbody>
                         </table>
                     </div>
