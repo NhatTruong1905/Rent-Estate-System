@@ -1,3 +1,4 @@
+<%@include file="/common/taglib.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,13 +27,13 @@
             <div class="row">
                 <div class="col-xs-12">
 
-                    <form class="form-horizontal" role="form" id="form-edit">
+                    <form:form class="form-horizontal" role="form" id="form-edit" modelAttribute="building">
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Tên tòa
                                 nhà </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name"/>
+                                <form:input path="name" class="form-control"/>
                             </div>
                         </div>
 
@@ -40,12 +41,10 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;">
                                 Quận </label>
                             <div class="col-sm-3">
-                                <select class="form-control" name="districtId">
-                                    <option value="">--Chọn quận--</option>
-                                    <option value="QUAN_1">Quận 1</option>
-                                    <option value="QUAN_2">Quận 2</option>
-                                    <option value="QUAN_TD">Quận Thủ Đức</option>
-                                </select>
+                                <form:select path="district" class="form-control">
+                                    <option value="">-- Chọn Quận --</option>
+                                    <form:options items="${districts}"></form:options>
+                                </form:select>
                             </div>
                         </div>
 
@@ -53,7 +52,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;">
                                 Phường </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="ward"/>
+                                <form:input path="ward" class="form-control"/>
                             </div>
                         </div>
 
@@ -61,7 +60,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;">
                                 Đường </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="street"/>
+                                <form:input path="street" class="form-control"/>
                             </div>
                         </div>
 
@@ -69,7 +68,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Kết
                                 cấu </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="structure"/>
+                                <form:input path="structure" class="form-control"/>
                             </div>
                         </div>
 
@@ -77,7 +76,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Số tầng
                                 hầm </label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" name="numberOfBasement"/>
+                                <form:input path="numberOfBasement" class="form-control"/>
                             </div>
                         </div>
 
@@ -85,7 +84,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Diện tích
                                 sàn </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="floorArea"/>
+                                <form:input path="floorArea" class="form-control"/>
                             </div>
                         </div>
 
@@ -93,7 +92,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;">
                                 Hướng </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="direction"/>
+                                <form:input path="direction" class="form-control"/>
                             </div>
                         </div>
 
@@ -101,7 +100,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;">
                                 Hạng </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="level"/>
+                                <form:input path="level" class="form-control"/>
                             </div>
                         </div>
 
@@ -109,7 +108,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Diện tích
                                 thuê </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="rentAreaId"/>
+                                <form:input path="rentArea" class="form-control"/>
                             </div>
                         </div>
 
@@ -117,7 +116,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Giá
                                 thuê </label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" name="rentPrice"/>
+                                <form:input path="rentPrice" class="form-control"/>
                             </div>
                         </div>
 
@@ -125,7 +124,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Mô tả
                                 giá </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="rentPriceDescription"/>
+                                <form:input path="rentPriceDescription" class="form-control"/>
                             </div>
                         </div>
 
@@ -133,7 +132,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Phí dịch
                                 vụ </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="serviceFee"/>
+                                <form:input path="serviceFee" class="form-control"/>
                             </div>
                         </div>
 
@@ -141,7 +140,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Phí ô
                                 tô </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="carFee"/>
+                                <form:input path="carFee" class="form-control"/>
                             </div>
                         </div>
 
@@ -149,7 +148,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Phí mô
                                 tô </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="motorbikeFee"/>
+                                <form:input path="motoFee" class="form-control"/>
                             </div>
                         </div>
 
@@ -157,7 +156,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Phí ngoài
                                 giờ </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="overtimeFee"/>
+                                <form:input path="overtimeFee" class="form-control"/>
                             </div>
                         </div>
 
@@ -165,7 +164,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Tiền
                                 điện </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="electricityfee"/>
+                                <form:input path="electricityFee" class="form-control"/>
                             </div>
                         </div>
 
@@ -173,7 +172,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Tiền
                                 nước </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="waterFee"/>
+                                <form:input path="waterFee" class="form-control"/>
                             </div>
                         </div>
 
@@ -181,7 +180,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Đặt
                                 cọc </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="deposit"/>
+                                <form:input path="deposit" class="form-control"/>
                             </div>
                         </div>
 
@@ -189,7 +188,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Thanh
                                 toán </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="payment"/>
+                                <form:input path="payment" class="form-control"/>
                             </div>
                         </div>
 
@@ -197,7 +196,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Thời hạn
                                 thuê </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="rentTime"/>
+                                <form:input path="rentTime" class="form-control"/>
                             </div>
                         </div>
 
@@ -205,7 +204,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Thời gian
                                 trang trí </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="decorationTime"/>
+                                <form:input path="decorationTime" class="form-control"/>
                             </div>
                         </div>
 
@@ -213,7 +212,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Tên quản
                                 lý </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="managerName"/>
+                                <form:input path="managerName" class="form-control"/>
                             </div>
                         </div>
 
@@ -221,7 +220,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> SĐT quản
                                 lý </label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" name="managerPhoneNumber"/>
+                                <form:input path="managerPhoneNumber" class="form-control"/>
                             </div>
                         </div>
 
@@ -229,19 +228,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Loại tòa
                                 nhà </label>
                             <div class="col-sm-10">
-                                <label class="inline" style="margin-right: 20px; padding-top: 5px;">
-                                    <input type="checkbox" class="ace" id="tangtret" name="typeCode" value="tang-tret">
-                                    <span class="lbl"> Tầng trệt</span>
-                                </label>
-                                <label class="inline" style="margin-right: 20px; padding-top: 5px;">
-                                    <input type="checkbox" class="ace" id="nguyencan" name="typeCode"
-                                           value="nguyen-can">
-                                    <span class="lbl"> Nguyên căn</span>
-                                </label>
-                                <label class="inline" style="padding-top: 5px;">
-                                    <input type="checkbox" class="ace" id="noithat" name="typeCode" value="noi-that">
-                                    <span class="lbl"> Nội thất</span>
-                                </label>
+                                <form:checkboxes path="typeCode" items="${typeCodes}"/>
                             </div>
                         </div>
 
@@ -249,7 +236,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Phí môi
                                 giới </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="brokerageFee"/>
+                                <form:input path="brokerageFee" class="form-control"/>
                             </div>
                         </div>
 
@@ -257,15 +244,23 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Ghi
                                 chú </label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="note" rows="3"></textarea>
+                                <form:textarea path="note" class="form-control" rows="3"/>
                             </div>
                         </div>
 
                         <div class="clearfix form-actions">
                             <div class="col-md-offset-2 col-md-10">
-                                <button class="btn btn-info" type="button" id="btnAddBuilding">
-                                    <i class="ace-icon fa fa-check bigger-110"></i> Thêm tòa nhà
-                                </button>
+                                <c:if test="${empty building.id}">
+                                    <button class="btn btn-info" type="button" id="btnAddOrUpdateBuilding">
+                                        <i class="ace-icon fa fa-check bigger-110"></i> Thêm tòa nhà
+                                    </button>
+                                </c:if>
+                                <c:if test="${not empty building.id}">
+                                    <button class="btn btn-pink" type="button" id="btnAddOrUpdateBuilding">
+                                        <i class="ace-icon fa fa-check bigger-110"></i> Sửa tòa nhà
+                                    </button>
+                                </c:if>
+
 
                                 &nbsp; &nbsp; &nbsp;
 
@@ -274,8 +269,9 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
 
+                        <form:hidden path="id"/>
+                    </form:form>
                 </div>
             </div>
         </div>
@@ -283,7 +279,7 @@
 </div>
 
 <script>
-    $('#btnAddBuilding').click(function (e) {
+    $('#btnAddOrUpdateBuilding').click(function (e) {
         e.preventDefault();
 
         var formData = $('#form-edit').serializeArray();
@@ -309,7 +305,7 @@
 
     function addBuilding(data) {
         $.ajax({
-            url: "http://localhost:8080/api/buildings",
+            url: "/api/buildings",
             type: "POST",
             data: JSON.stringify(data),
             dataType: "JSON",
@@ -319,7 +315,7 @@
                 console.log("success");
             },
             error: function (response) {
-                alert("Đã có lỗi xảy ra!");
+                alert(response.responseJson);
                 console.log("error");
             }
         });
