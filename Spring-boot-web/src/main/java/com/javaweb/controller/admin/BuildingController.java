@@ -28,6 +28,7 @@ public class BuildingController {
         mav.addObject("districts", District.getDistricts());
         mav.addObject("typeCodes", TypeCode.getTypes());
 
+
 // Tìm kiếm
         List<BuildingSearchResponse> results = new ArrayList<>();
         BuildingSearchResponse b1 = new BuildingSearchResponse();
