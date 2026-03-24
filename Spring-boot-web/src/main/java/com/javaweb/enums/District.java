@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum District {
     QUAN_1("Quận 1"),
-    QUAN_Thu_Duc("Quận Thủ Đức"),
+    QUAN_THU_DUC("Quận Thủ Đức"),
     QUAN_3("Quận 3"),
     QUAN_4("Quận 4"),
     QUAN_5("Quận 5"),
@@ -34,5 +34,16 @@ public enum District {
         }
 
         return district;
+    }
+
+    public static String getDistrictNameByKey(String keyDistrict) {
+        if (keyDistrict == null) return "";
+        for (District item : District.values()) {
+            if (item.toString().toLowerCase().trim().equals(keyDistrict.toLowerCase().trim())) {
+                return item.getDistrictName();
+            }
+        }
+
+        return keyDistrict;
     }
 }

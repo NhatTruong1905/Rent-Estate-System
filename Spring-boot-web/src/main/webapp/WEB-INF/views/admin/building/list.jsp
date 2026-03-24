@@ -29,8 +29,16 @@
                             <h5 class="widget-title">Tìm kiếm</h5>
 
                             <div class="widget-toolbar">
-                                <a href="#" data-action="collapse" id="iconCollapse">
+                                <a href="#" id="btnReload" title="Làm mới">
+                                    <i class="ace-icon fa fa-refresh green"></i>
+                                </a>
+
+                                <a href="#" data-action="collapse" title="Ẩn bảng" id="iconCollapse">
                                     <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+
+                                <a href="#" data-action="close" id="btnClose" title="Đóng bảng">
+                                    <i class="ace-icon fa fa-times red"></i>
                                 </a>
                             </div>
                         </div>
@@ -297,6 +305,12 @@
     //         iconCollapse.classList.add('fa-chevron-up');
     //     });
     // }
+
+    $('#btnReload').click(function (e) {
+        e.preventDefault()
+
+        $('#listForm').trigger('reset');
+    })
 
     $('#btnSearch').click(function (e) {
         e.preventDefault()
