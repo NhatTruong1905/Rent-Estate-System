@@ -33,7 +33,7 @@
                             <label class="col-sm-2 control-label no-padding-right" style="text-align: left;"> Tên tòa
                                 nhà </label>
                             <div class="col-sm-10">
-                                <form:input path="name" class="form-control"/>
+                                <form:input path="name" class="form-control" id="name"/>
                             </div>
                         </div>
 
@@ -296,10 +296,13 @@
 
         json['typeCode'] = typeCode;
 
-        if (json['name'] != '' && typeCode.length != 0) {
-            addBuilding(json);
+        if (json['name'] != '') {
+            $('#name').after('<span style="color: red">Name not null!</span>')
+        }
+        if (json['district'] != '') {
+            $('#district').after('<span style="color: red">District not null!</span>')
         } else {
-            alert("Tên và Loại tòa nhà không được để trống!")
+            addBuilding(json);
         }
     })
 

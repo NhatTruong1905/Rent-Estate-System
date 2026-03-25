@@ -225,7 +225,8 @@
                                            href="/admin/building-edit-${item.id}"><i
                                                 class="fa fa-pencil"></i>
                                         </a>
-                                        <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"><i
+                                        <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"
+                                                onclick="deleteOneBuilding(${item.id})"><i
                                                 class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
@@ -252,11 +253,11 @@
                     <tr>
                         <th class="center" style="width: 40px;">
                             <label class="pos-rel">
-                                <input type="checkbox" class="ace" value="30"/>
+                                <p class="center">Chọn</p>
                                 <span class="lbl"></span>
                             </label>
                         </th>
-                        <th>Họ tên nhân viên</th>
+                        <th class="center">Họ tên nhân viên</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -267,7 +268,7 @@
                                 <span class="lbl"></span>
                             </label>
                         </td>
-                        <td>Nguyen van A</td>
+                        <td class="center">Nguyen van A</td>
                     </tr>
                     <tr>
                         <td class="center">
@@ -276,7 +277,7 @@
                                 <span class="lbl"></span>
                             </label>
                         </td>
-                        <td>Nguyen van B</td>
+                        <td class="center">Nguyen van B</td>
                     </tr>
                     </tbody>
                 </table>
@@ -323,6 +324,20 @@
         $('#assignmentBuildingModal').modal('show');
     }
 
+    function loadStaff(id) {
+        $.ajax({
+            url: "/api/buildings" + id + "staffs",
+            type: "GET",
+            dataType: "JSON",
+            success: function (response) {
+                console.log("success")
+            },
+            error: function (response) {
+                console.log("error")
+            }
+        });
+    }
+
     $('#btnAssignmentBuilding').click(function (e) {
         e.preventDefault();
 
@@ -336,7 +351,7 @@
         if (json['buildingId'] != '' && json['staffIds'].length != 0) {
             updateAssignment(json);
         } else {
-            alert('Id của tòa nhà và nhân viên không được rỗng!')
+            alert('Id of Building and Staff not empty!')
         }
     })
 
@@ -349,13 +364,21 @@
         }).get();
         data['ids'] = ids
 
-        deleteBuilding(data['ids'])
+        if (data['ids'] != '') {
+            deleteBuilding(data['ids'])
+        } else {
+            alert("Không có tòa nhà được chọn")
+        }
+
     })
 
+    function deleteOneBuilding(id) {
+        deleteBuilding(id);
+    }
 
     function updateAssignment(data) {
         $.ajax({
-            url: "https://localhost:8080/api/assignments",
+            url: "/api/assignments",
             type: "DELETE",
             dataType: "JSON",
             success: function (response) {
@@ -369,16 +392,19 @@
 
     function deleteBuilding(data) {
         $.ajax({
-            url: "https://localhost:8080/api/buildings" + data,
-            type: "POST",
-            data: JSON.stringify(data),
+            url: "/api/buildings/" + data,
+            type: "DELETE",
+            // data: JSON.stringify(data),
             dataType: "JSON",
-            contentType: "application/json",
+            // contentType: "application/json",
             success: function (response) {
                 console.log("success")
+                alert(response.message);
+                window.location.href = "<c:url value='/admin/building-list' />"
             },
             error: function (response) {
                 console.log("error")
+                alert(response.message);
             }
         });
     }
