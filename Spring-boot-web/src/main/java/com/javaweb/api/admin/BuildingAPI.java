@@ -58,7 +58,7 @@ public class BuildingAPI {
     public ResponseEntity<?> loadStaff(@PathVariable Long buildingId) {
         // service lam
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
-        
+
         return null;
     }
 }
