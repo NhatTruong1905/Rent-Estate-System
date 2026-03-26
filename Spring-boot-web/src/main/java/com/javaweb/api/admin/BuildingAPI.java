@@ -12,6 +12,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,10 +55,10 @@ public class BuildingAPI {
             responseDTO.setMessage("Ids can't be empty!");
             return ResponseEntity.badRequest().body(responseDTO);
         } else {
-            buildingService.deleteAllByIds(ids);
             String nameOfBuildings = buildingService.findNameBuildingsById(ids);
+            buildingService.deleteAllByIds(ids);
 
-            responseDTO.setMessage(nameOfBuildings + " đã xóa thành công!");
+            responseDTO.setMessage("Tòa nhà: " + nameOfBuildings + " đã xóa thành công!");
             return ResponseEntity.ok().body(responseDTO);
         }
     }

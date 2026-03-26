@@ -5,6 +5,7 @@ import com.javaweb.converter.BuildingConverter;
 import com.javaweb.converter.BuildingSearchConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.enums.District;
+import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.repository.IBuildingRepository;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,13 +64,8 @@ public class BuildingServiceImpl implements IBuildingService {
 
     @Override
     public String findNameBuildingsById(List<Long> ids) {
-        List<BuildingEntity> buildingEntities = buildingRepository.findBuildingByIdIn(ids);
+        List<BuildingEntity> buildingEntities = buildingRepository.findAllByIdIn(ids);
 
-        List<String> results = new ArrayList<>();
-        for (BuildingEntity b : buildingEntities) {
-            results.add(b.getName());
-        }
-
-        return String.join(", ", results);
+        return buildingEntities.stream().map(b -> b.getName()).collect(Collectors.joining(", "));
     }
 }
