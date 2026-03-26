@@ -1,7 +1,7 @@
 package com.javaweb.config;
 
 import com.javaweb.security.CustomSuccessHandler;
-import com.javaweb.service.impl.CustomUserDetailService;
+import com.javaweb.service.impl.CustomUserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new CustomUserDetailService();
+        return new CustomUserDetailServiceImpl();
     }
 
     @Bean

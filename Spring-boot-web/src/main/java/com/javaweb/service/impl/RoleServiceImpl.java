@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class RoleService implements IRoleService {
+public class RoleServiceImpl implements IRoleService {
 	
 	@Autowired
 	private RoleRepository roleRepository;

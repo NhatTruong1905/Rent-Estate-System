@@ -5,18 +5,14 @@ import com.javaweb.enums.District;
 import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
-import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.service.IBuildingService;
 import com.javaweb.service.IUserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController(value = "buildingControllerOfAdmin")
 public class BuildingController {
@@ -25,9 +21,6 @@ public class BuildingController {
 
     @Autowired
     private IBuildingService buildingService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @GetMapping("/admin/building-list")
     public ModelAndView getBuilding(@ModelAttribute(name = "modelSearch") BuildingSearchRequest params) {

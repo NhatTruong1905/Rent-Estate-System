@@ -9,4 +9,8 @@ import java.util.Map;
 
 public interface IBuildingService {
     List<BuildingSearchResponse> findAll(BuildingSearchRequest params);
+
+    void deleteAllByIds(List<Long> ids);
+
+    String findNameBuildingsById(List<Long> ids);
 }

@@ -5,7 +5,6 @@ import java.util.Map;
 
 public enum District {
     QUAN_1("Quận 1"),
-    QUAN_THU_DUC("Quận Thủ Đức"),
     QUAN_3("Quận 3"),
     QUAN_4("Quận 4"),
     QUAN_5("Quận 5"),
@@ -15,7 +14,14 @@ public enum District {
     QUAN_9("Quận 9"),
     QUAN_10("Quận 10"),
     QUAN_11("Quận 11"),
-    QUAN_12("Quận 12");
+    QUAN_12("Quận 12"),
+    THANH_PHO_THU_DUC("TP Thủ Đức"),
+    QUAN_BINH_TAN("Quận Bình Tân"),
+    QUAN_TAN_BINH("Quận Tân Bình"),
+    QUAN_GO_VAP("Quận Gò Vấp"),
+    QUAN_PHU_NHUAN("Quận Phú Nhuận"),
+    QUAN_TAN_PHU("Quận Tân Phú"),
+    QUAN_BINH_THANH("Quận Bình Thạnh");
 
     private String districtName;
 

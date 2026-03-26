@@ -4,6 +4,8 @@ import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.repository.UserRepository;
+import com.javaweb.service.IBuildingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -16,6 +18,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/buildings")
 public class BuildingAPI {
+
+    @Autowired
+    private IBuildingService buildingService;
+
     private final UserRepository userRepository;
 
     public BuildingAPI(UserRepository userRepository) {
@@ -48,8 +54,10 @@ public class BuildingAPI {
             responseDTO.setMessage("Ids can't be empty!");
             return ResponseEntity.badRequest().body(responseDTO);
         } else {
-            // Xu ly xuong service xoa Building;
-            responseDTO.setMessage("OKAY NICE!!");
+            buildingService.deleteAllByIds(ids);
+            String nameOfBuildings = buildingService.findNameBuildingsById(ids);
+
+            responseDTO.setMessage(nameOfBuildings + " đã xóa thành công!");
             return ResponseEntity.ok().body(responseDTO);
         }
     }

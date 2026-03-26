@@ -4,6 +4,10 @@
 <head>
     <meta charset='utf-8'>
     <title>Building List</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
 
@@ -145,7 +149,48 @@
 
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <form:checkboxes path="typeCode" items="${typeCodes}"/>
+                                            <style>
+                                                .custom-checkbox-spring .title-label {
+                                                    font-weight: bold !important;
+                                                    color: #333 !important;
+                                                    margin-right: 25px !important;
+                                                    vertical-align: middle !important;
+                                                    font-size: 14px;
+                                                }
+
+                                                .custom-checkbox-spring span {
+                                                    display: inline-block !important;
+                                                    margin-right: 35px !important;
+                                                }
+
+                                                .custom-checkbox-spring input[type="checkbox"] {
+                                                    margin-right: 8px !important;
+                                                    margin-left: 0 !important;
+                                                    vertical-align: middle !important;
+                                                    position: relative !important;
+                                                    top: -2px !important;
+                                                    transform: scale(1.2);
+                                                    cursor: pointer;
+                                                }
+
+                                                .custom-checkbox-spring span label {
+                                                    vertical-align: middle !important;
+                                                    font-weight: 600 !important;
+                                                    color: #337ab7 !important;
+                                                    margin: 0 !important;
+                                                    cursor: pointer;
+                                                    transition: color 0.3s ease;
+                                                }
+
+                                                .custom-checkbox-spring span label:hover {
+                                                    color: #ff892a !important;
+                                                }
+                                            </style>
+
+                                            <div class="custom-checkbox-spring" style="margin-top: 5px;">
+                                                <label class="title-label">Loại tòa nhà: </label>
+                                                <form:checkboxes path="typeCode" items="${typeCodes}"/>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="space-8"></div>
@@ -292,25 +337,10 @@
 </div>
 
 <script>
-    // const searchCollapse = document.getElementById('searchCollapse');
-    // const iconCollapse = document.getElementById('iconCollapse');
-    //
-    // if (searchCollapse) {
-    //     searchCollapse.addEventListener('hidden.bs.collapse', function () {
-    //         iconCollapse.classList.remove('fa-chevron-up');
-    //         iconCollapse.classList.add('fa-chevron-down');
-    //     });
-    //
-    //     searchCollapse.addEventListener('shown.bs.collapse', function () {
-    //         iconCollapse.classList.remove('fa-chevron-down');
-    //         iconCollapse.classList.add('fa-chevron-up');
-    //     });
-    // }
 
     $('#btnReload').click(function (e) {
         e.preventDefault()
-
-        $('#listForm').trigger('reset');
+        window.location.href = "/admin/building-list";
     })
 
     $('#btnSearch').click(function (e) {

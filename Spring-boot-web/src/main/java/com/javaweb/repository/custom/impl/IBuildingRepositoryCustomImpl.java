@@ -2,7 +2,7 @@ package com.javaweb.repository.custom.impl;
 
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.entity.BuildingEntity;
-import com.javaweb.repository.IBuildingRepository;
+import com.javaweb.repository.custom.IBuildingRepositoryCustom;
 import com.javaweb.utils.DataUtil;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class BuildingRepositoryImpl implements IBuildingRepository {
+public class IBuildingRepositoryCustomImpl implements IBuildingRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 

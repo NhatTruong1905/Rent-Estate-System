@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IRentAreaRepository extends JpaRepository<RentAreaEntity, Long> {
     List<RentAreaEntity> findByBuilding_Id(Long id);
+
+    void deleteByBuilding_IdIn(List<Long> ids);
 }

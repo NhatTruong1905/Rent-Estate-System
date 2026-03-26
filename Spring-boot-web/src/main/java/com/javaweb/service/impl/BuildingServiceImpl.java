@@ -4,7 +4,6 @@ import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.converter.BuildingConverter;
 import com.javaweb.converter.BuildingSearchConverter;
 import com.javaweb.entity.BuildingEntity;
-import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.enums.District;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
@@ -13,13 +12,16 @@ import com.javaweb.repository.IRentAreaRepository;
 import com.javaweb.service.IBuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BuildingService implements IBuildingService {
+@Transactional
+public class BuildingServiceImpl implements IBuildingService {
 
     @Autowired
     private IBuildingRepository buildingRepository;
@@ -52,5 +54,23 @@ public class BuildingService implements IBuildingService {
         }
 
         return results;
+    }
+
+    @Override
+    public void deleteAllByIds(List<Long> ids) {
+        rentAreaRepository.deleteByBuilding_IdIn(ids);
+        buildingRepository.deleteAllById(ids);
+    }
+
+    @Override
+    public String findNameBuildingsById(List<Long> ids) {
+        List<BuildingEntity> buildingEntities = buildingRepository.findBuildingByIdIn(ids);
+
+        List<String> results = new ArrayList<>();
+        for (BuildingEntity b : buildingEntities) {
+            results.add(b.getName());
+        }
+
+        return String.join(", ", results);
     }
 }
