@@ -5,8 +5,8 @@ import com.javaweb.enums.District;
 import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
-import com.javaweb.service.IBuildingService;
-import com.javaweb.service.IUserService;
+import com.javaweb.service.BuildingService;
+import com.javaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,10 +17,10 @@ import java.util.List;
 @RestController(value = "buildingControllerOfAdmin")
 public class BuildingController {
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @Autowired
-    private IBuildingService buildingService;
+    private BuildingService buildingService;
 
     @GetMapping("/admin/building-list")
     public ModelAndView getBuilding(@ModelAttribute(name = "modelSearch") BuildingSearchRequest params) {

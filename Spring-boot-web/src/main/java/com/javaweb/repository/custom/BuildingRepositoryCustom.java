@@ -5,6 +5,6 @@ import com.javaweb.entity.BuildingEntity;
 
 import java.util.List;
 
-public interface IBuildingRepositoryCustom {
+public interface BuildingRepositoryCustom {
     List<BuildingEntity> findAll(BuildingSearchBuilder builder);
 }

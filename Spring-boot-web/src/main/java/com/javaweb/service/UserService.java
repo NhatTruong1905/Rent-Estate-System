@@ -1,16 +1,15 @@
 package com.javaweb.service;
 
-import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.exception.MyException;
-import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.model.response.StaffResponseDTO;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
 
-public interface IUserService {
+public interface UserService {
     UserDTO findOneByUserNameAndStatus(String name, int status);
 
     List<UserDTO> getUsers(String searchValue, Pageable pageable);
@@ -39,4 +38,6 @@ public interface IUserService {
     int countTotalItems();
 
     Map<Long, String> getListStaff();
+
+    List<StaffResponseDTO> getStaffOfBuilding(Long buildingId);
 }

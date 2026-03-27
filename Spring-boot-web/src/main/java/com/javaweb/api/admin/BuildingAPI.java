@@ -1,10 +1,11 @@
 package com.javaweb.api.admin;
 
-import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
+import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.UserRepository;
-import com.javaweb.service.IBuildingService;
+import com.javaweb.service.BuildingService;
+import com.javaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -12,7 +13,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +21,10 @@ import java.util.stream.Collectors;
 public class BuildingAPI {
 
     @Autowired
-    private IBuildingService buildingService;
+    private BuildingService buildingService;
+
+    @Autowired
+    private UserService userService;
 
     private final UserRepository userRepository;
 
@@ -65,9 +68,11 @@ public class BuildingAPI {
 
     @GetMapping("/{buildingId}/staffs")
     public ResponseEntity<?> loadStaff(@PathVariable Long buildingId) {
-        // service lam
-        List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
+        List<StaffResponseDTO> staffResponseDTOS = userService.getStaffOfBuilding(buildingId);
 
-        return null;
+        ResponseDTO response = new ResponseDTO();
+        response.setMessage("Staffs loaded successfully!");
+        response.setData(staffResponseDTOS);
+        return ResponseEntity.ok().body(response);
     }
 }

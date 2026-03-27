@@ -2,14 +2,17 @@ package com.javaweb.service.impl;
 
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.converter.UserConverter;
+import com.javaweb.entity.BuildingEntity;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.entity.RoleEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.exception.MyException;
+import com.javaweb.model.response.StaffResponseDTO;
+import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RoleRepository;
 import com.javaweb.repository.UserRepository;
-import com.javaweb.service.IUserService;
+import com.javaweb.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +26,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -36,6 +39,8 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserConverter userConverter;
+    @Autowired
+    private BuildingRepository iBuildingRepository;
 
 
     @Override
@@ -89,7 +94,6 @@ public class UserServiceImpl implements IUserService {
 
         return staffList;
     }
-
 
     @Override
     public int getTotalItems(String searchValue) {
@@ -181,5 +185,28 @@ public class UserServiceImpl implements IUserService {
             userEntity.setStatus(0);
             userRepository.save(userEntity);
         }
+    }
+
+    @Override
+    public List<StaffResponseDTO> getStaffOfBuilding(Long buildingId) {
+        List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
+        BuildingEntity buildingEntity = iBuildingRepository.findById(buildingId).get();
+
+        List<UserEntity> assignedStaffs = new ArrayList<>();
+        List<StaffResponseDTO> staffResponseDTOS = new ArrayList<>();
+        for (UserEntity s : staffs) {
+            StaffResponseDTO staffResponseDTO = new StaffResponseDTO();
+            staffResponseDTO.setStaffId(s.getId());
+            staffResponseDTO.setFullName(s.getFullName());
+            if (assignedStaffs.contains(s)) {
+                staffResponseDTO.setChecked("checked");
+            } else {
+                staffResponseDTO.setChecked("");
+            }
+
+            staffResponseDTOS.add(staffResponseDTO);
+        }
+
+        return staffResponseDTOS;
     }
 }

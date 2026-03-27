@@ -5,12 +5,11 @@ import com.javaweb.converter.BuildingConverter;
 import com.javaweb.converter.BuildingSearchConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.enums.District;
-import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
-import com.javaweb.repository.IBuildingRepository;
-import com.javaweb.repository.IRentAreaRepository;
-import com.javaweb.service.IBuildingService;
+import com.javaweb.repository.BuildingRepository;
+import com.javaweb.repository.RentAreaRepository;
+import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,13 +20,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class BuildingServiceImpl implements IBuildingService {
+public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
-    private IBuildingRepository buildingRepository;
+    private BuildingRepository buildingRepository;
 
     @Autowired
-    private IRentAreaRepository rentAreaRepository;
+    private RentAreaRepository rentAreaRepository;
 
     @Autowired
     private BuildingSearchConverter buildingSearchConverter;
