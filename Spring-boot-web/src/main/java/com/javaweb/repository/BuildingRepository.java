@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface BuildingRepository extends JpaRepository<BuildingEntity, Long>, BuildingRepositoryCustom {
     List<BuildingEntity> findAllByIdIn(List<Long> ids);
+
+    BuildingEntity findBuildingById(Long buildingId);
 }

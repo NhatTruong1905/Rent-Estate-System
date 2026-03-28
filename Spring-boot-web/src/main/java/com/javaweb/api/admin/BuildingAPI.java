@@ -5,7 +5,6 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.UserRepository;
-import com.javaweb.service.AssignmentBuilding;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,6 @@ public class BuildingAPI {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private AssignmentBuilding assignmentBuilding;
-
     private final UserRepository userRepository;
 
     public BuildingAPI(UserRepository userRepository) {
@@ -47,8 +43,6 @@ public class BuildingAPI {
                         .collect(Collectors.toList());
                 return ResponseEntity.badRequest().body(errors);
             }
-
-
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
@@ -74,7 +68,6 @@ public class BuildingAPI {
     @GetMapping("/{buildingId}/staffs")
     public ResponseEntity<?> loadStaff(@PathVariable Long buildingId) {
         List<StaffResponseDTO> staffResponseDTOS = userService.getStaffOfBuilding(buildingId);
-        List<AssignmentBuildingDTO> assignmentBuildingDTOS = assignmentBuilding.getAssignedBuildingByBuildingId(buildingId);
 
         ResponseDTO response = new ResponseDTO();
         response.setMessage("Staffs loaded successfully!");

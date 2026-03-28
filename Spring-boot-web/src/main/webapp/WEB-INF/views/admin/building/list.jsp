@@ -306,24 +306,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="center">
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" value="31"/>
-                                <span class="lbl"></span>
-                            </label>
-                        </td>
-                        <td class="center">Nguyen van A</td>
-                    </tr>
-                    <tr>
-                        <td class="center">
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" value="32"/>
-                                <span class="lbl"></span>
-                            </label>
-                        </td>
-                        <td class="center">Nguyen van B</td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -352,15 +335,24 @@
     function assignmentBuilding(id) {
         $('#buildingId').val(id);
         $('#assignmentBuildingModal').modal('show');
+        loadStaff(id);
     }
 
     function loadStaff(id) {
         $.ajax({
-            url: "/api/buildings" + id + "staffs",
+            url: "/api/buildings/" + id + "/staffs",
             type: "GET",
             dataType: "JSON",
             success: function (response) {
-                console.log("success")
+                console.log(response.message)
+                var row = '';
+                $.each(response.data, function (index, item) {
+                    row += '<tr>';
+                    row += '<td class="center"> <input type="checkbox" value=' + item.staffId + ' ' + item.checked + '> </td>';
+                    row += '<td class="center">' + item.fullName + '</td>';
+                    row += '</tr>';
+                })
+                $('#staffList').find('tbody').html(row);
             },
             error: function (response) {
                 console.log("error")

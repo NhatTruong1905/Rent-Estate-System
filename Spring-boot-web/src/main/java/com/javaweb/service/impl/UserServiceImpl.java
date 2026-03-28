@@ -39,9 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserConverter userConverter;
+
     @Autowired
     private BuildingRepository iBuildingRepository;
-
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
@@ -190,9 +190,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<StaffResponseDTO> getStaffOfBuilding(Long buildingId) {
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
-        BuildingEntity buildingEntity = iBuildingRepository.findById(buildingId).get();
+        BuildingEntity buildingEntity = iBuildingRepository.findBuildingById(buildingId);
+        List<UserEntity> assignedStaffs = userRepository.findAllByAssignmentBuildings_building(buildingEntity);
 
-        List<UserEntity> assignedStaffs = new ArrayList<>();
+
         List<StaffResponseDTO> staffResponseDTOS = new ArrayList<>();
         for (UserEntity s : staffs) {
             StaffResponseDTO staffResponseDTO = new StaffResponseDTO();
