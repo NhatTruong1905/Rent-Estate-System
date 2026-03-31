@@ -5,6 +5,7 @@ import com.javaweb.converter.BuildingConverter;
 import com.javaweb.converter.BuildingSearchConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.enums.District;
+import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.repository.BuildingRepository;
@@ -66,5 +67,13 @@ public class BuildingServiceImpl implements BuildingService {
         List<BuildingEntity> buildingEntities = buildingRepository.findAllByIdIn(ids);
 
         return buildingEntities.stream().map(b -> b.getName()).collect(Collectors.joining(", "));
+    }
+
+    @Override
+    public BuildingDTO findBuildingById(Long id) {
+        BuildingEntity buildingEntity = buildingRepository.findBuildingById(id);
+        BuildingDTO buildingDTO = buildingConverter.toBuildingDTOConverter(buildingEntity);
+
+        return buildingDTO;
     }
 }

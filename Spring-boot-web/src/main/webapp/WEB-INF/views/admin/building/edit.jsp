@@ -301,6 +301,9 @@
         }
         if (json['district'] != '') {
             $('#district').after('<span style="color: red">District not null!</span>')
+        }
+        if (json['rentPrice'] != null) {
+            $('#rentPrice').after('<span style="color: red">Rent Price not null!</span>')
         } else {
             addBuilding(json);
         }
@@ -314,11 +317,12 @@
             dataType: "JSON",
             contentType: "application/json",
             success: function (response) {
-                alert("Thêm tòa nhà thành công!");
+                alert("Thêm tòa nhà" + response.message + "thành công!");
                 console.log("success");
             },
             error: function (response) {
-                alert(response.responseJson);
+                // alert(response.responseJson);
+                alert("Thêm tòa nhà" + response.message + "thất bại!");
                 console.log("error");
             }
         });

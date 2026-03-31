@@ -43,6 +43,8 @@ public class BuildingAPI {
                         .collect(Collectors.toList());
                 return ResponseEntity.badRequest().body(errors);
             }
+
+
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
@@ -60,7 +62,7 @@ public class BuildingAPI {
             String nameOfBuildings = buildingService.findNameBuildingsById(ids);
             buildingService.deleteAllByIds(ids);
 
-            responseDTO.setMessage("Tòa nhà: " + nameOfBuildings + " đã xóa thành công!");
+            responseDTO.setMessage(nameOfBuildings);
             return ResponseEntity.ok().body(responseDTO);
         }
     }

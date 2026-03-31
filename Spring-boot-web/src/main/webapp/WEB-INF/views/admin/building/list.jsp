@@ -369,13 +369,30 @@
             return $(this).val();
         }).get();
         json['staffIds'] = staffIds;
-
-        if (json['buildingId'] != '' && json['staffIds'].length != 0) {
+        if (json['buildingId'] != null) {
             updateAssignment(json);
         } else {
-            alert('Id of Building and Staff not empty!')
+            alert("Id của tòa nhà không được thiếu!");
         }
+
     })
+
+    function updateAssignment(data) {
+        $.ajax({
+            url: "/api/assignments",
+            type: "POST",
+            dataType: "JSON",
+            data: JSON.stringify(),
+            contentType: 'application/json',
+            success: function (response) {
+                console.log("success")
+                alert("Đã giao tòa nhà cho nhân viên " + response.message + " !")
+            },
+            error: function (response) {
+                alert("Giao tòa nhà cho nhân viên " + response.message + " thất bại!")
+            }
+        });
+    }
 
     $('#btnDeleteBuilding').click(function (e) {
         e.preventDefault();
@@ -398,35 +415,19 @@
         deleteBuilding(id);
     }
 
-    function updateAssignment(data) {
-        $.ajax({
-            url: "/api/assignments",
-            type: "DELETE",
-            dataType: "JSON",
-            success: function (response) {
-                console.log("success")
-            },
-            error: function (response) {
-                console.log("error")
-            }
-        });
-    }
-
     function deleteBuilding(data) {
         $.ajax({
             url: "/api/buildings/" + data,
             type: "DELETE",
-            // data: JSON.stringify(data),
             dataType: "JSON",
-            // contentType: "application/json",
             success: function (response) {
                 console.log("success")
-                alert(response.message);
+                alert("Xóa tòa nhà " + response.message + " thành công!");
                 window.location.href = "<c:url value='/admin/building-list' />"
             },
             error: function (response) {
                 console.log("error")
-                alert(response.message);
+                alert("Xoá tòa nhà" + response.message + " thất bại!");
             }
         });
     }

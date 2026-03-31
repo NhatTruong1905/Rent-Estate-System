@@ -46,18 +46,7 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("admin/building/edit");
         mav.addObject("districts", District.getDistricts());
         mav.addObject("typeCodes", TypeCode.getTypes());
-        // find building by id ==> BuildingEntity ==> BuildingDTO
-        BuildingDTO b = new BuildingDTO();
-        b.setId(id);
-        b.setName("Dev Building 1");
-        b.setWard("Đông Thạnh");
-        b.setStreet("Đặng Thúc Vịnh");
-        b.setRentPrice(25L);
-        List<String> type = new ArrayList<>();
-        type.add("TANG_TRET");
-        type.add("NOI_THAT");
-        b.setTypeCode(type);
-        mav.addObject("building", b);
+        mav.addObject("building", buildingService.findBuildingById(id));
         return mav;
     }
 }
