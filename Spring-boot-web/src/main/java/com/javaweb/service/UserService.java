@@ -40,4 +40,6 @@ public interface UserService {
     Map<Long, String> getListStaff();
 
     List<StaffResponseDTO> getStaffOfBuilding(Long buildingId);
+
+    String getNameStaffs(List<Long> ids);
 }

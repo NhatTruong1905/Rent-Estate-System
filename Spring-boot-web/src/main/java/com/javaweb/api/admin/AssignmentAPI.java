@@ -1,17 +1,16 @@
 package com.javaweb.api.admin;
 
 import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.AssignmentBuildingService;
 import com.javaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ public class AssignmentAPI {
     private UserService userService;
 
     @PostMapping()
-    public ResponseEntity<?> updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuilding, BindingResult bindingResult) {
+    public ResponseEntity<?> updateAssignmentBuilding(@Valid @RequestBody AssignmentBuildingDTO assignmentBuilding, BindingResult bindingResult) {
 
         try {
             if (bindingResult.hasErrors()) {
@@ -36,12 +35,14 @@ public class AssignmentAPI {
                         .collect(Collectors.toList());
                 return ResponseEntity.badRequest().body(errors);
             }
+            String nameOfStaffs = userService.getNameStaffs(assignmentBuilding.getStaffIds());
             assignmentBuildingService.updateAssignmentBuilding(assignmentBuilding);
-// Tìm tên nhân viên.... sổ ra
+
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setMessage(nameOfStaffs);
+            return ResponseEntity.ok().body(responseDTO);
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
-
-        return null;
     }
 }

@@ -29,17 +29,20 @@ public class AssignmentBuildingServiceImpl implements AssignmentBuildingService 
 
     @Override
     public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) {
-        AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
-
         BuildingEntity building = buildingRepository.findBuildingById(assignmentBuildingDTO.getBuildingId());
-        assignmentBuildingEntity.setBuilding(building);
-        assignmentBuildingRepository.save(assignmentBuildingEntity);
 
-        List<Long> idStaffEntities = assignmentBuildingDTO.getStaffIds();
-        List<UserEntity> staffEntities = userRepository.findByIdIn(idStaffEntities);
-        for (UserEntity s : staffEntities) {
-            assignmentBuildingEntity.setStaff(s);
-            assignmentBuildingRepository.save(assignmentBuildingEntity);
+        assignmentBuildingRepository.deleteByBuilding(building);
+
+        List<Long> staffIds = assignmentBuildingDTO.getStaffIds();
+        if (staffIds != null && !staffIds.isEmpty()) {
+            List<UserEntity> staffEntities = userRepository.findByIdIn(staffIds);
+
+            for (UserEntity s : staffEntities) {
+                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
+                assignmentBuildingEntity.setBuilding(building);
+                assignmentBuildingEntity.setStaff(s);
+                assignmentBuildingRepository.save(assignmentBuildingEntity);
+            }
         }
     }
 }

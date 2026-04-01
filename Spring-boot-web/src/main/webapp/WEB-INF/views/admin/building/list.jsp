@@ -25,6 +25,8 @@
         </div>
 
         <div class="page-content">
+
+            <link rel="stylesheet" href="<c:url value='/admin/css/custom-building-list.css' />"/>
             <div class="row">
                 <div class="col-xs-12">
 
@@ -149,43 +151,8 @@
 
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <style>
-                                                .custom-checkbox-spring .title-label {
-                                                    font-weight: bold !important;
-                                                    color: #333 !important;
-                                                    margin-right: 25px !important;
-                                                    vertical-align: middle !important;
-                                                    font-size: 14px;
-                                                }
-
-                                                .custom-checkbox-spring span {
-                                                    display: inline-block !important;
-                                                    margin-right: 35px !important;
-                                                }
-
-                                                .custom-checkbox-spring input[type="checkbox"] {
-                                                    margin-right: 8px !important;
-                                                    margin-left: 0 !important;
-                                                    vertical-align: middle !important;
-                                                    position: relative !important;
-                                                    top: -2px !important;
-                                                    transform: scale(1.2);
-                                                    cursor: pointer;
-                                                }
-
-                                                .custom-checkbox-spring span label {
-                                                    vertical-align: middle !important;
-                                                    font-weight: 600 !important;
-                                                    color: #337ab7 !important;
-                                                    margin: 0 !important;
-                                                    cursor: pointer;
-                                                    transition: color 0.3s ease;
-                                                }
-
-                                                .custom-checkbox-spring span label:hover {
-                                                    color: #ff892a !important;
-                                                }
-                                            </style>
+                                            <link rel="stylesheet"
+                                                  href="<c:url value='/admin/css/custom-building-list.css' />"/>
 
                                             <div class="custom-checkbox-spring" style="margin-top: 5px;">
                                                 <label class="title-label">Loại tòa nhà: </label>
@@ -197,7 +164,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <button type="button" class="btn btn-sm btn-success" id="btnSearch">
+                                            <button type="button" class="btn btn-sm btn-primary" id="btnSearch">
                                                 Tìm kiếm <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                                             </button>
                                         </div>
@@ -208,13 +175,12 @@
                     </div>
 
                     <div class="pull-right" style="margin-bottom: 10px; margin-top: 10px;">
-                        <a href="/admin/building-edit">
-                            <button class="btn btn-white btn-info btn-bold" title="Thêm tòa nhà">
-                                <i class="fa fa-plus-circle purple bigger-120"></i>
-                            </button>
+                        <a href="/admin/building-edit" class="btn btn-purple btn-bold" title="Thêm tòa nhà">
+                            <i class="fa fa-plus-circle bigger-120"></i> Thêm tòa nhà
                         </a>
-                        <button class="btn btn-white btn-warning btn-bold" title="Xóa" id="btnDeleteBuilding">
-                            <i class="fa fa-trash-o pink bigger-120"></i>
+
+                        <button class="btn btn-danger btn-bold" title="Xóa các tòa nhà đã chọn" id="btnDeleteBuilding">
+                            <i class="fa fa-trash-o bigger-120"></i> Xóa
                         </button>
                     </div>
                     <div class="clearfix"></div>
@@ -382,11 +348,15 @@
             url: "/api/assignments",
             type: "POST",
             dataType: "JSON",
-            data: JSON.stringify(),
-            contentType: 'application/json',
+            data: JSON.stringify(data),
+            contentType: "application/json",
             success: function (response) {
                 console.log("success")
-                alert("Đã giao tòa nhà cho nhân viên " + response.message + " !")
+                if (data.staffIds && data.staffIds.length !== 0) {
+                    alert("Đã giao tòa nhà cho nhân viên " + response.message + " !")
+                } else {
+                    alert("Đã thu hồi quyền quản lý của tất cả nhân viên đối với tòa nhà này!");
+                }
             },
             error: function (response) {
                 alert("Giao tòa nhà cho nhân viên " + response.message + " thất bại!")

@@ -210,4 +210,10 @@ public class UserServiceImpl implements UserService {
 
         return staffResponseDTOS;
     }
+
+    @Override
+    public String getNameStaffs(List<Long> ids) {
+        List<UserEntity> staffEntities = userRepository.findByIdIn(ids);
+        return staffEntities.stream().map(n -> n.getFullName()).collect(Collectors.joining(", "));
+    }
 }

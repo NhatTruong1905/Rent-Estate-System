@@ -8,6 +8,74 @@
         } catch (e) {
         }
     </script>
+    <style>
+        .sidebar-shortcuts-large .btn {
+            width: 42px !important;
+            height: 38px !important;
+            padding: 0 !important;
+            margin: 0 2px !important;
+            border-radius: 6px !important;
+            border: none !important;
+
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .sidebar-shortcuts-large .btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+            opacity: 0.9 !important;
+        }
+
+        .sidebar-shortcuts-large .btn i,
+        .sidebar-shortcuts-large .btn svg {
+            margin: 0 !important;
+            font-size: 16px !important;
+            width: 16px !important;
+            height: 16px !important;
+        }
+
+        .sidebar-shortcuts-large {
+            display: flex !important;
+            justify-content: center !important;
+            flex-wrap: nowrap !important;
+            padding: 10px 0 !important;
+        }
+
+        .sidebar-shortcuts-large .btn {
+            width: 38px !important;
+            height: 38px !important;
+            padding: 0 !important;
+            margin: 0 2px !important;
+            border-radius: 6px !important;
+            border: none !important;
+
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .sidebar-shortcuts-large .btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+            opacity: 0.9 !important;
+        }
+
+        .sidebar-shortcuts-large .btn i,
+        .sidebar-shortcuts-large .btn svg {
+            margin: 0 !important;
+            font-size: 15px !important;
+            width: 15px !important;
+            height: 15px !important;
+        }
+    </style>
     <div class="sidebar-shortcuts">
         <div class="sidebar-shortcuts-large">
             <a href="/trang-chu">
