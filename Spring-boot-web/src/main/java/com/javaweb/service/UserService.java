@@ -2,7 +2,7 @@ package com.javaweb.service;
 
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
-import com.javaweb.exception.MyException;
+import com.javaweb.exception.NumberFormatException;
 import com.javaweb.model.response.StaffResponseDTO;
 import org.springframework.data.domain.Pageable;
 
@@ -24,7 +24,7 @@ public interface UserService {
 
     UserDTO update(Long id, UserDTO userDTO);
 
-    void updatePassword(long id, PasswordDTO userDTO) throws MyException;
+    void updatePassword(long id, PasswordDTO userDTO) throws NumberFormatException;
 
     UserDTO resetPassword(long id);
 

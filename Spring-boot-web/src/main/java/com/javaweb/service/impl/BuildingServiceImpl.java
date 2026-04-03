@@ -4,7 +4,9 @@ import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.converter.BuildingConverter;
 import com.javaweb.converter.BuildingSearchConverter;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.enums.District;
+import com.javaweb.exception.NumberFormatException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
@@ -72,8 +74,28 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public BuildingDTO findBuildingById(Long id) {
         BuildingEntity buildingEntity = buildingRepository.findBuildingById(id);
+        List<RentAreaEntity> rentAreaEntities = rentAreaRepository.findByBuilding_Id(id);
+
         BuildingDTO buildingDTO = buildingConverter.toBuildingDTOConverter(buildingEntity);
 
+        buildingDTO.setRentArea(rentAreaEntities.stream().map(r -> String.valueOf(r.getValue())).collect(Collectors.joining(", ")));
+
         return buildingDTO;
+    }
+
+    @Override
+    public void createOrUpdateBuilding(BuildingDTO buildingDTO) throws NumberFormatException {
+        BuildingEntity buildingEntity = buildingConverter.toBuildingEntityConverter(buildingDTO);
+
+        if (buildingDTO.getId() != null) {
+            rentAreaRepository.deleteByBuilding_Id(buildingDTO.getId());
+        }
+
+        BuildingEntity savedBuilding = buildingRepository.save(buildingEntity);
+
+        for (RentAreaEntity rentArea : buildingEntity.getRentAreas()) {
+            rentArea.setBuilding(savedBuilding);
+            rentAreaRepository.save(rentArea);
+        }
     }
 }

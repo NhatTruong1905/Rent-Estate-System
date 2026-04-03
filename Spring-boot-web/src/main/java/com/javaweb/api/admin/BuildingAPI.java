@@ -44,12 +44,13 @@ public class BuildingAPI {
                 return ResponseEntity.badRequest().body(errors);
             }
 
-
+            buildingService.createOrUpdateBuilding(buildingDTO);
+            ResponseDTO responseDTO = new ResponseDTO();
+            responseDTO.setMessage(buildingDTO.getName());
+            return ResponseEntity.ok().body(responseDTO);
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
-
-        return null;
     }
 
     @DeleteMapping("/{ids}")

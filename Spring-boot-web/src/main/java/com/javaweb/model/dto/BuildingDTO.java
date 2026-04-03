@@ -3,6 +3,7 @@ package com.javaweb.model.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,10 +16,13 @@ import java.util.Map;
 public class BuildingDTO extends AbstractDTO {
     @NotBlank(message = "Name can't be blank!")
     private String name;
+    @NotBlank(message = "Street can't be blank!")
     private String street;
+    @NotBlank(message = "Ward can't be blank!")
     private String ward;
-    @NotBlank(message = "District can't be blank!")
+    @NotNull(message = "District can't be blank!")
     private String district;
+    @Min(value = 1, message = "Number of Basement greater than or equal to 0")
     private Long numberOfBasement;
     private Long floorArea;
     private String level;
@@ -37,6 +41,7 @@ public class BuildingDTO extends AbstractDTO {
     private String structure;
     private String direction;
     private String note;
+    @NotBlank(message = "Rent Area can't be blank!")
     private String rentArea;
     @NotBlank(message = "Manager Name can't be blank!")
     private String managerName;

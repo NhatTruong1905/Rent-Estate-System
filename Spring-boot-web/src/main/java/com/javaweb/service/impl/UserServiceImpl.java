@@ -7,7 +7,7 @@ import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.entity.RoleEntity;
 import com.javaweb.entity.UserEntity;
-import com.javaweb.exception.MyException;
+import com.javaweb.exception.NumberFormatException;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RoleRepository;
@@ -150,14 +150,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updatePassword(long id, PasswordDTO passwordDTO) throws MyException {
+    public void updatePassword(long id, PasswordDTO passwordDTO) throws NumberFormatException {
         UserEntity user = userRepository.findById(id).get();
         if (passwordEncoder.matches(passwordDTO.getOldPassword(), user.getPassword())
                 && passwordDTO.getNewPassword().equals(passwordDTO.getConfirmPassword())) {
             user.setPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
             userRepository.save(user);
         } else {
-            throw new MyException(SystemConstant.CHANGE_PASSWORD_FAIL);
+            throw new NumberFormatException(SystemConstant.CHANGE_PASSWORD_FAIL);
         }
     }
 
