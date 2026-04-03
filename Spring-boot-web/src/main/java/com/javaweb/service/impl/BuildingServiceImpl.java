@@ -6,7 +6,7 @@ import com.javaweb.converter.BuildingSearchConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.enums.District;
-import com.javaweb.exception.NumberFormatException;
+import com.javaweb.exception.InvalidNumberException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,12 +80,13 @@ public class BuildingServiceImpl implements BuildingService {
         BuildingDTO buildingDTO = buildingConverter.toBuildingDTOConverter(buildingEntity);
 
         buildingDTO.setRentArea(rentAreaEntities.stream().map(r -> String.valueOf(r.getValue())).collect(Collectors.joining(", ")));
+        buildingDTO.setTypeCode(Arrays.asList(buildingEntity.getTypeCode().split(",")));
 
         return buildingDTO;
     }
 
     @Override
-    public void createOrUpdateBuilding(BuildingDTO buildingDTO) throws NumberFormatException {
+    public void createOrUpdateBuilding(BuildingDTO buildingDTO) throws InvalidNumberException {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntityConverter(buildingDTO);
 
         if (buildingDTO.getId() != null) {

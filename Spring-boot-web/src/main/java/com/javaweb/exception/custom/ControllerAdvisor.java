@@ -1,6 +1,6 @@
 package com.javaweb.exception.custom;
 
-import com.javaweb.exception.NumberFormatException;
+import com.javaweb.exception.InvalidNumberException;
 import com.javaweb.model.response.ResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +10,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<ResponseDTO> handleInvalidDataException(NumberFormatException ex) {
+    @ExceptionHandler(InvalidNumberException.class)
+    public ResponseEntity<ResponseDTO> handleInvalidDataException(InvalidNumberException ex) {
         ResponseDTO error = new ResponseDTO();
         error.setMessage("Dữ liệu đầu vào không hợp lệ");
         error.setDetail(ex.getMessage());

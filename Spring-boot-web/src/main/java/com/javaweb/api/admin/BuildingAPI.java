@@ -1,6 +1,6 @@
 package com.javaweb.api.admin;
 
-import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.exception.InvalidNumberException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
@@ -34,23 +34,20 @@ public class BuildingAPI {
     }
 
     @PostMapping()
-    public ResponseEntity<?> createOrUpdateBuilding(@Valid @RequestBody BuildingDTO buildingDTO, BindingResult bindingResult) {
-        try {
-            if (bindingResult.hasErrors()) {
-                List<String> errors = bindingResult.getFieldErrors()
-                        .stream()
-                        .map(FieldError::getDefaultMessage)
-                        .collect(Collectors.toList());
-                return ResponseEntity.badRequest().body(errors);
-            }
-
-            buildingService.createOrUpdateBuilding(buildingDTO);
-            ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.setMessage(buildingDTO.getName());
-            return ResponseEntity.ok().body(responseDTO);
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
+    public ResponseEntity<?> createOrUpdateBuilding(@Valid @RequestBody BuildingDTO buildingDTO, BindingResult bindingResult) throws InvalidNumberException {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errors);
         }
+
+        buildingService.createOrUpdateBuilding(buildingDTO);
+
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setMessage(buildingDTO.getName());
+        return ResponseEntity.ok().body(responseDTO);
     }
 
     @DeleteMapping("/{ids}")

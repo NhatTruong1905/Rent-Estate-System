@@ -2,7 +2,7 @@ package com.javaweb.converter;
 
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
-import com.javaweb.exception.NumberFormatException;
+import com.javaweb.exception.InvalidNumberException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.BuildingSearchResponse;
 import org.modelmapper.ModelMapper;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class BuildingConverter {
@@ -27,19 +28,19 @@ public class BuildingConverter {
         return modelMapper.map(buildingEntity, BuildingDTO.class);
     }
 
-    private void validateNumber(String value) throws NumberFormatException {
+    private void validateNumber(String value) throws InvalidNumberException {
         if (value == null || value.isEmpty()) {
-            throw new NumberFormatException("Giá trị không được để trống.");
+            throw new InvalidNumberException("Giá trị không được để trống.");
         }
 
         for (char c : value.toCharArray()) {
             if (!Character.isDigit(c)) {
-                throw new NumberFormatException("Giá trị '" + value + "' chứa ký tự '" + c + "' không phải là số.");
+                throw new InvalidNumberException("Giá trị '" + value + "' chứa ký tự '" + c + "' không phải là số.");
             }
         }
     }
 
-    public BuildingEntity toBuildingEntityConverter(BuildingDTO buildingDTO) throws NumberFormatException {
+    public BuildingEntity toBuildingEntityConverter(BuildingDTO buildingDTO) throws InvalidNumberException {
         BuildingEntity building = modelMapper.map(buildingDTO, BuildingEntity.class);
 
         String rentAreaRaw = buildingDTO.getRentArea();
@@ -61,6 +62,8 @@ public class BuildingConverter {
             rentAreaEntities.add(rentAreaEntity);
         }
         building.setRentAreas(rentAreaEntities);
+
+        building.setTypeCode(buildingDTO.getTypeCode().stream().collect(Collectors.joining(",")));
 
         return building;
     }

@@ -1,6 +1,6 @@
 package com.javaweb.service;
 
-import com.javaweb.exception.NumberFormatException;
+import com.javaweb.exception.InvalidNumberException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
@@ -16,5 +16,5 @@ public interface BuildingService {
 
     BuildingDTO findBuildingById(Long id);
 
-    void createOrUpdateBuilding(BuildingDTO buildingDTO) throws NumberFormatException;
+    void createOrUpdateBuilding(BuildingDTO buildingDTO) throws InvalidNumberException;
 }

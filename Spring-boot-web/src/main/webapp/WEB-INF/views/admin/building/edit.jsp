@@ -258,7 +258,8 @@
                                         <label class="col-sm-2 control-label no-padding-right"
                                                style="text-align: left; font-weight: bold;"> Loại tòa nhà </label>
                                         <div class="col-sm-10">
-                                            <div class="custom-checkbox-spring" style="margin-top: 6px;" id="typeCode">
+                                            <div class="custom-checkbox-spring" style="margin-top: 6px;"
+                                                 id="typeCodeWrapper">
                                                 <form:checkboxes path="typeCode" items="${typeCodes}"/>
                                             </div>
                                         </div>
@@ -381,7 +382,7 @@
             hasError = true;
         }
         if (json['typeCode'].length <= 0) {
-            $('#typeCode').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Loại tòa nhà không được để trống!</span>');
+            $('#typeCodeWrapper').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Loại tòa nhà không được để trống!</span>');
             hasError = true;
         }
 
@@ -409,13 +410,16 @@
                 }
             },
             error: function (response) {
-                if (data.id != null) {
-                    alert("Cập nhập tòa nhà thất bại!");
-                    console.log("error");
+                var errorData = response.responseJSON;
+
+                if (errorData && errorData.detail) {
+                    alert("Lỗi dữ liệu: " + errorData.detail);
+                } else if (Array.isArray(errorData)) {
+                    alert("Lỗi: " + errorData.join("\n"));
                 } else {
-                    alert("Thêm tòa nhà thất bại!");
-                    console.log("error");
+                    alert("Hệ thống gặp lỗi, vui lòng thử lại sau!");
                 }
+                console.log("Error details:", response);
             }
         });
     }
