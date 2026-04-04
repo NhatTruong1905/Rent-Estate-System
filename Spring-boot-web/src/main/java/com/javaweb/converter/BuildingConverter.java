@@ -2,7 +2,7 @@ package com.javaweb.converter;
 
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
-import com.javaweb.exception.InvalidNumberException;
+import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.BuildingSearchResponse;
 import org.modelmapper.ModelMapper;
@@ -28,19 +28,19 @@ public class BuildingConverter {
         return modelMapper.map(buildingEntity, BuildingDTO.class);
     }
 
-    private void validateNumber(String value) throws InvalidNumberException {
+    private void validateNumber(String value) throws ServiceException {
         if (value == null || value.isEmpty()) {
-            throw new InvalidNumberException("Giá trị không được để trống.");
+            throw new ServiceException("Giá trị không được để trống.");
         }
 
         for (char c : value.toCharArray()) {
             if (!Character.isDigit(c)) {
-                throw new InvalidNumberException("Giá trị '" + value + "' chứa ký tự '" + c + "' không phải là số.");
+                throw new ServiceException("Giá trị '" + value + "' chứa ký tự '" + c + "' không phải là số.");
             }
         }
     }
 
-    public BuildingEntity toBuildingEntityConverter(BuildingDTO buildingDTO) throws InvalidNumberException {
+    public BuildingEntity toBuildingEntityConverter(BuildingDTO buildingDTO) throws ServiceException {
         BuildingEntity building = modelMapper.map(buildingDTO, BuildingEntity.class);
 
         String rentAreaRaw = buildingDTO.getRentArea();

@@ -1,8 +1,10 @@
 package com.javaweb.service.impl;
 
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.UserEntity;
+import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
@@ -28,8 +30,12 @@ public class AssignmentBuildingServiceImpl implements AssignmentBuildingService 
     private UserRepository userRepository;
 
     @Override
-    public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) {
+    public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) throws ServiceException {
         BuildingEntity building = buildingRepository.findBuildingById(assignmentBuildingDTO.getBuildingId());
+
+        if (building == null) {
+            throw new ServiceException(SystemConstant.BUILDING_NOT_FOUND);
+        }
 
         assignmentBuildingRepository.deleteByBuilding(building);
 

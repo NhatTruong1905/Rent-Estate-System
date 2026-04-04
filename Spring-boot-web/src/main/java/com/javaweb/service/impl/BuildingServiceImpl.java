@@ -6,10 +6,11 @@ import com.javaweb.converter.BuildingSearchConverter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.enums.District;
-import com.javaweb.exception.InvalidNumberException;
+import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.repository.AssignmentBuildingRepository;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.service.BuildingService;
@@ -37,6 +38,8 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
     private BuildingConverter buildingConverter;
+    @Autowired
+    private AssignmentBuildingRepository assignmentBuildingRepository;
 
     @Override
     public List<BuildingSearchResponse> findAll(BuildingSearchRequest params) {
@@ -62,7 +65,8 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public void deleteAllByIds(List<Long> ids) {
         rentAreaRepository.deleteByBuilding_IdIn(ids);
-        buildingRepository.deleteAllById(ids);
+        assignmentBuildingRepository.deleteByBuilding_IdIn(ids);
+        buildingRepository.deleteByIdIn(ids);
     }
 
     @Override
@@ -86,7 +90,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public void createOrUpdateBuilding(BuildingDTO buildingDTO) throws InvalidNumberException {
+    public void createOrUpdateBuilding(BuildingDTO buildingDTO) throws ServiceException {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntityConverter(buildingDTO);
 
         if (buildingDTO.getId() != null) {

@@ -359,7 +359,16 @@
                 }
             },
             error: function (response) {
-                alert("Giao tòa nhà cho nhân viên " + response.message + " thất bại!")
+                var errorData = response.responseJSON;
+
+                if (errorData && errorData.detail) {
+                    alert("Lỗi dữ liệu: " + errorData.detail);
+                } else if (Array.isArray(errorData)) {
+                    alert("Lỗi: " + errorData.join("\n"));
+                } else {
+                    alert("Hệ thống gặp lỗi, vui lòng thử lại sau!");
+                }
+                console.log("Error details:", response);
             }
         });
     }
@@ -397,7 +406,7 @@
             },
             error: function (response) {
                 console.log("error")
-                alert("Xoá tòa nhà" + response.message + " thất bại!");
+                alert("Xoá tòa nhà " + response.message + " thất bại!");
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.javaweb.api.admin;
 
+import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.AssignmentBuildingService;
@@ -25,24 +26,20 @@ public class AssignmentAPI {
     private UserService userService;
 
     @PostMapping()
-    public ResponseEntity<?> updateAssignmentBuilding(@Valid @RequestBody AssignmentBuildingDTO assignmentBuilding, BindingResult bindingResult) {
+    public ResponseEntity<?> updateAssignmentBuilding(@Valid @RequestBody AssignmentBuildingDTO assignmentBuilding, BindingResult bindingResult) throws ServiceException {
 
-        try {
-            if (bindingResult.hasErrors()) {
-                List<String> errors = bindingResult.getFieldErrors()
-                        .stream()
-                        .map(FieldError::getDefaultMessage)
-                        .collect(Collectors.toList());
-                return ResponseEntity.badRequest().body(errors);
-            }
-            String nameOfStaffs = userService.getNameStaffs(assignmentBuilding.getStaffIds());
-            assignmentBuildingService.updateAssignmentBuilding(assignmentBuilding);
-
-            ResponseDTO responseDTO = new ResponseDTO();
-            responseDTO.setMessage(nameOfStaffs);
-            return ResponseEntity.ok().body(responseDTO);
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errors);
         }
+        String nameOfStaffs = userService.getNameStaffs(assignmentBuilding.getStaffIds());
+        assignmentBuildingService.updateAssignmentBuilding(assignmentBuilding);
+
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setMessage(nameOfStaffs);
+        return ResponseEntity.ok().body(responseDTO);
     }
 }

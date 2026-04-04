@@ -1,7 +1,6 @@
 package com.javaweb.api.admin;
 
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.exception.InvalidNumberException;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.service.UserService;
@@ -31,7 +30,7 @@ public class UserAPI {
         try {
             userService.updatePassword(id, passwordDTO);
             return ResponseEntity.ok(SystemConstant.UPDATE_SUCCESS);
-        } catch (NumberFormatException | InvalidNumberException e) {
+        } catch (NumberFormatException e) {
             //LOGGER.error(e.getMessage());
             return ResponseEntity.ok(e.getMessage());
         }

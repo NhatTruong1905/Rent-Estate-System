@@ -1,6 +1,6 @@
 package com.javaweb.api.admin;
 
-import com.javaweb.exception.InvalidNumberException;
+import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
@@ -34,7 +34,7 @@ public class BuildingAPI {
     }
 
     @PostMapping()
-    public ResponseEntity<?> createOrUpdateBuilding(@Valid @RequestBody BuildingDTO buildingDTO, BindingResult bindingResult) throws InvalidNumberException {
+    public ResponseEntity<?> createOrUpdateBuilding(@Valid @RequestBody BuildingDTO buildingDTO, BindingResult bindingResult) throws ServiceException {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors()
                     .stream()
