@@ -262,9 +262,9 @@
                 <table class="table table-bordered table-striped" id="staffList">
                     <thead>
                     <tr>
-                        <th class="center" style="width: 40px;">
+                        <th class="center" style="width: 60px;">
                             <label class="pos-rel">
-                                <p class="center">Chọn</p>
+                                <input type="checkbox" class="ace" id="checkAllStaff"/>
                                 <span class="lbl"></span>
                             </label>
                         </th>
@@ -304,24 +304,48 @@
         loadStaff(id);
     }
 
+    $(document).ready(function () {
+        $('#buildingList, #staffList').on('change', 'thead input[type=checkbox]', function () {
+            var isChecked = $(this).prop('checked');
+            $(this).closest('table').find('tbody input[type=checkbox]').prop('checked', isChecked);
+        });
+
+        $('#buildingList, #staffList').on('change', 'tbody input[type=checkbox]', function () {
+            var $table = $(this).closest('table');
+            var totalCheckboxes = $table.find('tbody input[type=checkbox]').length;
+            var checkedCheckboxes = $table.find('tbody input[type=checkbox]:checked').length;
+
+            $table.find('thead input[type=checkbox]').prop('checked', totalCheckboxes === checkedCheckboxes && totalCheckboxes > 0);
+        });
+    });
+
     function loadStaff(id) {
         $.ajax({
             url: "/api/buildings/" + id + "/staffs",
             type: "GET",
             dataType: "JSON",
             success: function (response) {
-                console.log(response.message)
                 var row = '';
                 $.each(response.data, function (index, item) {
                     row += '<tr>';
-                    row += '<td class="center"> <input type="checkbox" value=' + item.staffId + ' ' + item.checked + '> </td>';
+                    row += '<td class="center">';
+                    row += '  <label class="pos-rel">';
+                    row += '    <input type="checkbox" class="ace" value="' + item.staffId + '" ' + item.checked + '>';
+                    row += '    <span class="lbl"></span>';
+                    row += '  </label>';
+                    row += '</td>';
                     row += '<td class="center">' + item.fullName + '</td>';
                     row += '</tr>';
-                })
+                });
+
                 $('#staffList').find('tbody').html(row);
+
+                var total = $('#staffList tbody input[type=checkbox]').length;
+                var checked = $('#staffList tbody input[type=checkbox]:checked').length;
+                $('#staffList thead input[type=checkbox]').prop('checked', total === checked && total > 0);
             },
             error: function (response) {
-                console.log("error")
+                console.log("Lỗi tải danh sách nhân viên!");
             }
         });
     }
