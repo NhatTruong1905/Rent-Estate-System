@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService {
     public List<StaffResponseDTO> getStaffOfBuilding(Long buildingId) {
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
         BuildingEntity buildingEntity = iBuildingRepository.findBuildingById(buildingId);
-        List<UserEntity> assignedStaffs = userRepository.findAllByAssignmentBuildings_building(buildingEntity);
+        List<UserEntity> assignedStaffs = userRepository.findByBuildings(buildingEntity);
 
 
         List<StaffResponseDTO> staffResponseDTOS = new ArrayList<>();

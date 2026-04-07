@@ -15,6 +15,7 @@ import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,10 +43,10 @@ public class BuildingServiceImpl implements BuildingService {
     private AssignmentBuildingRepository assignmentBuildingRepository;
 
     @Override
-    public List<BuildingSearchResponse> findAll(BuildingSearchRequest params) {
+    public List<BuildingSearchResponse> findAll(BuildingSearchRequest params, Pageable pageable) {
         BuildingSearchBuilder builder = buildingSearchConverter.toBuildingSearchBuilderConverter(params);
 
-        List<BuildingEntity> buildingList = buildingRepository.findAll(builder);
+        List<BuildingEntity> buildingList = buildingRepository.findAll(builder, pageable);
 
         List<BuildingSearchResponse> results = new ArrayList<>();
         for (BuildingEntity b : buildingList) {
@@ -97,11 +98,18 @@ public class BuildingServiceImpl implements BuildingService {
             rentAreaRepository.deleteByBuilding_Id(buildingDTO.getId());
         }
 
-        BuildingEntity savedBuilding = buildingRepository.save(buildingEntity);
-
-        for (RentAreaEntity rentArea : buildingEntity.getRentAreas()) {
-            rentArea.setBuilding(savedBuilding);
-            rentAreaRepository.save(rentArea);
+        List<RentAreaEntity> rentAreaEntities = buildingEntity.getRentAreas();
+        if (rentAreaEntities != null) {
+            for (RentAreaEntity rentArea : rentAreaEntities) {
+                rentArea.setBuilding(buildingEntity);
+            }
         }
+
+        buildingRepository.save(buildingEntity);
+    }
+
+    @Override
+    public int countTotalItems() {
+        return buildingRepository.countTotalItem();
     }
 }

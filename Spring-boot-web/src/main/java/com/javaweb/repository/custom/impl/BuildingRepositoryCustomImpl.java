@@ -4,6 +4,7 @@ import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import com.javaweb.utils.DataUtil;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 public class BuildingRepositoryCustomImpl implements BuildingRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
+
+    String sqlcountTotalItem;
 
     private void sqlJoin(BuildingSearchBuilder builder, StringBuilder join) {
         Long staffId = builder.getStaffId();
@@ -91,7 +94,7 @@ public class BuildingRepositoryCustomImpl implements BuildingRepositoryCustom {
     }
 
     @Override
-    public List<BuildingEntity> findAll(BuildingSearchBuilder builder) {
+    public List<BuildingEntity> findAll(BuildingSearchBuilder builder, Pageable pageable) {
         StringBuilder sql = new StringBuilder("SELECT b.* FROM building b ");
         sqlJoin(builder, sql);
 
@@ -100,8 +103,24 @@ public class BuildingRepositoryCustomImpl implements BuildingRepositoryCustom {
         sqlWhereSpecial(builder, where);
         sql.append(where).append(" GROUP BY b.id ");
 
+        sqlcountTotalItem = sql.toString();
+
+        sql.append(" LIMIT :limit OFFSET :offset");
+
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
+
+        query.setParameter("limit", pageable.getPageSize());
+        query.setParameter("offset", pageable.getPageNumber() * pageable.getPageSize());
 
         return query.getResultList();
     }
+
+    @Override
+    public int countTotalItem() {
+        String sql = sqlcountTotalItem;
+        Query query = entityManager.createNativeQuery(sql.toString());
+        return query.getResultList().size();
+    }
+
+
 }

@@ -196,3 +196,38 @@ button#btnSearch:hover {
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15) !important;
     opacity: 0.9 !important;
 }
+
+.pagebanner {
+    float: left;
+    margin-top: 15px;
+    color: #393939;
+    font-weight: 500;
+}
+
+.pagelinks {
+    float: right;
+    margin-top: 10px;
+}
+
+.pagelinks a, .pagelinks strong {
+    display: inline-block;
+    padding: 5px 12px;
+    margin-left: 4px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    color: #2283c5;
+    background-color: #fff;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.pagelinks a:hover {
+    background-color: #f4f9fc;
+    border-color: #2283c5;
+}
+
+.pagelinks strong {
+    background-color: #2283c5;
+    color: #fff;
+    border-color: #2283c5;
+}
