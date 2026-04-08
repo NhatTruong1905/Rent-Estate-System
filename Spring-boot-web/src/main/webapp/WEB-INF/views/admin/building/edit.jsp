@@ -281,6 +281,29 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right"
+                                               style="text-align: left; font-weight: bold;"> Hình đại diện </label>
+                                        <div class="col-sm-10">
+                                            <form:input path="image" type="file" id="uploadImage"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right"
+                                               style="text-align: left; font-weight: bold;"></label>
+                                        <div class="col-sm-10">
+                                            <c:if test="${not empty building.image}">
+                                                <c:set var="imagePath" value="/repository${building.image}"/>
+                                                <img src="${imagePath}" id="viewImage" width="300px" height="300px"
+                                                     style="margin-top: 50px">
+                                            </c:if>
+                                            <c:if test="${empty building.image}">
+                                                <img src="/img/pageNotFound.jpg" id="viewImage" width="300px"
+                                                     height="300px">
+                                            </c:if>
+                                        </div>
+                                    </div>
+
                                     <div class="clearfix form-actions"
                                          style="background-color: transparent; border-top: 1px solid #f0f0f0; margin-bottom: 0;">
                                         <div class="col-md-offset-2 col-md-10">
@@ -318,6 +341,9 @@
 </div>
 
 <script>
+    var imageBase64 = '';
+    var imageName = '';
+
     $('#btnAddOrUpdateBuilding').click(function (e) {
         e.preventDefault();
 
@@ -333,10 +359,14 @@
             } else {
                 typeCode.push(item.value);
             }
+
+            if (imageBase64 !== '') {
+                json['imageBase64'] = imageBase64;
+                json['imageName'] = imageName;
+            }
         });
 
         json['typeCode'] = typeCode;
-
 
         var hasError = false;
 
@@ -390,6 +420,29 @@
             addBuilding(json);
         }
     })
+
+    $('#uploadImage').change(function (event) {
+        var reader = new FileReader();
+        var file = $(this)[0].files[0];
+
+        reader.onload = function (e) {
+            imageBase64 = e.target.result;
+            imageName = file.name;
+        }
+        reader.readAsDataURL(file);
+        openImage(this, "viewImage");
+    })
+
+    function openImage(input, imageView) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#' + imageView).attr('src', reader.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
     function addBuilding(data) {
         $.ajax({

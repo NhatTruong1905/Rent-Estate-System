@@ -5,6 +5,7 @@ import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.repository.BuildingRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,8 @@ public class BuildingConverter {
 
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private BuildingRepository buildingRepository;
 
     public BuildingSearchResponse toBuildingSearchResponseConverter(BuildingEntity entity) {
         return modelMapper.map(entity, BuildingSearchResponse.class);
@@ -42,6 +45,11 @@ public class BuildingConverter {
 
     public BuildingEntity toBuildingEntityConverter(BuildingDTO buildingDTO) throws ServiceException {
         BuildingEntity building = modelMapper.map(buildingDTO, BuildingEntity.class);
+
+        if (buildingDTO.getId() != null) {
+            BuildingEntity buildingImgEntity = buildingRepository.findById(buildingDTO.getId()).get();
+            building.setImage(buildingImgEntity.getImage());
+        }
 
         String rentAreaRaw = buildingDTO.getRentArea();
         if (rentAreaRaw == null || rentAreaRaw.isEmpty()) {

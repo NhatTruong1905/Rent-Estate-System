@@ -37,7 +37,7 @@ public class AssignmentBuildingServiceImpl implements AssignmentBuildingService 
             throw new ServiceException(SystemConstant.BUILDING_NOT_FOUND);
         }
 
-        assignmentBuildingRepository.deleteByBuilding(building);
+        building.getStaffs().clear();
 
         List<Long> staffIds = assignmentBuildingDTO.getStaffIds();
         if (staffIds != null && !staffIds.isEmpty()) {
@@ -46,15 +46,7 @@ public class AssignmentBuildingServiceImpl implements AssignmentBuildingService 
                 throw new ServiceException("Một hoặc nhiều nhân viên không tồn tại trong hệ thống!");
             }
 
-            List<AssignmentBuildingEntity> assignment = new ArrayList<>();
-            for (UserEntity s : staffEntities) {
-                AssignmentBuildingEntity assignmentBuildingEntity = new AssignmentBuildingEntity();
-                assignmentBuildingEntity.setBuilding(building);
-                assignmentBuildingEntity.setStaff(s);
-                assignment.add(assignmentBuildingEntity);
-            }
-
-            assignmentBuildingRepository.saveAll(assignment);
+            building.getStaffs().addAll(staffEntities);
         }
     }
 }
