@@ -94,16 +94,6 @@ public class BuildingServiceImpl implements BuildingService {
     public void createOrUpdateBuilding(BuildingDTO buildingDTO) throws ServiceException {
         BuildingEntity buildingEntity = buildingConverter.toBuildingEntityConverter(buildingDTO);
 
-        if (buildingDTO.getId() != null) {
-            rentAreaRepository.deleteByBuilding_Id(buildingDTO.getId());
-        }
-
-        List<RentAreaEntity> rentAreaEntities = buildingEntity.getRentAreas();
-        if (rentAreaEntities != null) {
-            for (RentAreaEntity rentArea : rentAreaEntities) {
-                rentArea.setBuilding(buildingEntity);
-            }
-        }
         buildingRepository.save(buildingEntity);
     }
 

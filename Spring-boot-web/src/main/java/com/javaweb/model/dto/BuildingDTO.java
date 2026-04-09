@@ -22,7 +22,7 @@ public class BuildingDTO extends AbstractDTO {
     private String ward;
     @NotNull(message = "District can't be blank!")
     private String district;
-    @Min(value = 1, message = "Number of Basement greater than or equal to 0")
+    @Min(value = 0, message = "Number of Basement greater than or equal to 0")
     private Long numberOfBasement;
     private Long floorArea;
     private String level;
