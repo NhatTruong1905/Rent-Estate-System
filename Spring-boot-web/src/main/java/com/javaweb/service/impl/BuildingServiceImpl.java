@@ -1,5 +1,7 @@
 package com.javaweb.service.impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.javaweb.builder.BuildingSearchBuilder;
 import com.javaweb.converter.BuildingConverter;
 import com.javaweb.converter.BuildingSearchConverter;
@@ -15,16 +17,14 @@ import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.service.BuildingService;
 import com.javaweb.utils.UploadFileUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,10 +42,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Autowired
     private BuildingConverter buildingConverter;
-    @Autowired
-    private AssignmentBuildingRepository assignmentBuildingRepository;
-    @Autowired
-    private UploadFileUtils uploadFileUtils;
+
 
     @Override
     public List<BuildingSearchResponse> findAll(BuildingSearchRequest params, Pageable pageable) {
@@ -104,28 +101,10 @@ public class BuildingServiceImpl implements BuildingService {
         List<RentAreaEntity> rentAreaEntities = buildingEntity.getRentAreas();
         if (rentAreaEntities != null) {
             for (RentAreaEntity rentArea : rentAreaEntities) {
-
                 rentArea.setBuilding(buildingEntity);
             }
         }
-        saveThumbnail(buildingDTO, buildingEntity);
         buildingRepository.save(buildingEntity);
-    }
-
-    private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
-        String path = "/building/" + buildingDTO.getImageName();
-        if (buildingDTO.getImageBase64() != null) {
-            if (buildingEntity.getImage() != null) {
-                if (!path.equals(buildingEntity.getImage())) {
-                    File file = new File("D://Building-Management-System" + buildingEntity.getImage());
-                    file.delete();
-                }
-            }
-
-            byte[] bytes = Base64.decodeBase64(buildingDTO.getImageBase64().getBytes());
-            uploadFileUtils.writeOrUpdate(path, bytes);
-            buildingEntity.setImage(path);
-        }
     }
 
     @Override

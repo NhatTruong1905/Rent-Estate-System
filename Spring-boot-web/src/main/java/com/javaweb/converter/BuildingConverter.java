@@ -46,9 +46,9 @@ public class BuildingConverter {
     public BuildingEntity toBuildingEntityConverter(BuildingDTO buildingDTO) throws ServiceException {
         BuildingEntity building = modelMapper.map(buildingDTO, BuildingEntity.class);
 
-        if (buildingDTO.getId() != null) {
-            BuildingEntity buildingImgEntity = buildingRepository.findById(buildingDTO.getId()).get();
-            building.setImage(buildingImgEntity.getImage());
+        if (buildingDTO.getId() != null && (buildingDTO.getImage() == null || buildingDTO.getImage().isEmpty())) {
+            BuildingEntity oldBuilding = buildingRepository.findById(buildingDTO.getId()).get();
+            building.setImage(oldBuilding.getImage());
         }
 
         String rentAreaRaw = buildingDTO.getRentArea();

@@ -293,8 +293,7 @@
                                                style="text-align: left; font-weight: bold;"></label>
                                         <div class="col-sm-10">
                                             <c:if test="${not empty building.image}">
-                                                <c:set var="imagePath" value="/repository${building.image}"/>
-                                                <img src="${imagePath}" id="viewImage" width="300px" height="300px"
+                                                <img src="${building.image}" id="viewImage" width="300px" height="300px"
                                                      style="margin-top: 50px">
                                             </c:if>
                                             <c:if test="${empty building.image}">
@@ -341,12 +340,29 @@
 </div>
 
 <script>
-    var imageBase64 = '';
-    var imageName = '';
+    const CLOUD_NAME = "dokjzty69";
+    const UPLOAD_PRESET = "building";
 
-    $('#btnAddOrUpdateBuilding').click(function (e) {
+    async function uploadToCloudinary(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", UPLOAD_PRESET);
+
+        try {
+            const response = await fetch(`https://api.cloudinary.com/v1_1/` + CLOUD_NAME + `/image/upload`, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            return data.secure_url;
+        } catch (error) {
+            console.error("Lỗi khi upload lên Cloudinary:", error);
+            return null;
+        }
+    }
+
+    $('#btnAddOrUpdateBuilding').click(async function (e) {
         e.preventDefault();
-
         $('.error-msg').remove();
 
         var formData = $('#form-edit').serializeArray();
@@ -358,11 +374,6 @@
                 json["" + item.name + ""] = item.value;
             } else {
                 typeCode.push(item.value);
-            }
-
-            if (imageBase64 !== '') {
-                json['imageBase64'] = imageBase64;
-                json['imageName'] = imageName;
             }
         });
 
@@ -417,19 +428,33 @@
         }
 
         if (!hasError) {
-            addBuilding(json);
+            const btn = $(this);
+            const originalText = btn.html();
+            btn.prop('disabled', true).html('<i class="ace-icon fa fa-spinner fa-spin bigger-110"></i> Đang lưu...');
+            try {
+                var fileInput = $('#uploadImage')[0].files[0];
+
+                if (fileInput) {
+                    var imageUrl = await uploadToCloudinary(fileInput);
+                    if (imageUrl) {
+                        json['image'] = imageUrl;
+                    } else {
+                        alert("Upload ảnh thất bại, vui lòng kiểm tra lại mạng hoặc cấu hình Cloudinary!");
+                        btn.prop('disabled', false).html(originalText);
+                        return;
+                    }
+                }
+                addBuilding(json);
+            } catch (error) {
+                console.error(error);
+                alert("Đã xảy ra lỗi trong quá trình xử lý!");
+            } finally {
+                btn.prop('disabled', false).html(originalText);
+            }
         }
     })
 
     $('#uploadImage').change(function (event) {
-        var reader = new FileReader();
-        var file = $(this)[0].files[0];
-
-        reader.onload = function (e) {
-            imageBase64 = e.target.result;
-            imageName = file.name;
-        }
-        reader.readAsDataURL(file);
         openImage(this, "viewImage");
     })
 

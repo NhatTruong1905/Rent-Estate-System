@@ -11,10 +11,10 @@ import java.io.IOException;
 public class UploadFileUtils {
 
     public void writeOrUpdate(String path, byte[] bytes) {
-        path = "D:\\Building-Management-System" + path;
+        path = "D://Building-Management-System" + path;
         File file = new File(StringUtils.substringBeforeLast(path, "/"));
         if (!file.exists()) {
-            file.mkdir();
+            file.mkdirs();
         }
         try (FileOutputStream fop = new FileOutputStream(path)) {
             fop.write(bytes);
