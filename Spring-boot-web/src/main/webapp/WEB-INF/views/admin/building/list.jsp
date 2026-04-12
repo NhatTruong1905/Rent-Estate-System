@@ -18,7 +18,7 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Trang chủ</a>
+                    <a href="/admin/home">Trang chủ</a>
                 </li>
                 <li class="active">Danh sách tòa nhà</li>
             </ul>
@@ -138,13 +138,15 @@
                                                 <label>SĐT Quản lý</label>
                                                 <form:input path="managerPhoneNumber" class="form-control"/>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <label>Chọn nhân viên</label>
-                                                <form:select path="staffId" class="form-control">
-                                                    <option value="">-- Chọn Nhân Viên --</option>
-                                                    <form:options items="${staffs}"></form:options>
-                                                </form:select>
-                                            </div>
+                                            <security:authorize access="hasRole('MANAGER')">
+                                                <div class="col-sm-4">
+                                                    <label>Chọn nhân viên</label>
+                                                    <form:select path="staffId" class="form-control">
+                                                        <option value="">-- Chọn Nhân Viên --</option>
+                                                        <form:options items="${staffs}"></form:options>
+                                                    </form:select>
+                                                </div>
+                                            </security:authorize>
                                         </div>
                                     </div>
                                     <div class="space-8"></div>
@@ -179,9 +181,12 @@
                             <i class="fa fa-plus-circle bigger-120"></i> Thêm tòa nhà
                         </a>
 
-                        <button class="btn btn-danger btn-bold" title="Xóa các tòa nhà đã chọn" id="btnDeleteBuilding">
-                            <i class="fa fa-trash-o bigger-120"></i> Xóa
-                        </button>
+                        <security:authorize access="hasRole('MANAGER')">
+                            <button class="btn btn-danger btn-bold" title="Xóa các tòa nhà đã chọn"
+                                    id="btnDeleteBuilding">
+                                <i class="fa fa-trash-o bigger-120"></i> Xóa
+                            </button>
+                        </security:authorize>
                     </div>
                     <div class="clearfix"></div>
 
@@ -217,18 +222,22 @@
                             <display:column headerClass="text-center" property="serviceFee" title="Phí dịch vụ"/>
                             <display:column headerClass="text-center" property="brokerageFee" title="Phí môi giới"/>
                             <display:column headerClass="text-center" class="text-center text-nowrap" title="Thao tác">
-                                <button class="btn btn-xs btn-success" onclick="assignmentBuilding(${tableList.id})"
-                                        title="Giao tòa nhà">
-                                    <i class="fa fa-check-square"></i>
-                                </button>
+                                <security:authorize access="hasRole('MANAGER')">
+                                    <button class="btn btn-xs btn-success" onclick="assignmentBuilding(${tableList.id})"
+                                            title="Giao tòa nhà">
+                                        <i class="fa fa-check-square"></i>
+                                    </button>
+                                </security:authorize>
                                 <a class="btn btn-xs btn-info" title="Sửa tòa nhà"
                                    href="/admin/building-edit-${tableList.id}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"
-                                        onclick="deleteOneBuilding(${tableList.id})">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                <security:authorize access="hasRole('MANAGER')">
+                                    <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"
+                                            onclick="deleteOneBuilding(${tableList.id})">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </security:authorize>
                             </display:column>
 
                         </display:table>

@@ -7,6 +7,7 @@ import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.UserService;
 import com.javaweb.utils.DisplayTagUtils;
@@ -37,6 +38,10 @@ public class BuildingController {
         mav.addObject("districts", District.getDistricts());
         mav.addObject("typeCodes", TypeCode.getTypes());
 
+        if (SecurityUtils.getAuthorities().contains(SystemConstant.STAFF_ROLE)) {
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            params.setStaffId(staffId);
+        }
         List<BuildingSearchResponse> results = buildingService.findAll(params, PageRequest.of(params.getPage() - 1, params.getMaxPageItems()));
         params.setListResult(results);
         params.setTotalItems(buildingService.countTotalItems());
@@ -59,6 +64,15 @@ public class BuildingController {
     @GetMapping("/admin/building-edit-{id}")
     public ModelAndView editBuilding(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView("admin/building/edit");
+
+        if(SecurityUtils.getAuthorities().contains(SystemConstant.STAFF_ROLE)){
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            if(buildingService.isStaffOfBuilding(staffId,id) == false){
+                mav.setViewName("redirect:/error/404");
+                return mav;
+            }
+        }
+
         mav.addObject("districts", District.getDistricts());
         mav.addObject("typeCodes", TypeCode.getTypes());
         mav.addObject("building", buildingService.findBuildingById(id));

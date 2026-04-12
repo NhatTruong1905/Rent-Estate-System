@@ -20,4 +20,6 @@ public interface BuildingService {
     void createOrUpdateBuilding(BuildingDTO buildingDTO) throws ServiceException;
 
     int countTotalItems();
+
+    boolean isStaffOfBuilding(Long staffId, Long buildingId);
 }

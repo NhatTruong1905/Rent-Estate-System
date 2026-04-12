@@ -101,4 +101,15 @@ public class BuildingServiceImpl implements BuildingService {
     public int countTotalItems() {
         return buildingRepository.countTotalItem();
     }
+
+    @Override
+    public boolean isStaffOfBuilding(Long staffId, Long buildingId) {
+        BuildingEntity buildingEntity = buildingRepository.findByStaffs_Id(staffId);
+
+        if (buildingEntity != null && buildingEntity.getId() == buildingId) {
+            return true;
+        }
+
+        return false;
+    }
 }
