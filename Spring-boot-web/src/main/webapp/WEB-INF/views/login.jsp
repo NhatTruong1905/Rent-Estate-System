@@ -12,6 +12,12 @@
     <!-- <h1 class="form-heading">login Form</h1> -->
     <div class="login-form">
         <div class="main-div">
+            <c:if test="${param.registerSuccess != null}">
+                <div class="alert alert-success">
+                    Đăng ký tài khoản thành công! Vui lòng đăng nhập.
+                </div>
+            </c:if>
+
             <c:if test="${param.incorrectAccount != null}">
                 <div class="alert alert-danger">
                     Username or password incorrect
@@ -39,9 +45,9 @@
                                             <p class="text-white-50 mb-5">Please enter your login and password!</p>
                                             <form action="j_spring_security_check" id="formLogin" method="post">
                                                 <div class="form-outline form-white mb-4">
-                                                    <label class="form-label" for="userName">Tên đăng nhập</label>
+                                                    <label class="form-label" for="userName">Username</label>
                                                     <input type="text" class="form-control" id="userName"
-                                                           name="j_username" placeholder="Tên đăng nhập">
+                                                           name="j_username" placeholder="Username">
                                                 </div>
 
                                                 <div class="form-outline form-white mb-4">
@@ -50,32 +56,32 @@
                                                            name="j_password" placeholder="Mật khẩu">
                                                 </div>
 
-                                                <div class="form-check d-flex justify-content-center mb-5">
-                                                    <div><input class="form-check-input me-2" type="checkbox" value=""
-                                                                id="form2Example3cg"/></div>
-                                                    <div><label class="form-check-label">
-                                                        Remember Password
-                                                    </label></div>
-                                                </div>
+                                                <%--                                                <div class="form-check d-flex justify-content-center mb-5">--%>
+                                                <%--                                                    <div><input class="form-check-input me-2" type="checkbox" value=""--%>
+                                                <%--                                                                id="form2Example3cg"/></div>--%>
+                                                <%--                                                    <div><label class="form-check-label">--%>
+                                                <%--                                                        Remember Password--%>
+                                                <%--                                                    </label></div>--%>
+                                                <%--                                                </div>--%>
 
-                                                <p class="small mb-2 pb-lg-2"><a class="text-white-50" href="#!">Forgot
-                                                    password?</a></p>
+                                                <%--                                                <p class="small mb-2 pb-lg-2"><a class="text-white-50" href="#!">Forgot--%>
+                                                <%--                                                    password?</a></p>--%>
 
                                                 <button type="submit" class="btn btn-primary">Đăng nhập</button>
                                             </form>
-                                            <div class="d-flex justify-content-center text-center mt-2 pt-1">
-                                                <a href="#!" class="login-extension text-white"><i
-                                                        class="fab fa-facebook-f fa-lg"></i></a>
-                                                <a href="#!" class="login-extension text-white"><i
-                                                        class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
-                                                <a href="#!" class="login-extension text-white"><i
-                                                        class="fab fa-google fa-lg"></i></a>
-                                            </div>
+                                            <%--                                            <div class="d-flex justify-content-center text-center mt-2 pt-1">--%>
+                                            <%--                                                <a href="#!" class="login-extension text-white"><i--%>
+                                            <%--                                                        class="fab fa-facebook-f fa-lg"></i></a>--%>
+                                            <%--                                                <a href="#!" class="login-extension text-white"><i--%>
+                                            <%--                                                        class="fab fa-twitter fa-lg mx-4 px-2"></i></a>--%>
+                                            <%--                                                <a href="#!" class="login-extension text-white"><i--%>
+                                            <%--                                                        class="fab fa-google fa-lg"></i></a>--%>
+                                            <%--                                            </div>--%>
                                         </div>
                                         <div class="text-center">
-                                            <p class="mb-0 tex-center account">Don't have an account? <a href="#!"
-                                                                                                         class="text-white-50 fw-bold">Sign
-                                                Up</a></p>
+                                            <p class="mb-0 tex-center account">Don't have an account? <a
+                                                    href="<c:url value='/register'/>" class="text-white-50 fw-bold">Sign
+                                                Up</a>
                                         </div>
 
                                     </div>

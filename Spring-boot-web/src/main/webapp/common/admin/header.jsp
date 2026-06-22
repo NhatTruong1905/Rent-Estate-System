@@ -7,7 +7,7 @@
      style="background-color: #2c3e50; border-bottom: 1px solid #1a252f; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
     <div class="navbar-container ace-save-state" id="navbar-container">
         <div class="navbar-header pull-left">
-            <a href="#" class="navbar-brand" style="color: white; padding: 10px 15px;">
+            <a href="/admin/home" class="navbar-brand" style="color: white; padding: 10px 15px;">
                 <small>
                     <i class="fa fa-leaf" style="color: #2ecc71;"></i> <span
                         style="font-weight: 600; letter-spacing: 1px;">TRANG QUẢN TRỊ</span>

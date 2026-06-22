@@ -104,12 +104,6 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public boolean isStaffOfBuilding(Long staffId, Long buildingId) {
-        BuildingEntity buildingEntity = buildingRepository.findByStaffs_Id(staffId);
-
-        if (buildingEntity != null && buildingEntity.getId() == buildingId) {
-            return true;
-        }
-
-        return false;
+        return buildingRepository.existsByIdAndStaffs_Id(buildingId, staffId);
     }
 }

@@ -3,10 +3,12 @@ package com.javaweb.service.impl;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.converter.UserConverter;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.exception.UsernameException;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.entity.RoleEntity;
 import com.javaweb.entity.UserEntity;
+import com.javaweb.model.request.UserRegisterDTO;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.BuildingRepository;
 import com.javaweb.repository.RoleRepository;
@@ -125,26 +127,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO insert(UserDTO newUser) {
+    public UserRegisterDTO insert(UserRegisterDTO newUser) {
         RoleEntity role = roleRepository.findOneByCode(newUser.getRoleCode());
         UserEntity userEntity = userConverter.convertToEntity(newUser);
         userEntity.setRoles(Stream.of(role).collect(Collectors.toList()));
         userEntity.setStatus(1);
         userEntity.setPassword(passwordEncoder.encode(SystemConstant.PASSWORD_DEFAULT));
-        return userConverter.convertToDto(userRepository.save(userEntity));
+        return userConverter.convertToRegisterDto(userRepository.save(userEntity));
     }
 
     @Override
     @Transactional
-    public UserDTO update(Long id, UserDTO updateUser) {
-        RoleEntity role = roleRepository.findOneByCode(updateUser.getRoleCode());
+    public UserRegisterDTO update(Long id, UserRegisterDTO updateUser) {
         UserEntity oldUser = userRepository.findById(id).get();
-        UserEntity userEntity = userConverter.convertToEntity(updateUser);
-        userEntity.setUserName(oldUser.getUserName());
-        userEntity.setStatus(oldUser.getStatus());
-        userEntity.setRoles(Stream.of(role).collect(Collectors.toList()));
-        userEntity.setPassword(oldUser.getPassword());
-        return userConverter.convertToDto(userRepository.save(userEntity));
+        RoleEntity role = roleRepository.findOneByCode(updateUser.getRoleCode());
+
+        oldUser.setFullName(updateUser.getFullName());
+        oldUser.setEmail(updateUser.getEmail());
+        oldUser.setPhone(updateUser.getPhone());
+        oldUser.setRoles(Stream.of(role).collect(Collectors.toList()));
+
+        if (StringUtils.isNotBlank(updateUser.getPassword())) {
+            oldUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        }
+
+        return userConverter.convertToRegisterDto(userRepository.save(oldUser));
     }
 
     @Override
@@ -214,5 +221,23 @@ public class UserServiceImpl implements UserService {
     public String getNameStaffs(List<Long> ids) {
         List<UserEntity> staffEntities = userRepository.findByIdIn(ids);
         return staffEntities.stream().map(n -> n.getFullName()).collect(Collectors.joining(", "));
+    }
+
+    @Override
+    public void registerNewUserAccount(UserRegisterDTO userDTO) throws UsernameException {
+        if (userRepository.existsByUserName(userDTO.getUserName())) {
+            throw new UsernameException("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
+        }
+
+        UserEntity userEntity = userConverter.convertToEntity(userDTO);
+        userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+        RoleEntity defaultRole = roleRepository.findOneByCode("USER");
+        if (defaultRole != null) {
+            userEntity.setRoles(Collections.singletonList(defaultRole));
+        }
+
+        userRepository.save(userEntity);
+
     }
 }

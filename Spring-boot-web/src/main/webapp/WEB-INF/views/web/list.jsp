@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@include file="/common/taglib.jsp"%>
+         pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -15,43 +15,43 @@
 <body>
 <div class="page-wrapper">
     <%--<header>--%>
-        <%--<!-- MENU  -->--%>
-        <%--<div class="p-4">--%>
-            <%--<div class="row navbar">--%>
-                <%--<div class="col-12 col-md-3">--%>
-                    <%--<div class="logo">--%>
-                        <%--<a href="/trang-chu">--%>
-                            <%--<img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo.png?1676257083798"--%>
-                                 <%--alt="">--%>
-                        <%--</a>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="col-12 col-md-6">--%>
-                    <%--<div class="item-menu">--%>
-                        <%--<div class="nav nav1">--%>
-                            <%--<div class="nav-item p-2"><a class="nav-item-link" href="/trang-chu"><span>Trang--%>
-                                            <%--chủ</span></a></div>--%>
-                            <%--<div class="nav-item p-2"><a class="nav-item-link" href="/gioi-thieu"><span>Giới--%>
-                                            <%--thiệu</span></a></div>--%>
-                            <%--<div class="nav-item p-2"><a class="nav-item-link" href=""><span--%>
-                                    <%--style="color: var(--primary-color);">Sản phẩm</span></a></div>--%>
-                            <%--<div class="nav-item p-2"><a class="nav-item-link" href="/tin-tuc"><span>Tin--%>
-                                            <%--tức</span></a>--%>
-                            <%--</div>--%>
-                            <%--<div class="nav-item p-2"><a href='<c:url value='/lien-he'/>'><span>Liên hệ--%>
-                                    <%--</span></a>--%>
-                            <%--</div>--%>
+    <%--<!-- MENU  -->--%>
+    <%--<div class="p-4">--%>
+    <%--<div class="row navbar">--%>
+    <%--<div class="col-12 col-md-3">--%>
+    <%--<div class="logo">--%>
+    <%--<a href="/trang-chu">--%>
+    <%--<img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo.png?1676257083798"--%>
+    <%--alt="">--%>
+    <%--</a>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="col-12 col-md-6">--%>
+    <%--<div class="item-menu">--%>
+    <%--<div class="nav nav1">--%>
+    <%--<div class="nav-item p-2"><a class="nav-item-link" href="/trang-chu"><span>Trang--%>
+    <%--chủ</span></a></div>--%>
+    <%--<div class="nav-item p-2"><a class="nav-item-link" href="/gioi-thieu"><span>Giới--%>
+    <%--thiệu</span></a></div>--%>
+    <%--<div class="nav-item p-2"><a class="nav-item-link" href=""><span--%>
+    <%--style="color: var(--primary-color);">Sản phẩm</span></a></div>--%>
+    <%--<div class="nav-item p-2"><a class="nav-item-link" href="/tin-tuc"><span>Tin--%>
+    <%--tức</span></a>--%>
+    <%--</div>--%>
+    <%--<div class="nav-item p-2"><a href='<c:url value='/lien-he'/>'><span>Liên hệ--%>
+    <%--</span></a>--%>
+    <%--</div>--%>
 
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="col-12 col-md-3">--%>
-                    <%--<button class="btn btn-primary px-4">--%>
-                        <%--Liên hệ tư vấn--%>
-                    <%--</button>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="col-12 col-md-3">--%>
+    <%--<button class="btn btn-primary px-4">--%>
+    <%--Liên hệ tư vấn--%>
+    <%--</button>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
     <%--</header>--%>
     <!-- INTRO  -->
     <div class="intro text-center">
@@ -369,7 +369,7 @@
                                     ngoạn tầm view tuyệt đẹp ra hai công viên lớn nhất quận Cầu Giấy.</span>
                             <ul class="product1-conntent-list">
                                 <li class="product1-conntent-item">
-                                 <i class="fa-solid fa-location-dot"></i>
+                                    <i class="fa-solid fa-location-dot"></i>
                                     <span>Số 03 Tôn Thất thuyết</span>
                                 </li>
                                 <li class="product1-conntent-item">
@@ -423,42 +423,46 @@
 
         <!-- FOOTER  -->
         <footer class="footer">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="top-footer text-center mt-0">
                     <div class="logo logo-footer pt-5">
-                        <a href="./ViewHome.html"><img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo_footer.png?1676257083798"
-                                                       alt="logo-footer"></a>
-                        <p class="desc-logo-footer mt-3">Với hơn 10 năm kinh nghiệm, SkyLand tự hào là sàn
-                            mua
-                            bán, giao dịch và quảng cáo
-                            bất động sản hàng đầu tại Việt Nam</p>
+                        <a href="./ViewHome.html"><img
+                                src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo_footer.png?1676257083798"
+                                alt="logo-footer"></a>
+                        <p class="desc-logo-footer mt-3">Với hơn 10 năm kinh nghiệm, SkyLand tự hào là sàn mua bán, giao
+                            dịch và quảng cáo bất động sản hàng đầu tại Việt Nam</p>
                         <div class="item-footer mt-5">
                             <div class="row">
                                 <div class="col-12 col-md-4 text-center">
                                     <div class="icon-footer">
-                                        <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_maps.png?1676257083798" alt="">
+                                        <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_maps.png?1676257083798"
+                                             alt="">
                                     </div>
                                     <div class="content-center-footer">
                                         <p class="mb-1 mt-3">Trụ sở chính</p>
-                                        <p class="desc-footer">Số 46 Man Thiện, TP Thủ Đức, TP HCM</p>
+                                        <p class="desc-footer">221/45E số 38, Đông Thạnh, TP HCM</p>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 text-center">
                                     <div class="icon-footer">
-                                        <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_phone.png?1676257083798" alt="">
+                                        <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_phone.png?1676257083798"
+                                             alt="">
                                     </div>
                                     <div class="content-center-footer">
                                         <p class="mb-1 mt-3">Hotline</p>
-                                        <p class="desc-footer"><a class="a-text" href="#">098828</a></p>
+                                        <p class="desc-footer"><a class="a-text" href="#">0967294349</a></p>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 text-center">
                                     <div class="icon-footer">
-                                        <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_email.png?1676257083798" alt="">
+                                        <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_email.png?1676257083798"
+                                             alt="">
+
                                     </div>
                                     <div class="content-center-footer">
                                         <p class="mb-1 mt-3">Email</p>
-                                        <p class="desc-footer"><a class="a-text" href="#">vsh@gmail.com</a>
+                                        <p class="desc-footer"><a class="a-text" target="_blank"
+                                                                  href="https://mail.google.com/mail/u/2/#inbox?compose=CllgCKCCRsQrVCLkpWzLBFsLDLfqQQgkHsSdTqdZQtplMzVGfgBGkFBzXwjmJHTlJwjwnFVPBrg">tn696199@gmail.com</a>
                                         </p>
                                     </div>
                                 </div>
@@ -469,7 +473,7 @@
                         <div class="border-bottom mb-5 mt-4"></div>
                     </div>
                 </div>
-                <div class="bottom-footer">
+                <div class="bottom-footer container">
                     <div class="row">
                         <div class="col-12 col-md-3">
                             <h4 class="title-item-bottom-footer">Thông tin công ty</h4>
@@ -515,14 +519,19 @@
                 </div>
             </div>
             <div class="bottom-footer-2">
-                <div class="text-center desc-bottom-footer-2">@ Bản quyền thuộc về Happy Team |
-                    Cung cấp bởi <a class="a-text group-name" href="#">HappyTeam</a></div>
+                <div class="text-center desc-bottom-footer-2">@ Bản quyền thuộc về NHAT TRUONG |
+                    Cung cấp bởi <a target="_blank" class="a-text group-name" href="https://github.com/NhatTruong1905">NHAT
+                        TRUONG</a></div>
             </div>
         </footer>
     </div>
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

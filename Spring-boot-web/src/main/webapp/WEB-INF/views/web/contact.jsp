@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@include file="/common/taglib.jsp"%>
+         pageEncoding="UTF-8" %>
+<%@include file="/common/taglib.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,43 +13,43 @@
 <body>
 <div class="page-wrapper">
     <%--<header>--%>
-        <%--<!-- MENU  -->--%>
-        <%--<div class="p-4">--%>
-            <%--<div class="row navbar">--%>
-                <%--<div class="col-12 col-md-3">--%>
-                    <%--<div class="logo">--%>
-                        <%--<a href="">--%>
-                            <%--<img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo.png?1676257083798"--%>
-                                 <%--alt="">--%>
-                        <%--</a>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="col-12 col-md-6">--%>
-                    <%--<div class="item-menu">--%>
-                        <%--<div class="nav nav1">--%>
-                            <%--<div class="nav-item p-2"><a class="nav-item-link" href="/trang-chu"><span>Trang--%>
-                                            <%--chủ</span></a></div>--%>
-                            <%--<div class="nav-item p-2"><a class="nav-item-link" href="/gioi-thieu"><span>Giới--%>
-                                            <%--thiệu</span></a></div>--%>
-                            <%--<div class="nav-item p-2"><a class="nav-item-link" href="/san-pham"><span>Sản phẩm--%>
-                                        <%--</span></a></div>--%>
-                            <%--<div class="nav-item p-2"><a class="nav-item-link" href="/tin-tuc"><span>Tin--%>
-                                            <%--tức</span></a></div>--%>
-                            <%--<div class="nav-item p-2">--%>
-                                <%--<a class="nav-item-link" href="/lien-he">--%>
-                                    <%--<span style="color: var(--primary-color);">Liên hệ</span>--%>
-                                <%--</a>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="col-12 col-md-3">--%>
-                    <%--<button class="btn btn-primary px-4">--%>
-                        <%--Liên hệ tư vấn--%>
-                    <%--</button>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
+    <%--<!-- MENU  -->--%>
+    <%--<div class="p-4">--%>
+    <%--<div class="row navbar">--%>
+    <%--<div class="col-12 col-md-3">--%>
+    <%--<div class="logo">--%>
+    <%--<a href="">--%>
+    <%--<img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo.png?1676257083798"--%>
+    <%--alt="">--%>
+    <%--</a>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="col-12 col-md-6">--%>
+    <%--<div class="item-menu">--%>
+    <%--<div class="nav nav1">--%>
+    <%--<div class="nav-item p-2"><a class="nav-item-link" href="/trang-chu"><span>Trang--%>
+    <%--chủ</span></a></div>--%>
+    <%--<div class="nav-item p-2"><a class="nav-item-link" href="/gioi-thieu"><span>Giới--%>
+    <%--thiệu</span></a></div>--%>
+    <%--<div class="nav-item p-2"><a class="nav-item-link" href="/san-pham"><span>Sản phẩm--%>
+    <%--</span></a></div>--%>
+    <%--<div class="nav-item p-2"><a class="nav-item-link" href="/tin-tuc"><span>Tin--%>
+    <%--tức</span></a></div>--%>
+    <%--<div class="nav-item p-2">--%>
+    <%--<a class="nav-item-link" href="/lien-he">--%>
+    <%--<span style="color: var(--primary-color);">Liên hệ</span>--%>
+    <%--</a>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--<div class="col-12 col-md-3">--%>
+    <%--<button class="btn btn-primary px-4">--%>
+    <%--Liên hệ tư vấn--%>
+    <%--</button>--%>
+    <%--</div>--%>
+    <%--</div>--%>
+    <%--</div>--%>
     <%--</header>--%>
     <!-- INTRO  -->
     <div class="intro text-center mb-5">
@@ -115,63 +115,79 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <h2 class="title-lienhe"><strong>Liên hệ với chúng tôi</strong></h2>
-                    <form>
-                        <div class="row">
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="Họ và tên">
+                    <div class="border p-4 rounded"
+                         style="background-color: #ffffff; border-color: #e0e0e0 !important;">
+                        <h2 class="title-lienhe mb-4"><strong>Liên hệ với chúng tôi</strong></h2>
+                        <form id="submitContact">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" name="fullname" class="form-control" placeholder="Họ và tên">
+                                    <span class="text-danger error-msg" id="error-fullName"
+                                          style="font-size: 13px;"></span>
+                                </div>
+                                <div class="col">
+                                    <input type="text" name="email" class="form-control" placeholder="Email">
+                                </div>
                             </div>
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="Email">
+                            <div class="mt-3">
+                                <input type="text" name="phone" class="form-control" placeholder="Số điện thoại">
+                                <span class="text-danger error-msg" id="error-phone" style="font-size: 13px;"></span>
                             </div>
-                        </div>
-                        <input type="text" class="form-control mt-3" placeholder="Số điện thoại">
-                        <input type="text" class="form-control mt-3" placeholder="Nội dung">
-                        <button class="btn btn-primary px-4 mt-3">
-                            Gửi liên hệ
-                        </button>
-                    </form>
+                            <input type="text" name="note" class="form-control mt-3" placeholder="Nhu cầu">
+                            <div class="text-danger mt-2" id="error-general"
+                                 style="font-size: 14px; font-weight: bold;"></div>
+                            <button type="button" id="btnSendContact" class="btn btn-success px-4 mt-3">
+                                Gửi liên hệ
+                            </button>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- FOOTER  -->
     <footer class="footer">
-        <div class="container">
+        <div class="container-fluid">
             <div class="top-footer text-center mt-0">
                 <div class="logo logo-footer pt-5">
-                    <a href="./ViewHome.html"><img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo_footer.png?1676257083798" alt="logo-footer"></a>
-                    <p class="desc-logo-footer mt-3">Với hơn 10 năm kinh nghiệm, SkyLand tự hào là sàn
-                        mua
-                        bán, giao dịch và quảng cáo
-                        bất động sản hàng đầu tại Việt Nam</p>
+                    <a href="./ViewHome.html"><img
+                            src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/logo_footer.png?1676257083798"
+                            alt="logo-footer"></a>
+                    <p class="desc-logo-footer mt-3">Với hơn 10 năm kinh nghiệm, SkyLand tự hào là sàn mua bán, giao
+                        dịch và quảng cáo bất động sản hàng đầu tại Việt Nam</p>
                     <div class="item-footer mt-5">
                         <div class="row">
                             <div class="col-12 col-md-4 text-center">
                                 <div class="icon-footer">
-                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_maps.png?1676257083798" alt="">
+                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_maps.png?1676257083798"
+                                         alt="">
                                 </div>
                                 <div class="content-center-footer">
                                     <p class="mb-1 mt-3">Trụ sở chính</p>
-                                    <p class="desc-footer">Số 46 Man Thiện, TP Thủ Đức, TP HCM</p>
+                                    <p class="desc-footer">221/45E số 38, Đông Thạnh, TP HCM</p>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 text-center">
                                 <div class="icon-footer">
-                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_phone.png?1676257083798 alt="">
+                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_phone.png?1676257083798"
+                                         alt="">
                                 </div>
                                 <div class="content-center-footer">
                                     <p class="mb-1 mt-3">Hotline</p>
-                                    <p class="desc-footer"><a class="a-text" href="#">098828</a></p>
+                                    <p class="desc-footer"><a class="a-text" href="#">0967294349</a></p>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 text-center">
                                 <div class="icon-footer">
-                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_email.png?1676257083798g" alt="">
+                                    <img src="https://bizweb.dktcdn.net/100/328/362/themes/894751/assets/place_email.png?1676257083798"
+                                         alt="">
+
                                 </div>
                                 <div class="content-center-footer">
                                     <p class="mb-1 mt-3">Email</p>
-                                    <p class="desc-footer"><a class="a-text" href="#">vsh@gmail.com</a>
+                                    <p class="desc-footer"><a class="a-text" target="_blank"
+                                                              href="https://mail.google.com/mail/u/2/#inbox?compose=CllgCKCCRsQrVCLkpWzLBFsLDLfqQQgkHsSdTqdZQtplMzVGfgBGkFBzXwjmJHTlJwjwnFVPBrg">tn696199@gmail.com</a>
                                     </p>
                                 </div>
                             </div>
@@ -182,7 +198,7 @@
                     <div class="border-bottom mb-5 mt-4"></div>
                 </div>
             </div>
-            <div class="bottom-footer">
+            <div class="bottom-footer container">
                 <div class="row">
                     <div class="col-12 col-md-3">
                         <h4 class="title-item-bottom-footer">Thông tin công ty</h4>
@@ -228,12 +244,65 @@
             </div>
         </div>
         <div class="bottom-footer-2">
-            <div class="text-center desc-bottom-footer-2">@ Bản quyền thuộc về Happy Team |
-                Cung cấp bởi <a class="a-text group-name" href="#">HappyTeam</a></div>
+            <div class="text-center desc-bottom-footer-2">@ Bản quyền thuộc về NHAT TRUONG |
+                Cung cấp bởi <a target="_blank" class="a-text group-name" href="https://github.com/NhatTruong1905">NHAT
+                    TRUONG</a></div>
         </div>
     </footer>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+<script>
+    $('#btnSendContact').click(function (e) {
+        e.preventDefault();
+
+        $('.error-msg').text('');
+        $('#error-general').text('');
+
+        var fullName = $('input[name="fullname"]').val().trim();
+        var phone = $('input[name="phone"]').val().trim();
+
+        if (fullName === "") {
+            $('#error-fullName').text("Vui lòng nhập Họ và tên!");
+            $('input[name="fullname"]').focus();
+            return;
+        }
+
+        if (phone === "") {
+            $('#error-phone').text("Vui lòng nhập Số điện thoại!");
+            $('input[name="phone"]').focus();
+            return;
+        }
+
+        var phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phone)) {
+            $('#error-phone').text("Số điện thoại không hợp lệ cần 10 số!");
+            $('input[name="phone"]').focus();
+            return;
+        }
+
+        var formData = $('#submitContact').serialize();
+        $.ajax({
+            url: '/api/customers',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                alert("Gửi liên hệ thành công! SkyLand sẽ sớm phản hồi cho bạn.");
+                $('#submitContact')[0].reset();
+            },
+            error: function (response) {
+                $('#error-general').text("Hệ thống đang bận, vui lòng thử lại sau!");
+                console.log(response);
+            }
+        });
+    });
+</script>
 </body>
 </html>

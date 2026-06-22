@@ -17,5 +17,6 @@ public interface BuildingRepository extends JpaRepository<BuildingEntity, Long>,
 
     void deleteByIdIn(List<Long> ids);
 
-    BuildingEntity findByStaffs_Id(Long staffId);
+    boolean existsByIdAndStaffs_Id(Long buildingId, Long staffId);
+
 }

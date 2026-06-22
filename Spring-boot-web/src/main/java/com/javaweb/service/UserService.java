@@ -2,6 +2,7 @@ package com.javaweb.service;
 
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
+import com.javaweb.model.request.UserRegisterDTO;
 import com.javaweb.model.response.StaffResponseDTO;
 import org.springframework.data.domain.Pageable;
 
@@ -19,9 +20,9 @@ public interface UserService {
 
     UserDTO findUserById(long id);
 
-    UserDTO insert(UserDTO userDTO);
+    UserRegisterDTO insert(UserRegisterDTO userDTO);
 
-    UserDTO update(Long id, UserDTO userDTO);
+    UserRegisterDTO update(Long id, UserRegisterDTO userDTO);
 
     void updatePassword(long id, PasswordDTO userDTO) throws NumberFormatException;
 
@@ -41,4 +42,8 @@ public interface UserService {
     List<StaffResponseDTO> getStaffOfBuilding(Long buildingId);
 
     String getNameStaffs(List<Long> ids);
+
+    void registerNewUserAccount(UserRegisterDTO userDTO);
+
+
 }

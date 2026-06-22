@@ -13,6 +13,7 @@ import com.javaweb.service.UserService;
 import com.javaweb.utils.DisplayTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,7 +43,7 @@ public class BuildingController {
             Long staffId = SecurityUtils.getPrincipal().getId();
             params.setStaffId(staffId);
         }
-        List<BuildingSearchResponse> results = buildingService.findAll(params, PageRequest.of(params.getPage() - 1, params.getMaxPageItems()));
+        List<BuildingSearchResponse> results = buildingService.findAll(params, PageRequest.of(params.getPage() - 1, params.getMaxPageItems(), Sort.by("id").descending()));
         params.setListResult(results);
         params.setTotalItems(buildingService.countTotalItems());
 
@@ -65,10 +66,10 @@ public class BuildingController {
     public ModelAndView editBuilding(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView("admin/building/edit");
 
-        if(SecurityUtils.getAuthorities().contains(SystemConstant.STAFF_ROLE)){
+        if (SecurityUtils.getAuthorities().contains(SystemConstant.STAFF_ROLE)) {
             Long staffId = SecurityUtils.getPrincipal().getId();
-            if(buildingService.isStaffOfBuilding(staffId,id) == false){
-                mav.setViewName("redirect:/error/404");
+            if (!buildingService.isStaffOfBuilding(staffId, id)) {
+                mav.setViewName("error/404");
                 return mav;
             }
         }

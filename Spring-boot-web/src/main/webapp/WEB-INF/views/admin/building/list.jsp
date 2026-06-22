@@ -228,10 +228,12 @@
                                         <i class="fa fa-check-square"></i>
                                     </button>
                                 </security:authorize>
+
                                 <a class="btn btn-xs btn-info" title="Sửa tòa nhà"
                                    href="/admin/building-edit-${tableList.id}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
+
                                 <security:authorize access="hasRole('MANAGER')">
                                     <button class="btn btn-xs btn-danger" title="Xóa tòa nhà"
                                             onclick="deleteOneBuilding(${tableList.id})">

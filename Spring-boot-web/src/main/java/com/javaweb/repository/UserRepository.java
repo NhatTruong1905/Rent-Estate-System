@@ -28,4 +28,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, UserRep
     List<UserEntity> findByIdIn(List<Long> id);
 
     List<UserEntity> findByBuildings(BuildingEntity building);
+
+    boolean existsByUserName(String userName);
 }

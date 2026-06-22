@@ -29,10 +29,13 @@ public class UserEntity extends BaseEntity {
     private String password;
 
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private Integer status = 1;
 
     @Column(name = "email", unique = true)
     private String email;
+
+    @Column(name = "phone", unique = true)
+    private String phone;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
@@ -43,19 +46,11 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
     private List<BuildingEntity> buildings = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "staff")
+    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
 
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

@@ -1,6 +1,7 @@
 package com.javaweb.exception.custom;
 
 import com.javaweb.exception.ServiceException;
+import com.javaweb.exception.UsernameException;
 import com.javaweb.model.response.ResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,14 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<ResponseDTO> handleInvalidDataException(ServiceException ex) {
         ResponseDTO error = new ResponseDTO();
         error.setMessage("Dữ liệu đầu vào không hợp lệ");
+        error.setDetail(ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UsernameException.class)
+    public ResponseEntity<ResponseDTO> handleInvalidUsernameException(UsernameException ex) {
+        ResponseDTO error = new ResponseDTO();
+        error.setMessage("Username không hợp lệ!");
         error.setDetail(ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }

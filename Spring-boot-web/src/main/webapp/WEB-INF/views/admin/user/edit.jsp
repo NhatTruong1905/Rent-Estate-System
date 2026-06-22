@@ -5,26 +5,67 @@
 <head>
     <title>Chỉnh sửa người dùng</title>
 </head>
-<div class="main-content">
+<body>
+
+<div class="main-content" id="main-container">
     <div class="main-content-inner">
+
         <div class="breadcrumbs" id="breadcrumbs">
-            <script type="text/javascript">
-                try {
-                    ace.settings.check('breadcrumbs', 'fixed')
-                } catch (e) {
-                }
-            </script>
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Trang chủ</a>
+                    <a href="/admin/home">Trang chủ</a>
                 </li>
-                <li class="active">Chỉnh sửa người dùng</li>
-            </ul><!-- /.breadcrumb -->
+                <li>
+                    <a href="/admin/user-list">Danh sách người dùng</a>
+                </li>
+                <li class="active">Thông tin người dùng</li>
+            </ul>
         </div>
+
         <div class="page-content">
+
+            <link rel="stylesheet" href="<c:url value='/admin/css/custom-building-list.css' />"/>
+
+            <style>
+                .widget-box {
+                    border-radius: 6px !important;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+                    border: 1px solid #d5d5d5 !important;
+                    overflow: hidden;
+                }
+
+                .widget-header {
+                    background-color: #f7f9fa !important;
+                    border-bottom: 1px solid #d5d5d5 !important;
+                }
+
+                .form-control {
+                    border-radius: 5px !important;
+                    border: 1px solid #d5d5d5;
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                    background-color: #ffffff !important;
+                }
+
+                .form-control:focus {
+                    border-color: #35bf76;
+                    box-shadow: 0 0 5px rgba(53, 191, 118, 0.3);
+                }
+
+                .form-control[readonly] {
+                    background-color: #ffffff !important;
+                    cursor: not-allowed;
+                    color: #555;
+                }
+
+                input:-webkit-autofill {
+                    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+                }
+            </style>
+
             <div class="row">
                 <div class="col-xs-12">
+
                     <c:if test="${not empty messageResponse}">
                         <div class="alert alert-block alert-${alert}">
                             <button type="button" class="close" data-dismiss="alert">
@@ -33,103 +74,219 @@
                                 ${messageResponse}
                         </div>
                     </c:if>
-                    <form:form id="formEdit" class="form-horizontal" modelAttribute="model">
-                    <div id="profile">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">Vai trò</label>
-                            <div class="col-sm-9">
-                                <form:select path="roleCode" id="roleCode">
-                                    <form:option value="" label="--- Chọn vai trò ---"/>
-                                    <form:options items="${model.roleDTOs}"/>
-                                </form:select>
+
+                    <div class="widget-box">
+                        <div class="widget-header">
+                            <h5 class="widget-title" style="font-weight: bold; color: #438eb9;">
+                                <i class="ace-icon fa fa-user"></i>
+                                <c:if test="${empty model.id}">Thêm Mới Người Dùng</c:if>
+                                <c:if test="${not empty model.id}">Cập Nhật Người Dùng</c:if>
+                            </h5>
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main" style="padding: 20px 30px;">
+
+                                <form:form class="form-horizontal" role="form" id="form-edit" modelAttribute="model"
+                                           autocomplete="off">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right"
+                                               style="text-align: left; font-weight: bold;"> Vai trò </label>
+                                        <div class="col-sm-3">
+                                            <form:select path="roleCode" class="form-control" id="roleCode">
+                                                <form:option value="" label="-- Chọn vai trò --"/>
+                                                <form:options items="${model.roleDTOs}"/>
+                                            </form:select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right"
+                                               style="text-align: left; font-weight: bold;"> Tên đăng nhập </label>
+                                        <div class="col-sm-10">
+                                            <c:if test="${not empty model.id}">
+                                                <form:input path="userName" class="form-control" id="userName"
+                                                            readonly="true"/>
+                                            </c:if>
+                                            <c:if test="${empty model.id}">
+                                                <form:input path="userName" class="form-control" id="userName"
+                                                            autocomplete="new-password"/>
+                                            </c:if>
+                                        </div>
+                                    </div>
+
+                                    <c:if test="${not empty model.id}">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label no-padding-right"
+                                                   style="text-align: left; font-weight: bold;"> Đặt lại mật
+                                                khẩu </label>
+                                            <div class="col-sm-10">
+                                                <input type="password" name="password" class="form-control"
+                                                       id="password"
+                                                       placeholder="Bỏ trống nếu không muốn đổi mật khẩu"
+                                                       readonly onfocus="this.removeAttribute('readonly');"/>
+                                            </div>
+                                        </div>
+                                    </c:if>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right"
+                                               style="text-align: left; font-weight: bold;"> Tên đầy đủ </label>
+                                        <div class="col-sm-10">
+                                            <form:input path="fullName" class="form-control" id="fullName"
+                                                        autocomplete="off"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right"
+                                               style="text-align: left; font-weight: bold;"> Email </label>
+                                        <div class="col-sm-10">
+                                            <form:input path="email" class="form-control" id="email"
+                                                        autocomplete="off"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right"
+                                               style="text-align: left; font-weight: bold;"> Số điện thoại </label>
+                                        <div class="col-sm-10">
+                                            <form:input path="phone" class="form-control" id="phone"
+                                                        autocomplete="off"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix form-actions"
+                                         style="background-color: transparent; border-top: 1px solid #f0f0f0; margin-bottom: 0;">
+                                        <div class="col-md-offset-2 col-md-10">
+
+                                            <c:if test="${empty model.id}">
+                                                <button class="btn btn-purple btn-bold" type="button"
+                                                        id="btnAddOrUpdateUsers">
+                                                    <i class="ace-icon fa fa-check bigger-110"></i> Thêm người dùng
+                                                </button>
+                                            </c:if>
+
+                                            <c:if test="${not empty model.id}">
+                                                <button class="btn btn-primary btn-bold" type="button"
+                                                        id="btnAddOrUpdateUsers">
+                                                    <i class="ace-icon fa fa-pencil bigger-110"></i> Sửa người dùng
+                                                </button>
+
+                                                &nbsp; &nbsp; &nbsp;
+
+                                                <button class="btn btn-warning btn-bold" type="button"
+                                                        id="btnResetPassword">
+                                                    <i class="ace-icon fa fa-key bigger-110"></i> Đặt lại mật khẩu tự
+                                                    động
+                                                </button>
+                                            </c:if>
+
+                                            &nbsp; &nbsp; &nbsp;
+
+                                            <button class="btn btn-danger btn-bold" type="reset">
+                                                <i class="ace-icon fa fa-undo bigger-110"></i> Hủy
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <form:hidden path="id" id="userId"/>
+                                </form:form>
+
                             </div>
                         </div>
-                        <div class="space-4"></div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                <%--<spring:message code="label.username"/>--%> Tên đăng nhập
-                            </label>
-                            <div class="col-sm-9">
-                                <c:if test="${not empty model.id}">
-                                    <form:input path="userName" id="userName" cssClass="form-control" disabled="true"/>
-                                </c:if>
-                                <c:if test="${empty model.id}">
-                                    <form:input path="userName" id="userName" cssClass="form-control"/>
-                                </c:if>
-                            </div>
-                        </div>
-                        <div class="space-4"></div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                <%--<spring:message code="label.fullname"/>--%>
-                                Tên đầy đủ
-                            </label>
-                            <div class="col-sm-9">
-                                <form:input path="fullName" id="fullName" cssClass="form-control"/>
-                            </div>
-                        </div>
-                        <div class="space-4"></div>
-                        <!--Btn-->
-                        <div class="col-sm-12">
-                            <label class="col-sm-3 control-label no-padding-right message-info"></label>
-                            <c:if test="${not empty model.id}">
-                                <input type="button" class="btn btn-white btn-warning btn-bold"
-                                       value="Cập nhật người dùng" id="btnAddOrUpdateUsers"/>
-                                <input type="button" class="btn btn-white btn-warning btn-bold"
-                                       value="Reset mật khẩu" id="btnResetPassword"/>
-                                <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
-                            </c:if>
-                            <c:if test="${empty model.id}">
-                                <input type="button" class="btn btn-white btn-warning btn-bold"
-                                       value="Thêm mới người dùng" id="btnAddOrUpdateUsers"/>
-                                <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
-                            </c:if>
-                        </div>
-                        <!--Btn-->
-                        <form:hidden path="id" id="userId"/>
-                        </form:form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script>
-    $("#btnAddOrUpdateUsers").click(function (event) {
-        event.preventDefault();
-        var formData = $("#formEdit").serializeArray();
-        var dataArray = {};
-        $.each(formData, function (i, v) {
-            dataArray["" + v.name + ""] = v.value;
+    $('#btnAddOrUpdateUsers').click(function (e) {
+        e.preventDefault();
+        $('.error-msg').remove();
+
+        var formData = $('#form-edit').serializeArray();
+        var json = {};
+        $.each(formData, function (i, item) {
+            json["" + item.name + ""] = item.value;
         });
-        if ($('#userId').val() != "") {
-            var userId = $('#userId').val();
-            var roleCode = dataArray['roleCode'];
-            if (roleCode != '') {
-                updateUser(dataArray, $('#userId').val());
-            } else {
-                window.location.href = "<c:url value='/admin/user-edit-"+userId+"?message=role_require'/>";
+
+        var userId = $('#userId').val();
+        if (userId != "") {
+            json["userName"] = $('#userName').val();
+        }
+
+        var hasError = false;
+
+        if (json['roleCode'] == '') {
+            $('#roleCode').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Vui lòng chọn Vai trò!</span>');
+            hasError = true;
+        }
+
+        if (json['userName'] == '') {
+            $('#userName').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Tên đăng nhập không được để trống!</span>');
+            hasError = true;
+        }
+
+        if (userId != "" && json['password'] !== undefined && json['password'].trim() !== "") {
+            if (json['password'].length < 6) {
+                $('#password').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Mật khẩu phải có ít nhất 6 ký tự!</span>');
+                hasError = true;
             }
         }
-        else {
-            var userName = dataArray['userName'];
-            var roleCode = dataArray['roleCode'];
-            if (userName != '' && roleCode != '') {
-                $('#loading_image').show();
-                addUser(dataArray);
+
+        if (json['fullName'] == '') {
+            $('#fullName').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Tên đầy đủ không được để trống!</span>');
+            hasError = true;
+        }
+
+        if (json['email'] == '') {
+            $('#email').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Email không được để trống!</span>');
+            hasError = true;
+        } else {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(json['email'])) {
+                $('#email').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Định dạng email không hợp lệ!</span>');
+                hasError = true;
+            }
+        }
+
+        if (json['phone'] == '') {
+            $('#phone').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Số điện thoại không được để trống!</span>');
+            hasError = true;
+        } else {
+            var phoneRegex = /^[0-9]{10,11}$/;
+            if (!phoneRegex.test(json['phone'])) {
+                $('#phone').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Số điện thoại phải gồm 10 hoặc 11 chữ số!</span>');
+                hasError = true;
+            }
+        }
+
+        if (!hasError) {
+            const btn = $(this);
+            const originalText = btn.html();
+            btn.prop('disabled', true).html('<i class="ace-icon fa fa-spinner fa-spin bigger-110"></i> Đang lưu...');
+
+            if (userId != "") {
+                updateUser(json, userId, btn, originalText);
             } else {
-                window.location.href = "<c:url value='/admin/user-edit?message=username_role_require'/>";
+                addUser(json, btn, originalText);
             }
         }
     });
 
     $('#btnResetPassword').click(function (event) {
         event.preventDefault();
-        $('#loading_image').show();
-        resetPassword($('#userId').val());
+        const btn = $(this);
+        const originalText = btn.html();
+        btn.prop('disabled', true).html('<i class="ace-icon fa fa-spinner fa-spin bigger-110"></i> Đang xử lý...');
+        resetPassword($('#userId').val(), btn, originalText);
     });
 
-    function addUser(data) {
+    function addUser(data, btn, originalText) {
         $.ajax({
             url: '${formUrl}',
             type: 'POST',
@@ -137,16 +294,21 @@
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function (res) {
-                $('#loading_image').hide();
-                window.location.href = "<c:url value='/admin/user-edit-"+res.id+"?message=insert_success'/>";
+                alert("Thêm người dùng thành công!");
+                window.location.href = "/admin/user-list";
             },
             error: function (res) {
-                window.location.href = "<c:url value='/admin/user-edit-"+res.id+"?message=error_system'/>";
+                btn.prop('disabled', false).html(originalText);
+                var errorMsg = "Đã xảy ra lỗi hệ thống!";
+                if (res.responseJSON && Array.isArray(res.responseJSON)) {
+                    errorMsg = "Lỗi dữ liệu:\n- " + res.responseJSON.join("\n- ");
+                }
+                alert(errorMsg);
             }
         });
     }
 
-    function updateUser(data, id) {
+    function updateUser(data, id, btn, originalText) {
         $.ajax({
             url: '${formUrl}/' + id,
             type: 'PUT',
@@ -154,25 +316,32 @@
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function (res) {
-                window.location.href = "<c:url value='/admin/user-edit-"+res.id+"?message=update_success'/>";
+                alert("Cập nhật người dùng thành công!");
+                window.location.href = "/admin/user-list";
             },
             error: function (res) {
-                window.location.href = "<c:url value='/admin/user-edit-"+id+"?message=error_system'/>";
+                btn.prop('disabled', false).html(originalText);
+                var errorMsg = "Hệ thống gặp lỗi, không thể cập nhật!";
+                if (res.responseJSON && Array.isArray(res.responseJSON)) {
+                    errorMsg = "Lỗi dữ liệu:\n- " + res.responseJSON.join("\n- ");
+                }
+                alert(errorMsg);
             }
         });
     }
 
-    function resetPassword(id) {
+    function resetPassword(id, btn, originalText) {
         $.ajax({
-            url: '${formUrl}/password/'+id+'/reset',
+            url: '${formUrl}/password/' + id + '/reset',
             type: 'PUT',
             dataType: 'json',
             success: function (res) {
-                $('#loading_image').hide();
-                window.location.href = "<c:url value='/admin/user-edit-"+res.id+"?message=reset_password_success'/>";
+                alert("Đặt lại mật khẩu thành công!");
+                window.location.href = "/admin/user-edit-" + res.id + "?message=reset_password_success";
             },
             error: function (res) {
-                window.location.href = "<c:url value='/admin/user-edit-"+id+"?message=error_system'/>";
+                btn.prop('disabled', false).html(originalText);
+                alert("Lỗi khi đặt lại mật khẩu!");
             }
         });
     }
