@@ -20,6 +20,8 @@ public class CustomerEntity extends BaseEntity {
     private String phone;
     @Column(name = "note")
     private String note;
+    @Column(name = "status", nullable = false)
+    private Integer status = 1;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();

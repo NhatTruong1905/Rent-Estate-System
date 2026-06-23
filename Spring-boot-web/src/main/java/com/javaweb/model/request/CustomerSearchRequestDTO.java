@@ -10,6 +10,6 @@ public class CustomerSearchRequestDTO extends AbstractDTO {
     private String fullname;
     private String phone;
     private String email;
-    private String status;
+    private String statusAssignment;
     private Long staffId;
 }

@@ -131,7 +131,7 @@
             </ul>
         </li>
     </ul>
-    <security:authorize access="hasRole('MANAGER')">
+    <security:authorize access="hasAnyRole('MANAGER','STAFF')">
         <ul class="nav nav-list">
             <li class="">
                 <a href="#" class="dropdown-toggle">

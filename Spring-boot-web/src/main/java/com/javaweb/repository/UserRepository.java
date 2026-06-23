@@ -1,6 +1,7 @@
 package com.javaweb.repository;
 
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.entity.CustomerEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.repository.custom.UserRepositoryCustom;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, UserRep
     List<UserEntity> findByIdIn(List<Long> id);
 
     List<UserEntity> findByBuildings(BuildingEntity building);
+
+    List<UserEntity> findByAssignmentCustomers_Customer(CustomerEntity customer);
 
     boolean existsByUserName(String userName);
 }

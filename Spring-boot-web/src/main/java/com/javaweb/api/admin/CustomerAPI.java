@@ -1,10 +1,9 @@
 package com.javaweb.api.admin;
 
-import com.javaweb.exception.ServiceException;
-import com.javaweb.model.dto.BuildingDTO;
+import com.javaweb.model.request.CustomerRequestDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
-import com.javaweb.service.BuildingService;
+import com.javaweb.service.CustomerService;
 import com.javaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +16,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/buildings")
-public class BuildingAPI {
-
+@RequestMapping("/api/customers")
+public class CustomerAPI {
     @Autowired
-    private BuildingService buildingService;
+    private CustomerService customerService;
 
     @Autowired
     private UserService userService;
 
-    @PostMapping()
-    public ResponseEntity<?> createOrUpdateBuilding(@Valid @RequestBody BuildingDTO buildingDTO, BindingResult bindingResult) throws ServiceException {
+    @PostMapping
+    public ResponseEntity<?> createOrUpdateCustomer(@Valid @RequestBody CustomerRequestDTO customerDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors()
                     .stream()
@@ -36,31 +34,27 @@ public class BuildingAPI {
             return ResponseEntity.badRequest().body(errors);
         }
 
-        buildingService.createOrUpdateBuilding(buildingDTO);
+        this.customerService.createOrUpdateCustomer(customerDTO);
 
-        ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setMessage(buildingDTO.getName());
-        return ResponseEntity.ok().body(responseDTO);
+        return ResponseEntity.ok().body(customerDTO);
     }
 
     @DeleteMapping("/{ids}")
-    public ResponseEntity<?> deleteBuilding(@PathVariable List<Long> ids) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable List<Long> ids) {
         ResponseDTO responseDTO = new ResponseDTO();
         if (ids == null || ids.isEmpty()) {
             responseDTO.setMessage("Ids can't be empty!");
             return ResponseEntity.badRequest().body(responseDTO);
         } else {
-            String nameOfBuildings = buildingService.findNameBuildingsById(ids);
-            buildingService.deleteAllByIds(ids);
+            this.customerService.deleteAllByIds(ids);
 
-            responseDTO.setMessage(nameOfBuildings);
             return ResponseEntity.ok().body(responseDTO);
         }
     }
 
-    @GetMapping("/{buildingId}/staffs")
-    public ResponseEntity<?> loadStaff(@PathVariable Long buildingId) {
-        List<StaffResponseDTO> staffResponseDTOS = userService.getStaffOfBuilding(buildingId);
+    @GetMapping("/{customerId}/staffs")
+    public ResponseEntity<?> loadStaff(@PathVariable Long customerId) {
+        List<StaffResponseDTO> staffResponseDTOS = this.userService.getStaffOfCustomer(customerId);
 
         ResponseDTO response = new ResponseDTO();
         response.setMessage("Staffs loaded successfully!");

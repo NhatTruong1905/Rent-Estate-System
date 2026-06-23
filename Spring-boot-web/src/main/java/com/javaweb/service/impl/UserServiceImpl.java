@@ -3,6 +3,7 @@ package com.javaweb.service.impl;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.converter.UserConverter;
 import com.javaweb.entity.BuildingEntity;
+import com.javaweb.entity.CustomerEntity;
 import com.javaweb.exception.UsernameException;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
@@ -11,6 +12,7 @@ import com.javaweb.entity.UserEntity;
 import com.javaweb.model.request.UserRegisterDTO;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.BuildingRepository;
+import com.javaweb.repository.CustomerRepository;
 import com.javaweb.repository.RoleRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.UserService;
@@ -43,6 +45,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BuildingRepository iBuildingRepository;
+
+    @Autowired
+    private CustomerRepository iCustomerRepository;
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
@@ -90,7 +95,7 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
         Map<Long, String> staffList = new HashMap<>();
         for (UserEntity s : staffs) {
-            staffList.put(s.getId(), s.getFullName());
+            staffList.put(s.getId(), s.getUserName());
         }
 
         return staffList;
@@ -198,6 +203,30 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
         BuildingEntity buildingEntity = iBuildingRepository.findBuildingById(buildingId);
         List<UserEntity> assignedStaffs = userRepository.findByBuildings(buildingEntity);
+
+
+        List<StaffResponseDTO> staffResponseDTOS = new ArrayList<>();
+        for (UserEntity s : staffs) {
+            StaffResponseDTO staffResponseDTO = new StaffResponseDTO();
+            staffResponseDTO.setStaffId(s.getId());
+            staffResponseDTO.setFullName(s.getFullName());
+            if (assignedStaffs.contains(s)) {
+                staffResponseDTO.setChecked("checked");
+            } else {
+                staffResponseDTO.setChecked("");
+            }
+
+            staffResponseDTOS.add(staffResponseDTO);
+        }
+
+        return staffResponseDTOS;
+    }
+
+    @Override
+    public List<StaffResponseDTO> getStaffOfCustomer(Long customerId) {
+        List<UserEntity> staffs = this.userRepository.findByStatusAndRoles_Code(1, "STAFF");
+        CustomerEntity customerEntity = this.iCustomerRepository.findCustomerById(customerId);
+        List<UserEntity> assignedStaffs = this.userRepository.findByAssignmentCustomers_Customer(customerEntity);
 
 
         List<StaffResponseDTO> staffResponseDTOS = new ArrayList<>();

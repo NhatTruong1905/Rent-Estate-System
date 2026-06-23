@@ -6,14 +6,14 @@ import lombok.Setter;
 @Setter
 @Getter
 public class CustomerDTO extends AbstractDTO {
-    private String name;
-    private String managementStaff;
-    private String customerPhone;
+    private String fullname;
+    private String phone;
     private String email;
     private String demand;
-    private String status;
+    private String statusAssignment;
     private String companyName;
-
-
-
+    private String note;
+    private String staffId;
+    private String staffName;
+    private Integer status;
 }

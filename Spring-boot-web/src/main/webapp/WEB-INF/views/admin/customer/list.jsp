@@ -22,7 +22,7 @@
                     <i class="ace-icon fa fa-home home-icon"></i>
                     <a href="/admin/home">Trang chủ</a>
                 </li>
-                <li class="active">Quản lý khách hàng</li>
+                <li class="active">Danh sách khách hàng</li>
             </ul>
         </div>
 
@@ -30,12 +30,24 @@
 
             <link rel="stylesheet" href="<c:url value='/admin/css/custom-building-list.css' />"/>
 
+            <style>
+                .table-custom-header thead tr th {
+                    background-color: #559166 !important;
+                    color: white !important;
+                    text-transform: uppercase;
+                    vertical-align: middle;
+                }
+                .form-group-custom {
+                    margin-bottom: 15px;
+                }
+            </style>
+
             <c:if test="${not empty messageResponse}">
                 <div class="alert alert-block alert-${alert}">
                     <button type="button" class="close" data-dismiss="alert">
                         <i class="ace-icon fa fa-times"></i>
                     </button>
-                    ${messageResponse}
+                        ${messageResponse}
                 </div>
             </c:if>
 
@@ -44,7 +56,7 @@
 
                     <div class="widget-box" id="searchCollapse">
                         <div class="widget-header">
-                            <h5 class="widget-title">Tìm kiếm khách hàng</h5>
+                            <h5 class="widget-title">Tìm kiếm</h5>
 
                             <div class="widget-toolbar">
                                 <a href="#" id="btnReload" title="Làm mới">
@@ -59,59 +71,47 @@
                         <div class="widget-body">
                             <div class="widget-main">
                                 <form:form id="listForm" action="${formUrl}" method="GET" modelAttribute="modelSearch">
-
                                     <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="col-sm-12 form-group">
+                                        <div class="col-sm-6">
+                                            <div class="form-group-custom">
                                                 <label>Tên khách hàng</label>
                                                 <form:input path="fullname" class="form-control" placeholder="Nhập tên..."/>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="col-sm-6 form-group">
+                                            <div class="form-group-custom">
                                                 <label>Di động</label>
                                                 <form:input path="phone" class="form-control" placeholder="Nhập số điện thoại..."/>
                                             </div>
-                                            <div class="col-sm-6 form-group">
+                                            <div class="form-group-custom">
+                                                <label>Tình trạng</label>
+                                                <form:select path="statusAssignment" class="form-control">
+                                                    <form:option value="" label="---Chọn tình trạng---"/>
+                                                    <form:options items="${statusAssignment}"/>
+                                                </form:select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group-custom">
                                                 <label>Email</label>
                                                 <form:input path="email" class="form-control" placeholder="Nhập địa chỉ email..."/>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="col-sm-6 form-group">
-                                                <label>Tình trạng</label>
-                                                <form:select path="status" class="form-control">
-                                                    <form:option value="" label="---Chọn tình trạng---"/>
-                                                    <form:options items="${statusMap}"/>
-                                                </form:select>
-                                            </div>
-
                                             <security:authorize access="hasRole('MANAGER')">
-                                                <div class="col-sm-6 form-group">
+                                                <div class="form-group-custom">
                                                     <label>Nhân viên quản lí</label>
                                                     <form:select path="staffId" class="form-control">
                                                         <form:option value="" label="---Chọn nhân viên---"/>
-                                                        <form:options items="${staffs}"/>
+                                                        <form:options items="${staffList}"/>
                                                     </form:select>
                                                 </div>
                                             </security:authorize>
                                         </div>
                                     </div>
 
-                                    <div class="space-4"></div>
-
                                     <div class="row">
-                                        <div class="col-xs-12 text-center" style="margin-top: 10px;">
+                                        <div class="col-xs-12 text-center" style="margin-top: 15px;">
                                             <button type="button" class="btn btn-sm btn-primary" id="btnSearch">
                                                 <i class="ace-icon fa fa-search"></i> Tìm kiếm
                                             </button>
-
                                             <a href="${formUrl}" class="btn btn-sm btn-danger">
                                                 <i class="ace-icon fa fa-undo"></i> Hoàn tác
                                             </a>
@@ -128,7 +128,8 @@
                         </a>
 
                         <security:authorize access="hasRole('MANAGER')">
-                            <button class="btn btn-danger btn-bold" title="Xóa các khách hàng đã chọn" id="btnDeleteCustomer">
+                            <button class="btn btn-danger btn-bold" title="Xóa các khách hàng đã chọn"
+                                    id="btnDeleteCustomer">
                                 <i class="fa fa-trash-o bigger-120"></i> Xóa
                             </button>
                         </security:authorize>
@@ -136,30 +137,28 @@
                     <div class="clearfix"></div>
 
                     <div class="table-responsive">
-                        <display:table name="model.listResult" cellspacing="0" cellpadding="0"
+                        <display:table name="params.listResult" cellspacing="0" cellpadding="0"
                                        requestURI="${formUrl}" partialList="true" sort="external"
-                                       size="${model.totalItems}" defaultsort="2" defaultorder="ascending"
-                                       id="tableList" pagesize="${model.maxPageItems}"
-                                       export="false"
-                                       class="table table-bordered table-striped align-middle"
-                                       style="margin: 3em 0 1.5em;"
-                                       htmlId="customerList">
+                                       size="${params.totalItems}" defaultsort="2" defaultorder="ascending"
+                                       id="tableList" pagesize="${params.maxPageItems}" export="false"
+                                       class="table table-bordered table-striped align-middle table-custom-header"
+                                       style="margin: 3em 0 1.5em;" htmlId="customerList">
 
                             <display:column title="<label class='pos-rel'><input type='checkbox' class='ace' id='checkAll'/><span class='lbl'></span></label>"
-                                            class="center" headerClass="center" style="width: 40px;">
+                                    class="center" headerClass="center" style="width: 40px;">
                                 <label class="pos-rel">
                                     <input type="checkbox" class="ace" value="${tableList.id}"/>
                                     <span class="lbl"></span>
                                 </label>
                             </display:column>
 
-                            <display:column headerClass="text-center" property="fullName" title="TÊN KHÁCH HÀNG"/>
+                            <display:column headerClass="text-center" property="fullname" title="TÊN KHÁCH HÀNG"/>
                             <display:column headerClass="text-center" property="phone" title="DI ĐỘNG"/>
                             <display:column headerClass="text-center" property="email" title="EMAIL"/>
-                            <display:column headerClass="text-center" property="demand" title="NHU CẦU"/>
+                            <display:column headerClass="text-center" property="note" title="NHU CẦU"/>
                             <display:column headerClass="text-center" property="createdBy" title="NGƯỜI THÊM"/>
                             <display:column headerClass="text-center" property="createdDate" title="NGÀY THÊM"/>
-                            <display:column headerClass="text-center" property="status" title="TÌNH TRẠNG"/>
+                            <display:column headerClass="text-center" property="statusAssignment" title="TÌNH TRẠNG"/>
 
                             <display:column headerClass="text-center" class="text-center text-nowrap" title="THAO TÁC">
                                 <security:authorize access="hasRole('MANAGER')">
@@ -168,7 +167,7 @@
                                     </button>
                                 </security:authorize>
 
-                                <a class="btn btn-xs btn-success" title="Sửa thông tin" href="/admin/customer-edit-${tableList.id}">
+                                <a class="btn btn-xs btn-success" title="Sửa khách hàng" href="/admin/customer-edit-${tableList.id}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
@@ -191,10 +190,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Giao Khách Hàng Cho Nhân Viên</h4>
+                <h4 class="modal-title">Danh sách nhân viên</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered table-striped" id="staffList">
+                <table class="table table-bordered table-striped" id="staffListModal">
                     <thead>
                     <tr>
                         <th class="center" style="width: 60px;">
@@ -206,8 +205,7 @@
                         <th class="center">Họ tên nhân viên</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <div class="modal-footer">
@@ -230,14 +228,13 @@
         $('#listForm').submit();
     });
 
-    // Bật tắt checkbox All cho bảng Customer và Modal Staff
     $(document).ready(function () {
-        $('#customerList, #staffList').on('change', 'thead input[type=checkbox]', function () {
+        $('#customerList, #staffListModal').on('change', 'thead input[type=checkbox]', function () {
             var isChecked = $(this).prop('checked');
             $(this).closest('table').find('tbody input[type=checkbox]').prop('checked', isChecked);
         });
 
-        $('#customerList, #staffList').on('change', 'tbody input[type=checkbox]', function () {
+        $('#customerList, #staffListModal').on('change', 'tbody input[type=checkbox]', function () {
             var $table = $(this).closest('table');
             var totalCheckboxes = $table.find('tbody input[type=checkbox]').length;
             var checkedCheckboxes = $table.find('tbody input[type=checkbox]:checked').length;
@@ -245,17 +242,15 @@
         });
     });
 
-    // Mở Modal giao khách hàng
     function assignmentCustomer(id) {
         $('#customerId').val(id);
         $('#assignmentCustomerModal').modal('show');
         loadStaff(id);
     }
 
-    // Tải danh sách Staff qua Ajax
-    function loadStaff(customerId) {
+    function loadStaff(id) {
         $.ajax({
-            url: "${customerAPI}/" + customerId + "/staffs",
+            url: "${customerAPI}/" + id + "/staffs",
             type: "GET",
             dataType: "JSON",
             success: function (response) {
@@ -271,12 +266,11 @@
                     row += '<td class="center">' + item.fullName + '</td>';
                     row += '</tr>';
                 });
+                $('#staffListModal').find('tbody').html(row);
 
-                $('#staffList').find('tbody').html(row);
-
-                var total = $('#staffList tbody input[type=checkbox]').length;
-                var checked = $('#staffList tbody input[type=checkbox]:checked').length;
-                $('#staffList thead input[type=checkbox]').prop('checked', total === checked && total > 0);
+                var total = $('#staffListModal tbody input[type=checkbox]').length;
+                var checked = $('#staffListModal tbody input[type=checkbox]:checked').length;
+                $('#staffListModal thead input[type=checkbox]').prop('checked', total === checked && total > 0);
             },
             error: function (response) {
                 console.log("Lỗi tải danh sách nhân viên!");
@@ -284,75 +278,69 @@
         });
     }
 
-    // Xử lý nút Giao khách hàng trong Modal
     $('#btnAssignmentCustomer').click(function (e) {
         e.preventDefault();
         var json = {};
         json['customerId'] = $('#customerId').val();
-
-        var staffIds = $('#staffList').find('tbody input[type=checkbox]:checked').map(function () {
-            return $(this).val();
-        }).get();
-        json['staffIds'] = staffIds;
+        json['staffIds'] = $('#staffListModal').find('tbody input[type=checkbox]:checked').map(function () { return $(this).val(); }).get();
 
         if (json['customerId'] != null) {
             updateAssignment(json);
         } else {
-            alert("Id của khách hàng không được để trống!");
+            alert("Id của khách hàng không được thiếu!");
         }
     });
 
     function updateAssignment(data) {
         $.ajax({
-            url: "/api/assignments/customer", // Cần điều chỉnh API này theo backend của bạn
+            url: "/api/assignments/customer",
             type: "POST",
             dataType: "JSON",
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (response) {
-                alert("Giao khách hàng thành công!");
+                if (data.staffIds && data.staffIds.length !== 0) {
+                    alert("Đã giao khách hàng cho nhân viên thành công!");
+                } else {
+                    alert("Đã thu hồi quyền quản lý của tất cả nhân viên đối với khách hàng này!");
+                }
                 $('#assignmentCustomerModal').modal('hide');
             },
             error: function (response) {
-                alert("Giao khách hàng thất bại!");
+                alert("Hệ thống gặp lỗi, vui lòng thử lại sau!");
                 console.log("Error details:", response);
             }
         });
     }
 
-    // Xóa nhiều Khách hàng
     $('#btnDeleteCustomer').click(function (e) {
         e.preventDefault();
-        var ids = $('#customerList').find('tbody input[type=checkbox]:checked').map(function () {
-            return $(this).val();
-        }).get();
+        var ids = $('#customerList').find('tbody input[type=checkbox]:checked').map(function () { return $(this).val(); }).get();
 
-        if (ids.length > 0) {
+        if (ids && ids.length > 0) {
             deleteCustomer(ids);
         } else {
-            alert("Không có khách hàng nào được chọn!");
+            alert("Vui lòng chọn ít nhất một khách hàng để xóa!");
         }
     });
 
-    // Xóa 1 Khách hàng
     function deleteOneCustomer(id) {
         deleteCustomer([id]);
     }
 
-    // Ajax Xóa Khách hàng
-    function deleteCustomer(data) {
+    function deleteCustomer(ids) {
+        var idString = ids.join(',');
         $.ajax({
-            url: "${customerAPI}",
+            url: "${customerAPI}/" + idString,
             type: "DELETE",
             dataType: "JSON",
-            contentType: "application/json",
-            data: JSON.stringify(data),
             success: function (response) {
                 alert("Xóa khách hàng thành công!");
                 window.location.href = "${formUrl}?message=delete_success";
             },
             error: function (response) {
                 alert("Xóa khách hàng thất bại!");
+                console.log("Error details:", response);
             }
         });
     }

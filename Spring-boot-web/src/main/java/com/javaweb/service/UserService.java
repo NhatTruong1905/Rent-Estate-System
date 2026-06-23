@@ -41,6 +41,8 @@ public interface UserService {
 
     List<StaffResponseDTO> getStaffOfBuilding(Long buildingId);
 
+    List<StaffResponseDTO> getStaffOfCustomer(Long customerId);
+
     String getNameStaffs(List<Long> ids);
 
     void registerNewUserAccount(UserRegisterDTO userDTO);
