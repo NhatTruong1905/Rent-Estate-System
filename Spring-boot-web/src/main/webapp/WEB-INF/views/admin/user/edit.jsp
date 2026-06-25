@@ -243,10 +243,7 @@
             hasError = true;
         }
 
-        if (json['email'] == '') {
-            $('#email').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Email không được để trống!</span>');
-            hasError = true;
-        } else {
+        if (json['email'] !== '') {
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(json['email'])) {
                 $('#email').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Định dạng email không hợp lệ!</span>');
@@ -254,13 +251,10 @@
             }
         }
 
-        if (json['phone'] == '') {
-            $('#phone').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Số điện thoại không được để trống!</span>');
-            hasError = true;
-        } else {
-            var phoneRegex = /^[0-9]{10,11}$/;
+        if (json['phone'] !== '') {
+            var phoneRegex = /^[0-9]{10}$/;
             if (!phoneRegex.test(json['phone'])) {
-                $('#phone').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Số điện thoại phải gồm 10 hoặc 11 chữ số!</span>');
+                $('#phone').after('<span class="error-msg" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Số điện thoại phải gồm 10 chữ số!</span>');
                 hasError = true;
             }
         }
@@ -300,8 +294,14 @@
             error: function (res) {
                 btn.prop('disabled', false).html(originalText);
                 var errorMsg = "Đã xảy ra lỗi hệ thống!";
-                if (res.responseJSON && Array.isArray(res.responseJSON)) {
-                    errorMsg = "Lỗi dữ liệu:\n- " + res.responseJSON.join("\n- ");
+                if (res.responseJSON) {
+                    if (Array.isArray(res.responseJSON)) {
+                        errorMsg = "Lỗi dữ liệu:\n- " + res.responseJSON.join("\n- ");
+                    } else if (res.responseJSON.detail) {
+                        errorMsg = res.responseJSON.detail;
+                    } else if (res.responseJSON.message) {
+                        errorMsg = res.responseJSON.message;
+                    }
                 }
                 alert(errorMsg);
             }

@@ -3,6 +3,7 @@ package com.javaweb.service.impl;
 import com.javaweb.converter.CustomerConverter;
 import com.javaweb.entity.AssignmentCustomerEntity;
 import com.javaweb.entity.CustomerEntity;
+import com.javaweb.enums.Status;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.request.CustomerRequestDTO;
 import com.javaweb.model.request.CustomerSearchRequestDTO;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -30,8 +30,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void createOrUpdateCustomer(CustomerRequestDTO customerDTO) {
-        CustomerEntity customerEntity = this.customerConverter.toEntity(customerDTO);
-        this.customerRepository.save(customerEntity);
+        if (customerDTO.getId() != null) {
+            CustomerEntity existingEntity = this.customerRepository.findCustomerById(customerDTO.getId());
+            this.customerConverter.toCustomerEntityUpdate(customerDTO, existingEntity);
+            this.customerRepository.save(existingEntity);
+        } else {
+            CustomerEntity customerEntity = this.customerConverter.toEntity(customerDTO);
+            customerEntity.setStatus(Status.CHUA_XU_LY.getStatus());
+            this.customerRepository.save(customerEntity);
+        }
+
     }
 
     @Override
@@ -41,13 +49,6 @@ public class CustomerServiceImpl implements CustomerService {
         List<CustomerDTO> customerDTOS = new ArrayList<>();
         for (CustomerEntity customerEntity : customerEntities) {
             CustomerDTO c = this.customerConverter.toDTO(customerEntity);
-            AssignmentCustomerEntity assignmentCustomerEntity = this.assignmentCustomerRepository.findByCustomer(customerEntity);
-            if (assignmentCustomerEntity != null) {
-                c.setStatusAssignment(assignmentCustomerEntity.getStatus());
-            } else {
-                c.setStatus(null);
-            }
-
             customerDTOS.add(c);
         }
 
@@ -73,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteAllByIds(List<Long> ids) {
         for (Long id : ids) {
             CustomerEntity customerEntity = this.customerRepository.findCustomerById(id);
-            customerEntity.setStatus(0);
+            customerEntity.setIsActive(0);
             this.customerRepository.save(customerEntity);
         }
     }

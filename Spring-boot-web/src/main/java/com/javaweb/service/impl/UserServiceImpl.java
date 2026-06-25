@@ -135,6 +135,9 @@ public class UserServiceImpl implements UserService {
     public UserRegisterDTO insert(UserRegisterDTO newUser) {
         RoleEntity role = roleRepository.findOneByCode(newUser.getRoleCode());
         UserEntity userEntity = userConverter.convertToEntity(newUser);
+        if (this.userRepository.existsByUserName(newUser.getUserName())) {
+            throw new UsernameException("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
+        }
         userEntity.setRoles(Stream.of(role).collect(Collectors.toList()));
         userEntity.setStatus(1);
         userEntity.setPassword(passwordEncoder.encode(SystemConstant.PASSWORD_DEFAULT));

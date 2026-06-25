@@ -25,7 +25,7 @@ public class UserRegisterDTO {
     @NotBlank(message = "Password không được để trống", groups = OnRegister.class)
     @Size(min = 6, message = "Password phải chứa tối thiểu 6 ký tự", groups = OnRegister.class)
     private String password;
-    @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ cần 10 số")
+    @Pattern(regexp = "^$|^[0-9]{10}$", message = "Số điện thoại không hợp lệ cần 10 số")
     private String phone;
     @Email(message = "Email không đúng định dạng")
     private String email;

@@ -29,30 +29,17 @@
         <div class="page-content">
 
             <link rel="stylesheet" href="<c:url value='/admin/css/custom-building-list.css' />"/>
-
-            <style>
-                .table-custom-header thead tr th {
-                    background-color: #559166 !important;
-                    color: white !important;
-                    text-transform: uppercase;
-                    vertical-align: middle;
-                }
-                .form-group-custom {
-                    margin-bottom: 15px;
-                }
-            </style>
-
-            <c:if test="${not empty messageResponse}">
-                <div class="alert alert-block alert-${alert}">
-                    <button type="button" class="close" data-dismiss="alert">
-                        <i class="ace-icon fa fa-times"></i>
-                    </button>
-                        ${messageResponse}
-                </div>
-            </c:if>
-
             <div class="row">
                 <div class="col-xs-12">
+
+                    <c:if test="${not empty messageResponse}">
+                        <div class="alert alert-block alert-${alert}">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                                ${messageResponse}
+                        </div>
+                    </c:if>
 
                     <div class="widget-box" id="searchCollapse">
                         <div class="widget-header">
@@ -62,59 +49,72 @@
                                 <a href="#" id="btnReload" title="Làm mới">
                                     <i class="ace-icon fa fa-refresh green"></i>
                                 </a>
+
                                 <a href="#" data-action="collapse" title="Ẩn bảng" id="iconCollapse">
                                     <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+
+                                <a href="#" data-action="close" id="btnClose" title="Đóng bảng">
+                                    <i class="ace-icon fa fa-times red"></i>
                                 </a>
                             </div>
                         </div>
 
                         <div class="widget-body">
                             <div class="widget-main">
-                                <form:form id="listForm" action="${formUrl}" method="GET" modelAttribute="modelSearch">
+                                <form:form id="listForm" action="${formUrl}" method="GET"
+                                           modelAttribute="modelSearch">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group-custom">
+                                        <div class="col-xs-12">
+                                            <div class="col-sm-6">
                                                 <label>Tên khách hàng</label>
-                                                <form:input path="fullname" class="form-control" placeholder="Nhập tên..."/>
+                                                <form:input path="fullname" class="form-control"/>
                                             </div>
-                                            <div class="form-group-custom">
+                                            <div class="col-sm-6">
                                                 <label>Di động</label>
-                                                <form:input path="phone" class="form-control" placeholder="Nhập số điện thoại..."/>
+                                                <form:input path="phone" class="form-control"/>
                                             </div>
-                                            <div class="form-group-custom">
-                                                <label>Tình trạng</label>
-                                                <form:select path="statusAssignment" class="form-control">
-                                                    <form:option value="" label="---Chọn tình trạng---"/>
-                                                    <form:options items="${statusAssignment}"/>
+                                        </div>
+                                    </div>
+                                    <div class="space-4"></div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="col-sm-6">
+                                                <label>Email</label>
+                                                <form:input path="email" class="form-control"/>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>Trạng thái xử lý</label>
+                                                <form:select path="status" class="form-control">
+                                                    <option value="">-- Chọn Trạng Thái Xử Lý --</option>
+                                                    <form:options items="${status}"></form:options>
                                                 </form:select>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="space-4"></div>
 
-                                        <div class="col-sm-6">
-                                            <div class="form-group-custom">
-                                                <label>Email</label>
-                                                <form:input path="email" class="form-control" placeholder="Nhập địa chỉ email..."/>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
                                             <security:authorize access="hasRole('MANAGER')">
-                                                <div class="form-group-custom">
-                                                    <label>Nhân viên quản lí</label>
+                                                <div class="col-sm-6">
+                                                    <label>Chọn nhân viên</label>
                                                     <form:select path="staffId" class="form-control">
-                                                        <form:option value="" label="---Chọn nhân viên---"/>
-                                                        <form:options items="${staffList}"/>
+                                                        <option value="">-- Chọn Nhân Viên --</option>
+                                                        <form:options items="${staffList}"></form:options>
                                                     </form:select>
                                                 </div>
                                             </security:authorize>
                                         </div>
                                     </div>
+                                    <div class="space-8"></div>
 
                                     <div class="row">
-                                        <div class="col-xs-12 text-center" style="margin-top: 15px;">
+                                        <div class="col-xs-12">
                                             <button type="button" class="btn btn-sm btn-primary" id="btnSearch">
-                                                <i class="ace-icon fa fa-search"></i> Tìm kiếm
+                                                Tìm kiếm <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                                             </button>
-                                            <a href="${formUrl}" class="btn btn-sm btn-danger">
-                                                <i class="ace-icon fa fa-undo"></i> Hoàn tác
-                                            </a>
                                         </div>
                                     </div>
                                 </form:form>
@@ -124,7 +124,7 @@
 
                     <div class="pull-right" style="margin-bottom: 10px; margin-top: 10px;">
                         <a href="/admin/customer-edit" class="btn btn-purple btn-bold" title="Thêm khách hàng">
-                            <i class="fa fa-user-plus bigger-120"></i> Thêm khách hàng
+                            <i class="fa fa-plus-circle bigger-120"></i> Thêm khách hàng
                         </a>
 
                         <security:authorize access="hasRole('MANAGER')">
@@ -140,11 +140,14 @@
                         <display:table name="params.listResult" cellspacing="0" cellpadding="0"
                                        requestURI="${formUrl}" partialList="true" sort="external"
                                        size="${params.totalItems}" defaultsort="2" defaultorder="ascending"
-                                       id="tableList" pagesize="${params.maxPageItems}" export="false"
-                                       class="table table-bordered table-striped align-middle table-custom-header"
-                                       style="margin: 3em 0 1.5em;" htmlId="customerList">
+                                       id="tableList" pagesize="${params.maxPageItems}"
+                                       export="false"
+                                       class="table table-bordered table-striped align-middle"
+                                       style="margin: 3em 0 1.5em;"
+                                       htmlId="customerList">
 
-                            <display:column title="<label class='pos-rel'><input type='checkbox' class='ace' id='checkAll'/><span class='lbl'></span></label>"
+                            <display:column
+                                    title="<label class='pos-rel'><input type='checkbox' class='ace' id='checkAll'/><span class='lbl'></span></label>"
                                     class="center" headerClass="center" style="width: 40px;">
                                 <label class="pos-rel">
                                     <input type="checkbox" class="ace" value="${tableList.id}"/>
@@ -152,27 +155,30 @@
                                 </label>
                             </display:column>
 
-                            <display:column headerClass="text-center" property="fullname" title="TÊN KHÁCH HÀNG"/>
-                            <display:column headerClass="text-center" property="phone" title="DI ĐỘNG"/>
-                            <display:column headerClass="text-center" property="email" title="EMAIL"/>
-                            <display:column headerClass="text-center" property="note" title="NHU CẦU"/>
-                            <display:column headerClass="text-center" property="createdBy" title="NGƯỜI THÊM"/>
-                            <display:column headerClass="text-center" property="createdDate" title="NGÀY THÊM"/>
-                            <display:column headerClass="text-center" property="statusAssignment" title="TÌNH TRẠNG"/>
+                            <display:column headerClass="text-center" property="fullname" title="Tên khách hàng"/>
+                            <display:column headerClass="text-center" property="phone" title="Di động"/>
+                            <display:column headerClass="text-center" property="email" title="Email"/>
+                            <display:column headerClass="text-center" property="demand" title="Nhu cầu"/>
+                            <display:column headerClass="text-center" property="createdBy" title="Người thêm"/>
+                            <display:column headerClass="text-center" property="createdDate" title="Ngày thêm"/>
+                            <display:column headerClass="text-center" property="status" title="Trạng thái xử lý"/>
 
-                            <display:column headerClass="text-center" class="text-center text-nowrap" title="THAO TÁC">
+                            <display:column headerClass="text-center" class="text-center text-nowrap" title="Thao tác">
                                 <security:authorize access="hasRole('MANAGER')">
-                                    <button class="btn btn-xs btn-primary" onclick="assignmentCustomer(${tableList.id})" title="Giao khách hàng">
-                                        <i class="fa fa-users"></i>
+                                    <button class="btn btn-xs btn-success" onclick="assignmentCustomer(${tableList.id})"
+                                            title="Giao khách hàng">
+                                        <i class="fa fa-check-square"></i>
                                     </button>
                                 </security:authorize>
 
-                                <a class="btn btn-xs btn-success" title="Sửa khách hàng" href="/admin/customer-edit-${tableList.id}">
+                                <a class="btn btn-xs btn-info" title="Sửa khách hàng"
+                                   href="/admin/customer-edit-${tableList.id}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
 
                                 <security:authorize access="hasRole('MANAGER')">
-                                    <button class="btn btn-xs btn-danger" title="Xóa khách hàng" onclick="deleteOneCustomer(${tableList.id})">
+                                    <button class="btn btn-xs btn-danger" title="Xóa khách hàng"
+                                            onclick="deleteOneCustomer(${tableList.id})">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </security:authorize>
@@ -193,7 +199,7 @@
                 <h4 class="modal-title">Danh sách nhân viên</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-bordered table-striped" id="staffListModal">
+                <table class="table table-bordered table-striped" id="staffList">
                     <thead>
                     <tr>
                         <th class="center" style="width: 60px;">
@@ -205,7 +211,9 @@
                         <th class="center">Họ tên nhân viên</th>
                     </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+
+                    </tbody>
                 </table>
             </div>
             <div class="modal-footer">
@@ -218,35 +226,38 @@
 </div>
 
 <script>
+
     $('#btnReload').click(function (e) {
-        e.preventDefault();
+        e.preventDefault()
         window.location.href = "${formUrl}";
-    });
+    })
 
     $('#btnSearch').click(function (e) {
-        e.preventDefault();
+        e.preventDefault()
+
         $('#listForm').submit();
-    });
-
-    $(document).ready(function () {
-        $('#customerList, #staffListModal').on('change', 'thead input[type=checkbox]', function () {
-            var isChecked = $(this).prop('checked');
-            $(this).closest('table').find('tbody input[type=checkbox]').prop('checked', isChecked);
-        });
-
-        $('#customerList, #staffListModal').on('change', 'tbody input[type=checkbox]', function () {
-            var $table = $(this).closest('table');
-            var totalCheckboxes = $table.find('tbody input[type=checkbox]').length;
-            var checkedCheckboxes = $table.find('tbody input[type=checkbox]:checked').length;
-            $table.find('thead input[type=checkbox]').prop('checked', totalCheckboxes === checkedCheckboxes && totalCheckboxes > 0);
-        });
-    });
+    })
 
     function assignmentCustomer(id) {
         $('#customerId').val(id);
         $('#assignmentCustomerModal').modal('show');
         loadStaff(id);
     }
+
+    $(document).ready(function () {
+        $('#customerList, #staffList').on('change', 'thead input[type=checkbox]', function () {
+            var isChecked = $(this).prop('checked');
+            $(this).closest('table').find('tbody input[type=checkbox]').prop('checked', isChecked);
+        });
+
+        $('#customerList, #staffList').on('change', 'tbody input[type=checkbox]', function () {
+            var $table = $(this).closest('table');
+            var totalCheckboxes = $table.find('tbody input[type=checkbox]').length;
+            var checkedCheckboxes = $table.find('tbody input[type=checkbox]:checked').length;
+
+            $table.find('thead input[type=checkbox]').prop('checked', totalCheckboxes === checkedCheckboxes && totalCheckboxes > 0);
+        });
+    });
 
     function loadStaff(id) {
         $.ajax({
@@ -266,11 +277,12 @@
                     row += '<td class="center">' + item.fullName + '</td>';
                     row += '</tr>';
                 });
-                $('#staffListModal').find('tbody').html(row);
 
-                var total = $('#staffListModal tbody input[type=checkbox]').length;
-                var checked = $('#staffListModal tbody input[type=checkbox]:checked').length;
-                $('#staffListModal thead input[type=checkbox]').prop('checked', total === checked && total > 0);
+                $('#staffList').find('tbody').html(row);
+
+                var total = $('#staffList tbody input[type=checkbox]').length;
+                var checked = $('#staffList tbody input[type=checkbox]:checked').length;
+                $('#staffList thead input[type=checkbox]').prop('checked', total === checked && total > 0);
             },
             error: function (response) {
                 console.log("Lỗi tải danh sách nhân viên!");
@@ -280,16 +292,21 @@
 
     $('#btnAssignmentCustomer').click(function (e) {
         e.preventDefault();
-        var json = {};
+
+        var json = {}
         json['customerId'] = $('#customerId').val();
-        json['staffIds'] = $('#staffListModal').find('tbody input[type=checkbox]:checked').map(function () { return $(this).val(); }).get();
+        var staffIds = $('#staffList').find('tbody input[type = checkbox]:checked').map(function () {
+            return $(this).val();
+        }).get();
+        json['staffIds'] = staffIds;
 
         if (json['customerId'] != null) {
             updateAssignment(json);
         } else {
             alert("Id của khách hàng không được thiếu!");
         }
-    });
+
+    })
 
     function updateAssignment(data) {
         $.ajax({
@@ -299,6 +316,7 @@
             data: JSON.stringify(data),
             contentType: "application/json",
             success: function (response) {
+                console.log("success")
                 if (data.staffIds && data.staffIds.length !== 0) {
                     alert("Đã giao khách hàng cho nhân viên thành công!");
                 } else {
@@ -315,14 +333,20 @@
 
     $('#btnDeleteCustomer').click(function (e) {
         e.preventDefault();
-        var ids = $('#customerList').find('tbody input[type=checkbox]:checked').map(function () { return $(this).val(); }).get();
 
-        if (ids && ids.length > 0) {
-            deleteCustomer(ids);
+        var data = {}
+        var ids = $('#customerList').find('tbody input[type = checkbox]:checked').map(function () {
+            return $(this).val();
+        }).get();
+        data['ids'] = ids
+
+        if (data['ids'] != '') {
+            deleteCustomer(data['ids'])
         } else {
-            alert("Vui lòng chọn ít nhất một khách hàng để xóa!");
+            alert("Không có khách hàng được chọn")
         }
-    });
+
+    })
 
     function deleteOneCustomer(id) {
         deleteCustomer([id]);
@@ -335,12 +359,13 @@
             type: "DELETE",
             dataType: "JSON",
             success: function (response) {
+                console.log("success")
                 alert("Xóa khách hàng thành công!");
-                window.location.href = "${formUrl}?message=delete_success";
+                window.location.href = "${formUrl}?message=delete_success"
             },
             error: function (response) {
+                console.log("error")
                 alert("Xóa khách hàng thất bại!");
-                console.log("Error details:", response);
             }
         });
     }

@@ -133,7 +133,7 @@
                                 <input type="text" name="phone" class="form-control" placeholder="Số điện thoại">
                                 <span class="text-danger error-msg" id="error-phone" style="font-size: 13px;"></span>
                             </div>
-                            <input type="text" name="note" class="form-control mt-3" placeholder="Nhu cầu">
+                            <input type="text" name="demand" class="form-control mt-3" placeholder="Nhu cầu">
                             <div class="text-danger mt-2" id="error-general"
                                  style="font-size: 14px; font-weight: bold;"></div>
                             <button type="button" id="btnSendContact" class="btn btn-success px-4 mt-3">
@@ -268,6 +268,8 @@
 
         var fullName = $('input[name="fullname"]').val().trim();
         var phone = $('input[name="phone"]').val().trim();
+        var email = $('input[name="email"]').val().trim();
+        var demand = $('input[name="demand"]').val().trim();
 
         if (fullName === "") {
             $('#error-fullName').text("Vui lòng nhập Họ và tên!");
@@ -288,17 +290,29 @@
             return;
         }
 
-        var formData = $('#submitContact').serialize();
+        var data = {
+            fullname: fullName,
+            phone: phone,
+            email: email,
+            demand: demand
+        };
+
         $.ajax({
             url: '/api/customers',
             type: 'POST',
-            data: formData,
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
             success: function (response) {
                 alert("Gửi liên hệ thành công! SkyLand sẽ sớm phản hồi cho bạn.");
                 $('#submitContact')[0].reset();
             },
             error: function (response) {
-                $('#error-general').text("Hệ thống đang bận, vui lòng thử lại sau!");
+                if (response.responseJSON && Array.isArray(response.responseJSON)) {
+                    $('#error-general').text("Lỗi: " + response.responseJSON.join(", "));
+                } else {
+                    $('#error-general').text("Hệ thống đang bận, vui lòng thử lại sau!");
+                }
                 console.log(response);
             }
         });

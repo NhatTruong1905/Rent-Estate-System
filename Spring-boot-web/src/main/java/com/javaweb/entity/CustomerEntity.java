@@ -18,10 +18,12 @@ public class CustomerEntity extends BaseEntity {
     private String email;
     @Column(name = "phone", nullable = false)
     private String phone;
-    @Column(name = "note")
-    private String note;
-    @Column(name = "status", nullable = false)
-    private Integer status = 1;
+    @Column(name = "demand")
+    private String demand;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "is_active", nullable = false)
+    private Integer isActive = 1;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();

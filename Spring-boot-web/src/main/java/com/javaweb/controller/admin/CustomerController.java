@@ -1,7 +1,7 @@
 package com.javaweb.controller.admin;
 
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.enums.StatusAssignment;
+import com.javaweb.enums.Status;
 import com.javaweb.enums.TransactionType;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.request.CustomerSearchRequestDTO;
@@ -31,9 +31,13 @@ public class CustomerController {
         ModelAndView mav = new ModelAndView("admin/customer/list");
         DisplayTagUtils.of(request, params);
 
-        mav.addObject("statusAssignment", StatusAssignment.values());
+        mav.addObject("status", Status.getListOfStatus());
         mav.addObject("staffList", this.userService.getListStaff());
 
+        if (SecurityUtils.getAuthorities().contains(SystemConstant.STAFF_ROLE)) {
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            params.setStaffId(staffId);
+        }
         List<CustomerDTO> results = this.customerService.findAll(params, PageRequest.of(params.getPage() - 1, params.getMaxPageItems()));
         params.setListResult(results);
         params.setTotalItems(this.customerService.countTotalItem(params));
@@ -47,7 +51,9 @@ public class CustomerController {
     @GetMapping("/customer-edit")
     public ModelAndView addCustomer(@ModelAttribute(name = "customer") CustomerDTO customerDTO) {
         ModelAndView mav = new ModelAndView("admin/customer/edit");
-        mav.addObject("statusAssignment", StatusAssignment.values());
+        customerDTO.setStatus(Status.CHUA_XU_LY.getStatus());
+        mav.addObject("status", Status.getListOfStatus());
+        mav.addObject("transactionType", TransactionType.getListOfTransactionType());
 
         return mav;
     }
@@ -63,8 +69,8 @@ public class CustomerController {
                 return mav;
             }
         }
-
-        mav.addObject("statusAssignment", StatusAssignment.values());
+        mav.addObject("status", Status.getListOfStatus());
+        mav.addObject("transactionType", TransactionType.getListOfTransactionType());
         mav.addObject("customer", this.customerService.findCustomerById(id));
         return mav;
     }

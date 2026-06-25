@@ -33,4 +33,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, UserRep
     List<UserEntity> findByAssignmentCustomers_Customer(CustomerEntity customer);
 
     boolean existsByUserName(String userName);
+
 }

@@ -26,6 +26,8 @@ public class CustomerRepositoryCustomImpl implements CustomerRepositoryCustom {
     private List<Predicate> buildPredicates(CustomerSearchRequestDTO request, Root<CustomerEntity> root, CriteriaBuilder builder) {
         List<Predicate> predicates = new ArrayList<>();
 
+        predicates.add(builder.equal(root.get("isActive"), 1));
+
         if (request.getFullname() != null && !request.getFullname().trim().isEmpty()) {
             predicates.add(builder.like(root.get("fullname"), "%" + request.getFullname().trim() + "%"));
         }
@@ -35,19 +37,12 @@ public class CustomerRepositoryCustomImpl implements CustomerRepositoryCustom {
         if (request.getPhone() != null && !request.getPhone().trim().isEmpty()) {
             predicates.add(builder.like(root.get("phone"), "%" + request.getPhone().trim() + "%"));
         }
-
-        boolean hasStatusFilter = request.getStatusAssignment() != null && !request.getStatusAssignment().trim().isEmpty();
-        boolean hasStaffFilter = request.getStaffId() != null;
-
-        if (hasStatusFilter || hasStaffFilter) {
+        if (request.getStatus() != null && !request.getStatus().trim().isEmpty()) {
+            predicates.add(builder.like(root.get("status"), "%" + request.getStatus().trim() + "%"));
+        }
+        if (request.getStaffId() != null) {
             Join<CustomerEntity, AssignmentCustomerEntity> assignmentJoin = root.join("assignmentCustomers");
-
-            if (hasStatusFilter) {
-                predicates.add(builder.equal(assignmentJoin.get("status"), request.getStatusAssignment()));
-            }
-            if (hasStaffFilter) {
-                predicates.add(builder.equal(assignmentJoin.get("staff").get("id"), request.getStaffId()));
-            }
+            predicates.add(builder.equal(assignmentJoin.get("staff").get("id"), request.getStaffId()));
         }
 
         return predicates;
@@ -79,6 +74,7 @@ public class CustomerRepositoryCustomImpl implements CustomerRepositoryCustom {
         Root<CustomerEntity> root = query.from(CustomerEntity.class);
 
         List<Predicate> predicates = buildPredicates(request, root, builder);
+        predicates.add(builder.equal(root.get("isActive"), 1));
         query.where(predicates.toArray(new Predicate[0]));
 
         query.select(builder.countDistinct(root));
