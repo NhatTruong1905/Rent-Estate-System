@@ -367,7 +367,7 @@
 
     function updateAssignment(data) {
         $.ajax({
-            url: "/api/assignments",
+            url: "/api/assignments/building",
             type: "POST",
             dataType: "JSON",
             data: JSON.stringify(data),

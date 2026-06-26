@@ -2,6 +2,7 @@ package com.javaweb.api.admin;
 
 import com.javaweb.exception.ServiceException;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
+import com.javaweb.model.dto.AssignmentCustomerDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.AssignmentBuildingService;
 import com.javaweb.service.UserService;
@@ -25,7 +26,7 @@ public class AssignmentAPI {
     @Autowired
     private UserService userService;
 
-    @PostMapping()
+    @PostMapping("/building")
     public ResponseEntity<?> updateAssignmentBuilding(@Valid @RequestBody AssignmentBuildingDTO assignmentBuilding, BindingResult bindingResult) throws ServiceException {
 
         if (bindingResult.hasErrors()) {
@@ -37,6 +38,24 @@ public class AssignmentAPI {
         }
         String nameOfStaffs = userService.getNameStaffs(assignmentBuilding.getStaffIds());
         assignmentBuildingService.updateAssignmentBuilding(assignmentBuilding);
+
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setMessage(nameOfStaffs);
+        return ResponseEntity.ok().body(responseDTO);
+    }
+
+    @PostMapping("/customer")
+    public ResponseEntity<?> updateAssignmentCustomer(@Valid @RequestBody AssignmentCustomerDTO assignmentCustomer, BindingResult bindingResult) throws ServiceException {
+
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errors);
+        }
+        String nameOfStaffs = userService.getNameStaffs(assignmentCustomer.getStaffIds());
+        assignmentBuildingService.updateAssignmentBuilding(assignmentCustomer);
 
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setMessage(nameOfStaffs);
