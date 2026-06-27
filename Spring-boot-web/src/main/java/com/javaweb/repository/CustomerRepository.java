@@ -9,6 +9,6 @@ import java.util.List;
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Long>, CustomerRepositoryCustom {
     CustomerEntity findCustomerById(Long id);
 
-    boolean existsByIdAndAssignmentCustomers_Staff_Id(Long id, Long staffId);
+    boolean existsByIdAndStaffs_Id(Long id, Long staffId);
 
 }

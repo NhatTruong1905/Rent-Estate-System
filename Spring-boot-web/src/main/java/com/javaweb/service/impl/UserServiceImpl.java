@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
         Map<Long, String> staffList = new HashMap<>();
         for (UserEntity s : staffs) {
-            staffList.put(s.getId(), s.getUserName());
+            staffList.put(s.getId(), s.getFullName());
         }
 
         return staffList;
@@ -229,7 +229,7 @@ public class UserServiceImpl implements UserService {
     public List<StaffResponseDTO> getStaffOfCustomer(Long customerId) {
         List<UserEntity> staffs = this.userRepository.findByStatusAndRoles_Code(1, "STAFF");
         CustomerEntity customerEntity = this.iCustomerRepository.findCustomerById(customerId);
-        List<UserEntity> assignedStaffs = this.userRepository.findByAssignmentCustomers_Customer(customerEntity);
+        List<UserEntity> assignedStaffs = this.userRepository.findByCustomers(customerEntity);
 
 
         List<StaffResponseDTO> staffResponseDTOS = new ArrayList<>();

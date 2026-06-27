@@ -305,7 +305,7 @@
 
                                     <div class="clearfix form-actions"
                                          style="background-color: transparent; border-top: 1px solid #f0f0f0; margin-bottom: 0;">
-                                        <div class="col-md-offset-2 col-md-10">
+                                        <div class="col-sm-offset-2 col-sm-10">
                                             <c:if test="${empty building.id}">
                                                 <button class="btn btn-purple btn-bold" type="button"
                                                         id="btnAddOrUpdateBuilding">
@@ -314,7 +314,7 @@
                                             </c:if>
                                             <c:if test="${not empty building.id}">
                                                 <button class="btn btn-primary btn-bold" type="button"
-                                                        id="btnAddOrUpdateBuilding">
+                                                        id="btnAddOrUpdateBuilding" >
                                                     <i class="ace-icon fa fa-pencil bigger-110"></i> Sửa tòa nhà
                                                 </button>
                                             </c:if>

@@ -5,6 +5,7 @@ import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.AssignmentCustomerDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.AssignmentBuildingService;
+import com.javaweb.service.AssignmentCustomerService;
 import com.javaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class AssignmentAPI {
     private AssignmentBuildingService assignmentBuildingService;
 
     @Autowired
+    private AssignmentCustomerService assignmentCustomerService;
+
+    @Autowired
     private UserService userService;
 
     @PostMapping("/building")
@@ -36,8 +40,8 @@ public class AssignmentAPI {
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errors);
         }
-        String nameOfStaffs = userService.getNameStaffs(assignmentBuilding.getStaffIds());
-        assignmentBuildingService.updateAssignmentBuilding(assignmentBuilding);
+        String nameOfStaffs = this.userService.getNameStaffs(assignmentBuilding.getStaffIds());
+        this.assignmentBuildingService.updateAssignmentBuilding(assignmentBuilding);
 
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setMessage(nameOfStaffs);
@@ -54,8 +58,8 @@ public class AssignmentAPI {
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errors);
         }
-        String nameOfStaffs = userService.getNameStaffs(assignmentCustomer.getStaffIds());
-        assignmentBuildingService.updateAssignmentBuilding(assignmentCustomer);
+        String nameOfStaffs = this.userService.getNameStaffs(assignmentCustomer.getStaffIds());
+        this.assignmentCustomerService.updateAssignmentCustomer(assignmentCustomer);
 
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setMessage(nameOfStaffs);

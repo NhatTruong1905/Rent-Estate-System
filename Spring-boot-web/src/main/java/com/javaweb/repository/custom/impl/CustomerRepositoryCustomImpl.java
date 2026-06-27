@@ -2,6 +2,7 @@ package com.javaweb.repository.custom.impl;
 
 import com.javaweb.entity.AssignmentCustomerEntity;
 import com.javaweb.entity.CustomerEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.request.CustomerSearchRequestDTO;
 import com.javaweb.repository.custom.CustomerRepositoryCustom;
@@ -41,8 +42,8 @@ public class CustomerRepositoryCustomImpl implements CustomerRepositoryCustom {
             predicates.add(builder.like(root.get("status"), "%" + request.getStatus().trim() + "%"));
         }
         if (request.getStaffId() != null) {
-            Join<CustomerEntity, AssignmentCustomerEntity> assignmentJoin = root.join("assignmentCustomers");
-            predicates.add(builder.equal(assignmentJoin.get("staff").get("id"), request.getStaffId()));
+            Join<CustomerEntity, UserEntity> staffJoin = root.join("staffs");
+            predicates.add(builder.equal(staffJoin.get("id"), request.getStaffId()));
         }
 
         return predicates;

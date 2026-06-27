@@ -187,6 +187,60 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="widget-box" style="margin-top: 20px;">
+                            <div class="widget-header">
+                                <h5 class="widget-title" style="font-weight: bold; color: #438eb9;">
+                                   <i class="ace-icon fa fa-street-view"></i> Dẫn đi xem nhà
+                                </h5>
+                                <div class="widget-toolbar">
+                                    <button class="btn btn-sm btn-success" title="Thêm giao dịch"
+                                            onclick="openTransactionModal()"
+                                            style="padding: 0 10px; margin-bottom: 3px;">
+                                        <i class="fa fa-plus-circle"></i> Thêm giao dịch
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main no-padding">
+                                    <table class="table table-bordered table-striped" style="margin: 0;">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">Ngày tạo</th>
+                                            <th class="text-center">Người tạo</th>
+                                            <th class="text-center">Ngày sửa</th>
+                                            <th class="text-center">Người sửa</th>
+                                            <th class="text-left">Chi tiết giao dịch</th>
+                                            <th class="text-center">Thao tác</th>
+                                        </tr>
+                                        </thead>
+                                            <%--                                        <tbody>--%>
+                                            <%--                                            <c:forEach var="item" items="${customer.listTransaction}">--%>
+                                            <%--                                                <tr>--%>
+                                            <%--                                                    <td class="text-center">${item.createdDate}</td>--%>
+                                            <%--                                                    <td class="text-center">${item.createdBy}</td>--%>
+                                            <%--                                                    <td class="text-center">${item.modifiedDate}</td>--%>
+                                            <%--                                                    <td class="text-center">${item.modifiedBy}</td>--%>
+                                            <%--                                                    <td>${item.transactionDetail}</td>--%>
+                                            <%--                                                    <td class="text-center">--%>
+                                            <%--                                                        <button class="btn btn-xs btn-info" title="Sửa giao dịch">--%>
+                                            <%--                                                            <i class="fa fa-pencil"></i>--%>
+                                            <%--                                                        </button>--%>
+                                            <%--                                                    </td>--%>
+                                            <%--                                                </tr>--%>
+                                            <%--                                            </c:forEach>--%>
+
+                                            <%--                                            <c:if test="${empty customer.listTransaction}">--%>
+                                            <%--                                                <tr>--%>
+                                            <%--                                                    <td colspan="6" class="text-center">Chưa có dữ liệu chăm sóc khách hàng.</td>--%>
+                                            <%--                                                </tr>--%>
+                                            <%--                                            </c:if>--%>
+                                            <%--                                        </tbody>--%>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </c:if>
 
                 </div>

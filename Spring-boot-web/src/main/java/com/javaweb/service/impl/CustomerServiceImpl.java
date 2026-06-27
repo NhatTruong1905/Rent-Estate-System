@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean isStaffOfCustomer(Long staffId, Long id) {
-        return this.customerRepository.existsByIdAndAssignmentCustomers_Staff_Id(id, staffId);
+        return this.customerRepository.existsByIdAndStaffs_Id(id, staffId);
     }
 
     @Override

@@ -25,6 +25,9 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "is_active", nullable = false)
     private Integer isActive = 1;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
-    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "assignmentcustomer",
+            joinColumns = @JoinColumn(name = "customerid"),
+            inverseJoinColumns = @JoinColumn(name = "staffid"))
+    private List<UserEntity> staffs = new ArrayList<>();
 }

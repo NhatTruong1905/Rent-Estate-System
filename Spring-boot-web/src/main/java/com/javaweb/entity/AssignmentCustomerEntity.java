@@ -10,8 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class AssignmentCustomerEntity extends BaseEntity {
-    @Column(name = "status")
-    private String status;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "staffid")
     private UserEntity staff;

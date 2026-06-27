@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>, UserRep
 
     List<UserEntity> findByBuildings(BuildingEntity building);
 
-    List<UserEntity> findByAssignmentCustomers_Customer(CustomerEntity customer);
+    List<UserEntity> findByCustomers(CustomerEntity customer);
 
     boolean existsByUserName(String userName);
 

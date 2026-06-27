@@ -46,8 +46,8 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
     private List<BuildingEntity> buildings = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "staff")
-    private List<AssignmentCustomerEntity> assignmentCustomers = new ArrayList<>();
+    @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
+    private List<CustomerEntity> customers = new ArrayList<>();
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
