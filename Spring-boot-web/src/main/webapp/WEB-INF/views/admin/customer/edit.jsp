@@ -119,8 +119,7 @@
 
                                             &nbsp; &nbsp; &nbsp;
 
-                                            <button class="btn btn-danger btn-bold" type="button"
-                                                    onclick="window.location.href='/admin/customer-list'">
+                                            <button class="btn btn-danger btn-bold" type="reset">
                                                 <i class="ace-icon fa fa-undo bigger-110"></i> Hủy
                                             </button>
                                         </div>
@@ -141,7 +140,7 @@
                                 </h5>
                                 <div class="widget-toolbar">
                                     <button class="btn btn-sm btn-success" title="Thêm giao dịch"
-                                            onclick="openTransactionModal()"
+                                            onclick="openTransactionModal('CSKH')"
                                             style="padding: 0 10px; margin-bottom: 3px;">
                                         <i class="fa fa-plus-circle"></i> Thêm giao dịch
                                     </button>
@@ -161,28 +160,31 @@
                                             <th class="text-center">Thao tác</th>
                                         </tr>
                                         </thead>
-                                            <%--                                        <tbody>--%>
-                                            <%--                                            <c:forEach var="item" items="${customer.listTransaction}">--%>
-                                            <%--                                                <tr>--%>
-                                            <%--                                                    <td class="text-center">${item.createdDate}</td>--%>
-                                            <%--                                                    <td class="text-center">${item.createdBy}</td>--%>
-                                            <%--                                                    <td class="text-center">${item.modifiedDate}</td>--%>
-                                            <%--                                                    <td class="text-center">${item.modifiedBy}</td>--%>
-                                            <%--                                                    <td>${item.transactionDetail}</td>--%>
-                                            <%--                                                    <td class="text-center">--%>
-                                            <%--                                                        <button class="btn btn-xs btn-info" title="Sửa giao dịch">--%>
-                                            <%--                                                            <i class="fa fa-pencil"></i>--%>
-                                            <%--                                                        </button>--%>
-                                            <%--                                                    </td>--%>
-                                            <%--                                                </tr>--%>
-                                            <%--                                            </c:forEach>--%>
+                                        <tbody>
+                                        <c:forEach var="item" items="${CSKH}">
+                                            <tr>
+                                                <td class="text-center">${item.createdDate}</td>
+                                                <td class="text-center">${item.createdBy}</td>
+                                                <td class="text-center">${item.modifiedDate}</td>
+                                                <td class="text-center">${item.modifiedBy}</td>
+                                                <td>${item.note}</td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-xs btn-info" title="Sửa giao dịch"
+                                                            onclick="openTransactionModal('CSKH')">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
 
-                                            <%--                                            <c:if test="${empty customer.listTransaction}">--%>
-                                            <%--                                                <tr>--%>
-                                            <%--                                                    <td colspan="6" class="text-center">Chưa có dữ liệu chăm sóc khách hàng.</td>--%>
-                                            <%--                                                </tr>--%>
-                                            <%--                                            </c:if>--%>
-                                            <%--                                        </tbody>--%>
+                                        <c:if test="${empty CSKH}">
+                                            <tr>
+                                                <td colspan="6" class="text-center">Chưa có dữ liệu chăm sóc khách
+                                                    hàng.
+                                                </td>
+                                            </tr>
+                                        </c:if>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -191,11 +193,11 @@
                         <div class="widget-box" style="margin-top: 20px;">
                             <div class="widget-header">
                                 <h5 class="widget-title" style="font-weight: bold; color: #438eb9;">
-                                   <i class="ace-icon fa fa-street-view"></i> Dẫn đi xem nhà
+                                    <i class="ace-icon fa fa-street-view"></i> Dẫn đi xem nhà
                                 </h5>
                                 <div class="widget-toolbar">
                                     <button class="btn btn-sm btn-success" title="Thêm giao dịch"
-                                            onclick="openTransactionModal()"
+                                            onclick="openTransactionModal('DDX')"
                                             style="padding: 0 10px; margin-bottom: 3px;">
                                         <i class="fa fa-plus-circle"></i> Thêm giao dịch
                                     </button>
@@ -215,28 +217,29 @@
                                             <th class="text-center">Thao tác</th>
                                         </tr>
                                         </thead>
-                                            <%--                                        <tbody>--%>
-                                            <%--                                            <c:forEach var="item" items="${customer.listTransaction}">--%>
-                                            <%--                                                <tr>--%>
-                                            <%--                                                    <td class="text-center">${item.createdDate}</td>--%>
-                                            <%--                                                    <td class="text-center">${item.createdBy}</td>--%>
-                                            <%--                                                    <td class="text-center">${item.modifiedDate}</td>--%>
-                                            <%--                                                    <td class="text-center">${item.modifiedBy}</td>--%>
-                                            <%--                                                    <td>${item.transactionDetail}</td>--%>
-                                            <%--                                                    <td class="text-center">--%>
-                                            <%--                                                        <button class="btn btn-xs btn-info" title="Sửa giao dịch">--%>
-                                            <%--                                                            <i class="fa fa-pencil"></i>--%>
-                                            <%--                                                        </button>--%>
-                                            <%--                                                    </td>--%>
-                                            <%--                                                </tr>--%>
-                                            <%--                                            </c:forEach>--%>
+                                        <tbody>
+                                        <c:forEach var="item" items="${DDX}">
+                                            <tr>
+                                                <td class="text-center">${item.createdDate}</td>
+                                                <td class="text-center">${item.createdBy}</td>
+                                                <td class="text-center">${item.modifiedDate}</td>
+                                                <td class="text-center">${item.modifiedBy}</td>
+                                                <td>${item.note}</td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-xs btn-info" title="Sửa giao dịch"
+                                                            onclick="openTransactionModal('DDX')">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
 
-                                            <%--                                            <c:if test="${empty customer.listTransaction}">--%>
-                                            <%--                                                <tr>--%>
-                                            <%--                                                    <td colspan="6" class="text-center">Chưa có dữ liệu chăm sóc khách hàng.</td>--%>
-                                            <%--                                                </tr>--%>
-                                            <%--                                            </c:if>--%>
-                                            <%--                                        </tbody>--%>
+                                        <c:if test="${empty DDX}">
+                                            <tr>
+                                                <td colspan="6" class="text-center">Chưa có dữ liệu dẫn đi xem nhà.</td>
+                                            </tr>
+                                        </c:if>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -244,6 +247,41 @@
                     </c:if>
 
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="transactionModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="font-weight: bold; color: #438eb9;">Nhập thông tin giao dịch</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group clearfix" style="margin-bottom: 0;">
+                            <label class="col-sm-3 control-label no-padding-right"
+                                   style="text-align: left; font-weight: bold; margin-top: 7px;">
+                                Chi tiết giao dịch
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" id="transactionNote" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="transactionTypeCode" value=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-primary" id="btnSaveTransaction">
+                    <i class="ace-icon fa fa-check"></i> Xác nhận
+                </button>
+                <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">
+                    <i class="ace-icon fa fa-times"></i> Đóng
+                </button>
             </div>
         </div>
     </div>
@@ -309,9 +347,55 @@
         });
     }
 
-    function openTransactionModal() {
-        alert("Chức năng thêm giao dịch đang được xây dựng!");
+    function openTransactionModal(transactionTypeCode) {
+        $('#transactionNote').val('');
+        $('.transaction-error').remove();
+
+        $('#transactionTypeCode').val(transactionTypeCode);
+
+        $('#transactionModal').modal('show');
     }
+
+    $('#btnSaveTransaction').click(function (e) {
+        e.preventDefault();
+        $('.transaction-error').remove();
+
+        var customerId = $('#id').val();
+        var code = $('#transactionTypeCode').val();
+        var note = $('#transactionNote').val();
+
+        if (note.trim() == '') {
+            $('#transactionNote').after('<span class="transaction-error" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Vui lòng nhập chi tiết giao dịch!</span>');
+            return;
+        }
+
+        var dataJson = {
+            "customerId": customerId,
+            "code": code,
+            "note": note
+        };
+
+        var btn = $(this);
+        btn.prop('disabled', true).text('Đang lưu...');
+
+        $.ajax({
+            url: "/api/customers/transaction",
+            type: "POST",
+            data: JSON.stringify(dataJson),
+            dataType: "JSON",
+            contentType: "application/json",
+            success: function (response) {
+                alert("Thêm giao dịch thành công!");
+                $('#transactionModal').modal('hide');
+                window.location.reload();
+            },
+            error: function (response) {
+                btn.prop('disabled', false).text('Xác nhận');
+                alert("Hệ thống gặp lỗi, không thể thêm giao dịch chăm sóc!");
+                console.log(response);
+            }
+        });
+    });
 </script>
 </body>
 </html>

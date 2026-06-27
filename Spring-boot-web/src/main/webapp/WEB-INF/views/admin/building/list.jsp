@@ -250,37 +250,41 @@
     </div>
 </div>
 
-<div class="modal fade" id="assignmentBuildingModal">
-    <div class="modal-dialog">
+<div class="modal fade" id="transactionModal" role="dialog" style="margin-top: 100px;">
+    <div class="modal-dialog" style="width: 600px;">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Danh sách nhân viên</h4>
+            <div class="modal-header" style="background-color: #f5f5f5; border-bottom: 1px solid #e5e5e5;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="font-weight: 500; color: #333;">Nhập thông tin giao dịch</h4>
             </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-striped" id="staffList">
-                    <thead>
-                    <tr>
-                        <th class="center" style="width: 60px;">
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" id="checkAllStaff"/>
-                                <span class="lbl"></span>
-                            </label>
-                        </th>
-                        <th class="center">Họ tên nhân viên</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
+            <div class="modal-body" style="padding: 30px 20px;">
+                <div class="form-horizontal">
+                    <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
+                        <label class="col-sm-3 control-label no-padding-right"
+                               style="text-align: left; color: #666; font-weight: bold;">
+                            Chi tiết giao dịch
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="transactionNote" class="form-control"
+                                   style="border-radius: 4px !important; width: 100% !important; display: block;"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="transactionTypeCode" value=""/>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnAssignmentBuilding">Giao tòa nhà</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            <div class="modal-footer"
+                 style="background-color: #fff; border-top: 1px solid #f0f0f0; padding: 15px 20px;">
+                <button type="button" class="btn btn-sm btn-primary" id="btnSaveTransaction"
+                        style="border-radius: 3px; padding: 5px 15px;">
+                    Xác nhận
+                </button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal"
+                        style="border-radius: 3px; padding: 5px 15px; background-color: #abbac3 !important; color: white !important; border: none;">
+                    Đóng
+                </button>
             </div>
         </div>
     </div>
-    <input type="hidden" id="buildingId" value="">
 </div>
 
 <script>

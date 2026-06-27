@@ -49,8 +49,4 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(mappedBy = "staffs", fetch = FetchType.LAZY)
     private List<CustomerEntity> customers = new ArrayList<>();
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
 }

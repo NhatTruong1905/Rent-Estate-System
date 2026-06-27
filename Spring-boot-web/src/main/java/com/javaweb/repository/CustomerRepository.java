@@ -11,4 +11,5 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Long>,
 
     boolean existsByIdAndStaffs_Id(Long id, Long staffId);
 
+    CustomerEntity findByIdAndIsActive(Long id, Integer isActive);
 }

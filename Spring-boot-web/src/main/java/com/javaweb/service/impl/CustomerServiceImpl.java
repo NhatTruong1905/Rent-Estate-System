@@ -79,4 +79,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    @Override
+    public CustomerDTO findByIdAndIsActive(Long id, Integer isActive) {
+        CustomerEntity customer = this.customerRepository.findByIdAndIsActive(id, isActive);
+        return this.customerConverter.toDTO(customer);
+    }
+
 }

@@ -1,12 +1,14 @@
 package com.javaweb.controller.admin;
 
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.entity.CustomerEntity;
 import com.javaweb.enums.Status;
 import com.javaweb.enums.TransactionType;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.request.CustomerSearchRequestDTO;
 import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.CustomerService;
+import com.javaweb.service.TransactionService;
 import com.javaweb.service.UserService;
 import com.javaweb.utils.DisplayTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @GetMapping("/customer-list")
     public ModelAndView getCustomer(@ModelAttribute(name = "modelSearch") CustomerSearchRequestDTO params, HttpServletRequest request) {
@@ -69,8 +74,17 @@ public class CustomerController {
                 return mav;
             }
         }
+
+        CustomerDTO customer = this.customerService.findByIdAndIsActive(id, 1);
+        if (customer == null) {
+            mav.setViewName("error/404");
+            return mav;
+        }
+
         mav.addObject("status", Status.getListOfStatus());
         mav.addObject("transactionType", TransactionType.getListOfTransactionType());
+        mav.addObject("CSKH", this.transactionService.findByCustomer_IdAndCode(id, TransactionType.CSKH.name()));
+        mav.addObject("DDX", this.transactionService.findByCustomer_IdAndCode(id, TransactionType.DDX.name()));
         mav.addObject("customer", this.customerService.findCustomerById(id));
         return mav;
     }

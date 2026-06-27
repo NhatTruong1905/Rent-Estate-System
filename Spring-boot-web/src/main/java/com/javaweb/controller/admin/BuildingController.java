@@ -74,6 +74,12 @@ public class BuildingController {
             }
         }
 
+        BuildingDTO building = this.buildingService.findBuildingById(id);
+        if (building == null) {
+            mav.setViewName("error/404");
+            return mav;
+        }
+
         mav.addObject("districts", District.getDistricts());
         mav.addObject("typeCodes", TypeCode.getTypes());
         mav.addObject("building", buildingService.findBuildingById(id));

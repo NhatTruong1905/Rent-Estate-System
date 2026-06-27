@@ -30,4 +30,7 @@ public class CustomerEntity extends BaseEntity {
             joinColumns = @JoinColumn(name = "customerid"),
             inverseJoinColumns = @JoinColumn(name = "staffid"))
     private List<UserEntity> staffs = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private List<TransactionEntity> transactions = new ArrayList<>();
 }

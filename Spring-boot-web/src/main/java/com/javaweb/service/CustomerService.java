@@ -1,5 +1,6 @@
 package com.javaweb.service;
 
+import com.javaweb.entity.CustomerEntity;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.request.CustomerRequestDTO;
 import com.javaweb.model.request.CustomerSearchRequestDTO;
@@ -21,4 +22,5 @@ public interface CustomerService {
 
     void deleteAllByIds(List<Long> ids);
 
+    CustomerDTO findByIdAndIsActive(Long id, Integer isActive);
 }
