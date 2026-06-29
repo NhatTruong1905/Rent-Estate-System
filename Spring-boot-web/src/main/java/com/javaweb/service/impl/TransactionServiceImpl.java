@@ -36,4 +36,28 @@ public class TransactionServiceImpl implements TransactionService {
 
         return transactionDTOS;
     }
+
+    @Override
+    public List<TransactionDTO> loadTransaction(String code, Long customerId) {
+        List<TransactionEntity> transEntities = this.transactionRepository.findByCodeAndCustomer_Id(code, customerId);
+
+        List<TransactionDTO> transDTOS = new ArrayList<>();
+        for (TransactionEntity trans : transEntities) {
+            transDTOS.add(this.transactionConverter.toDTO(trans));
+        }
+        return transDTOS;
+    }
+
+    @Override
+    public void createOrUpdateTransaction(TransactionDTO transaction) {
+        TransactionEntity oldTransEntity = this.transactionRepository.findTransactionById(transaction.getId());
+
+        if (oldTransEntity != null) {
+            this.transactionConverter.toOldEntity(transaction, oldTransEntity);
+            this.transactionRepository.save(oldTransEntity);
+        } else {
+            TransactionEntity trans = this.transactionConverter.toEntity(transaction);
+            this.transactionRepository.save(trans);
+        }
+    }
 }

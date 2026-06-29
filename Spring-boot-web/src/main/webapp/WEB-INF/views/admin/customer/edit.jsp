@@ -170,7 +170,7 @@
                                                 <td>${item.note}</td>
                                                 <td class="text-center">
                                                     <button class="btn btn-xs btn-info" title="Sửa giao dịch"
-                                                            onclick="openTransactionModal('CSKH')">
+                                                            onclick="openTransactionModal('CSKH', ${item.id})">
                                                         <i class="fa fa-pencil"></i>
                                                     </button>
                                                 </td>
@@ -227,7 +227,7 @@
                                                 <td>${item.note}</td>
                                                 <td class="text-center">
                                                     <button class="btn btn-xs btn-info" title="Sửa giao dịch"
-                                                            onclick="openTransactionModal('DDX')">
+                                                            onclick="openTransactionModal('DDX',${item.id})">
                                                         <i class="fa fa-pencil"></i>
                                                     </button>
                                                 </td>
@@ -256,7 +256,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" style="font-weight: bold; color: #438eb9;">Nhập thông tin giao dịch</h4>
             </div>
             <div class="modal-body">
@@ -274,6 +273,7 @@
                     </div>
                 </div>
                 <input type="hidden" id="transactionTypeCode" value=""/>
+                <input type="hidden" id="transactionId" value=""/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-primary" id="btnSaveTransaction">
@@ -347,13 +347,42 @@
         });
     }
 
-    function openTransactionModal(transactionTypeCode) {
-        $('#transactionNote').val('');
+    function openTransactionModal(transactionTypeCode, transactionId) {
         $('.transaction-error').remove();
 
         $('#transactionTypeCode').val(transactionTypeCode);
+        $('#transactionId').val(transactionId ? transactionId : '');
+        $('#transactionNote').val('');
 
+        if (transactionId) {
+            $('.modal-title').text('Cập nhật thông tin giao dịch');
+            loadTransactionData(transactionId, transactionTypeCode);
+        } else {
+            $('.modal-title').text('Nhập thông tin giao dịch');
+        }
         $('#transactionModal').modal('show');
+    }
+
+    function loadTransactionData(transactionId, code) {
+        var customerId = $('#id').val();
+
+        $.ajax({
+            url: "/api/" + customerId + "/transactions?code=" + code,
+            type: "GET",
+            dataType: "JSON",
+            success: function (response) {
+                if (response && response.data) {
+                    $.each(response.data, function (index, item) {
+                        if (item.id === transactionId) {
+                            $('#transactionNote').val(item.note);
+                        }
+                    });
+                }
+            },
+            error: function (response) {
+                console.log("Hệ thống không thể tải chi tiết ghi chú giao dịch!");
+            }
+        });
     }
 
     $('#btnSaveTransaction').click(function (e) {
@@ -363,8 +392,9 @@
         var customerId = $('#id').val();
         var code = $('#transactionTypeCode').val();
         var note = $('#transactionNote').val();
+        var transactionId = $('#transactionId').val();
 
-        if (note.trim() == '') {
+        if (note.trim() === '') {
             $('#transactionNote').after('<span class="transaction-error" style="color: red; font-style: italic; margin-top: 5px; display: inline-block;">* Vui lòng nhập chi tiết giao dịch!</span>');
             return;
         }
@@ -374,6 +404,10 @@
             "code": code,
             "note": note
         };
+
+        if (transactionId !== '') {
+            dataJson["id"] = transactionId;
+        }
 
         var btn = $(this);
         btn.prop('disabled', true).text('Đang lưu...');
@@ -399,3 +433,4 @@
 </script>
 </body>
 </html>
+

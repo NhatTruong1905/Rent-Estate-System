@@ -14,4 +14,12 @@ public class TransactionConverter {
     public TransactionDTO toDTO(TransactionEntity transactionEntity) {
         return modelMapper.map(transactionEntity, TransactionDTO.class);
     }
+
+    public TransactionEntity toEntity(TransactionDTO transactionDTO) {
+        return modelMapper.map(transactionDTO, TransactionEntity.class);
+    }
+
+    public void toOldEntity(TransactionDTO transactionDTO, TransactionEntity transactionEntity) {
+        modelMapper.map(transactionDTO, transactionEntity);
+    }
 }
